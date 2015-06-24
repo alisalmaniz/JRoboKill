@@ -98,9 +98,10 @@ public class Level2 extends JPanel{
         *********
 
     }
-
+        
     public void update() throws InterruptedException {
 
+        ********************
         x++;
         y++;
         repaint();
