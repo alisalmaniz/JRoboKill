@@ -97,9 +97,10 @@ public class Level2 extends JPanel{
        // ** masirTirX(Xrobot2, xClick);
 
     }
-
+        
     public void update() throws InterruptedException {
 
+        ********************
         x++;
         y++;
         repaint();
