@@ -67,7 +67,7 @@ public class Level1 extends JPanel {
         Graphics g2 = (Graphics) g;
         g.drawImage(zamin, 0, 0, this);
         g.drawImage(robot, Xrobot, Yrobot, this);
-        g.fillOval(x, y, 100, 100);
+        //debug amir :g.fillOval(x, y, 100, 100);
 
     }
 

@@ -93,8 +93,9 @@ public class Level2 extends JPanel{
         g.drawImage(zamin2, 0, 0, this);
         g.drawImage(robot2, Xrobot2, Yrobot2, this);
       //**  g.drawImage(Tir, Xrobot2, Yrobot2, this);
-        g.fillOval(x, y, 100, 100);
+       //debug amir:  g.fillOval(x, y, 100, 100);
        // ** masirTirX(Xrobot2, xClick);
+        *********
 
     }
 
