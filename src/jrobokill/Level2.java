@@ -5,6 +5,7 @@
  */
 package jrobokill;
 
+import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.KeyEventDispatcher;
@@ -15,37 +16,57 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import static jrobokill.Level1.RoboPanel2;
 
 /**
  *
  * @author Asus
  */
-public class Level2 extends JPanel{
-     private int xTir = 0;
+public class Level2 extends JPanel {
+
+    private int xTir = 0;
 
     private int Xrobot2 = 400;
     private int Yrobot2 = 500;
     public static int x = 0;
     public static int y = 0;
-    private int xClick = 0;
-    private int yClick = 0;
     private Image dbImage;
     private Graphics dbg;
+    private BufferedImage pol;
     private BufferedImage zamin2;
     private BufferedImage robot2;
     private BufferedImage Tir;
+    private BufferedImage box;
+    public static Level3 RoboPanel3;
 
     public Level2() {
         setLayout(null);
 
         //zamin
-        URL resourceZamin = getClass().getResource("/pic/zamin2.png");
+        URL resourceZamin = getClass().getResource("/pic/back2.png");
         try {
             zamin2 = ImageIO.read(resourceZamin);
         } catch (IOException e) {
             System.out.println("invalid adress zamin");
+        }
+        //box
+        URL resourceBox = getClass().getResource("/pic/box2.png");
+        try {
+            box = ImageIO.read(resourceBox);
+        } catch (IOException e) {
+            System.out.println("invalid adress box");
+        }
+        //pol
+        URL resourcePol = getClass().getResource("/pic/22.png");
+        try {
+            pol = ImageIO.read(resourcePol);
+        } catch (IOException e) {
+            System.out.println("invalid adress pol");
         }
         //robot
         URL resourceRobot = getClass().getResource("/pic/robot2.png");
@@ -69,8 +90,8 @@ public class Level2 extends JPanel{
             @Override
             public void mouseClicked(MouseEvent evt) {
                 if (evt.getClickCount() == 1) {
-                //  **  xClick = evt.getX();
-                  // ** yClick = evt.getY();
+                    //  **  xClick = evt.getX();
+                    // ** yClick = evt.getY();
 
                 }
             }
@@ -83,7 +104,7 @@ public class Level2 extends JPanel{
         dbg = dbImage.getGraphics();
         paintComponent(dbg);
         g.drawImage(dbImage, 0, 0, this);
-       
+
     }
 
     @Override
@@ -91,17 +112,37 @@ public class Level2 extends JPanel{
         super.paintComponent(g);
         Graphics g2 = (Graphics) g;
         g.drawImage(zamin2, 0, 0, this);
+        g.drawImage(pol, 200, 0, this);
+        for (int i = 0; i < 4; i++) {
+            g.drawImage(box, 210, 200 + 35 * i, this);
+        }
+
         g.drawImage(robot2, Xrobot2, Yrobot2, this);
-      //**  g.drawImage(Tir, Xrobot2, Yrobot2, this);
-       //debug amir:  g.fillOval(x, y, 100, 100);
-       // ** masirTirX(Xrobot2, xClick);
-        *********
+
+        if ((Xrobot2 > 200 && Xrobot2 < 600) && (Yrobot2 < 40)) {
+            JRoboKill.counter = 3;
+            RoboPanel3 = new Level3();
+            JRoboKill.board.remove(Level1.RoboPanel2);
+            JRoboKill.board.add(RoboPanel3, BorderLayout.CENTER);
+            JRoboKill.board.revalidate();
+        }
+        //agar az roye pol oonvartar raft biyofte payin
+        if (Xrobot2 < 180 || Xrobot2 > 550) {
+            //g.drawImage(Fall, Xrobot, Yrobot, this);
+            try {
+                Thread.sleep(80);
+
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Level1.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            JOptionPane.showMessageDialog(null, "You fall in a hole ", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+            System.exit(0);
+        }
 
     }
-        
+
     public void update() throws InterruptedException {
 
-        ********************
         x++;
         y++;
         repaint();
@@ -120,18 +161,21 @@ public class Level2 extends JPanel{
 
             if (moveKey == KeyEvent.VK_UP) {
                 Yrobot2 = Yrobot2 - 5;
+                repaint();
             }
 
             if (moveKey == KeyEvent.VK_LEFT) {
                 Xrobot2 = Xrobot2 - 5;
-
+                repaint();
             }
 
             if (moveKey == KeyEvent.VK_RIGHT) {
                 Xrobot2 = Xrobot2 + 5;
+                repaint();
             }
             if (moveKey == KeyEvent.VK_DOWN) {
                 Yrobot2 = Yrobot2 + 5;
+                repaint();
             }
 
             //return false;
@@ -142,9 +186,9 @@ public class Level2 extends JPanel{
     }
 
     public void masirTirX(int xR, int xC) {
-        
+
         if (xR > xC) {
-            
+
             xTir = xTir + 5;
 
         }
