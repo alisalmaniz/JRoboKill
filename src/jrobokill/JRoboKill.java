@@ -21,26 +21,19 @@ public class JRoboKill {
      * @param args the command line arguments
      */
     public static int counter = 1;
-    public static JFrame board;
-    public static StartMenu startmenu;
+    public static MainFrame board;
+    
     public static void main(String[] args) throws InterruptedException {
         
         // TODO code application logic here
-         board = new JFrame();
+         board = new MainFrame();
 
         // new karadn naghshe ha va start menu
         
-        startmenu = new StartMenu();
+        
 
         //tanzim jframe
-        board.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        board.setVisible(true);
-        board.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        board.setResizable(false);
-        Dimension size = new Dimension(805, 635);
-        board.setSize(size);
-        //amir:add kardan start menu be Jfram
-        board.add(startmenu, BorderLayout.CENTER);
+        
        
         
         //agar start ro az toye "start menu" zad bazi shoroa she.

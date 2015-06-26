@@ -11,6 +11,8 @@ import java.awt.Image;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -23,7 +25,7 @@ import static jrobokill.Level2.RoboPanel3;
  *
  * @author Asus
  */
-public class Level3 extends JPanel {
+public class Level3 extends JPanel implements Runnable{
 
     private BufferedImage zamin3;
     private BufferedImage robot3;
@@ -37,8 +39,14 @@ public class Level3 extends JPanel {
     private int Xrobot3 = 400;
     private int Yrobot3 = 500;
       public static Level4 RoboPanel4;
+      private boolean Robo3IsAlive;
 
     public Level3() {
+        
+        setLayout(null);
+        
+        Robo3IsAlive=true;
+        
         //zamin
         URL resourceZamin = getClass().getResource("/pic/zamin.png");
         try {
@@ -58,7 +66,8 @@ public class Level3 extends JPanel {
 
         //move
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new moving());
-
+        
+        (new Thread(this)).start();
     }
 
     // ba dbuffeting
@@ -79,14 +88,15 @@ public class Level3 extends JPanel {
 
         g.drawImage(robot3, Xrobot3, Yrobot3, this);
         
-        if ((Xrobot3 > 200 && Xrobot3 < 600) && (Yrobot3 < 40)) {
-            JRoboKill.counter = 4;
-            RoboPanel4 = new Level4();
-            JRoboKill.board.remove(Level2.RoboPanel3);
-            JRoboKill.board.add(RoboPanel4, BorderLayout.CENTER);
-            JRoboKill.board.revalidate();
-        }
+        
+        
+    }
 
+    @Override
+    public void run() {
+        while (true) {            
+            repaint();
+        }
     }
 
     class moving implements KeyEventDispatcher {
@@ -112,27 +122,30 @@ public class Level3 extends JPanel {
             if (moveKey == KeyEvent.VK_UP) {
                 if (Yrobot3 >= 0 && pause3 == 0) {
                     Yrobot3 = Yrobot3 - 5;
-                    repaint();
+                        if ((Xrobot3 > 200 && Xrobot3 < 600) && (Yrobot3 < 40) && JRoboKill.counter==3) {
+                        JRoboKill.counter = 4;
+                        RoboPanel4 = new Level4();
+                        JRoboKill.board.remove(Level2.RoboPanel3);
+                        JRoboKill.board.add(RoboPanel4, BorderLayout.CENTER);
+                        JRoboKill.board.revalidate();
+                    }
                 }
             }
 
             if (moveKey == KeyEvent.VK_LEFT) {
                 if (Xrobot3 >= 0 && pause3 == 0) {
                     Xrobot3 = Xrobot3 - 5;
-                    repaint();
                 }
             }
 
             if (moveKey == KeyEvent.VK_RIGHT) {
                 if (Xrobot3 <= 740 && pause3 == 0) {
                     Xrobot3 = Xrobot3 + 5;
-                    repaint();
                 }
             }
             if (moveKey == KeyEvent.VK_DOWN) {
                 if (Yrobot3 <= 560 && pause3 == 0) {
                     Yrobot3 = Yrobot3 + 5;
-                    repaint();
                 }
             }
 
@@ -141,5 +154,34 @@ public class Level3 extends JPanel {
 
         }
 
+    }
+    
+    private class TirHandler implements MouseListener{
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+        
     }
 }

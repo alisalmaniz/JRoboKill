@@ -11,6 +11,8 @@ import java.awt.Image;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -24,7 +26,7 @@ import javax.swing.JPanel;
  *
  * @author Asus
  */
-public class Level1 extends JPanel {
+public class Level1 extends JPanel implements Runnable{
 
     private int Xrobot = 400;
     private int Yrobot = 500;
@@ -42,10 +44,12 @@ public class Level1 extends JPanel {
     private BufferedImage Fall;
     private static int pause=0;
     public static Level2 RoboPanel2;
+    private boolean Robo1IsAlive;
 
     public Level1() {
         setLayout(null);
 
+        Robo1IsAlive=true;
         //zamin
         URL resourceZamin = getClass().getResource("/pic/zamin.png");
         try {
@@ -107,6 +111,7 @@ public class Level1 extends JPanel {
         //move
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new moving());
 
+        (new Thread(this)).start();
     }
 
     // ba dbuffeting
@@ -135,34 +140,32 @@ public class Level1 extends JPanel {
 
         g.drawImage(exit, 350, 50, this);
 
-        //g.fillRect(0, 0, 290, 800);
-        g.drawImage(robot, Xrobot, Yrobot, this);
+        
         g.drawImage(Jet, 20, 90, this);
+        
+        if(Robo1IsAlive){
+            g.drawImage(robot, Xrobot, Yrobot, this);
+        }
+        else{
+            g.drawImage(Fall, Xrobot, Yrobot, this);   
+        }
+        
        
 
        
         
-        //soghot robat dar chale
-        if (Xrobot < 300) {
-            g.drawImage(Fall, Xrobot, Yrobot, this);
-            try {
-                Thread.sleep(80);
+        
+    }
 
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Level1.class.getName()).log(Level.SEVERE, null, ex);
-            }
-             JOptionPane.showMessageDialog(null, "You fall in a hole ", "Game Over", JOptionPane.INFORMATION_MESSAGE);
-            System.exit(0);
+    @Override
+    public void run() {
+        
+        while (true) {            
+            repaint();
         }
     }
 
-    public void update() throws InterruptedException {
-
-        // debug amir:x++;
-        //debug amir:y++;
-        repaint();
-        Thread.sleep(5);
-    }
+    
 
     class moving implements KeyEventDispatcher {
 
@@ -175,7 +178,7 @@ public class Level1 extends JPanel {
                 System.exit(0);
             }
             //button O & P for pause and continue
-             if (moveKey == KeyEvent.VK_P)
+             if (moveKey == KeyEvent.VK_P )
              {
                  pause=1;
                  JOptionPane.showMessageDialog(null, "Pasue", "", JOptionPane.INFORMATION_MESSAGE);
@@ -194,38 +197,47 @@ public class Level1 extends JPanel {
                
              }
               
-            if (moveKey == KeyEvent.VK_UP) {
+            if (moveKey == KeyEvent.VK_UP ) {
                 if (Yrobot >= 0 && pause==0) {
                     Yrobot = Yrobot - 5;
                     //agar az x,y door gozasht bere marhale 2
-                if ((Xrobot > 200 && Xrobot < 600) && (Yrobot < 40)) {
-                    JRoboKill.counter = 2;
-                    RoboPanel2 = new Level2();
-                    JRoboKill.board.remove(StartMenu.RoboPanel);
-                    JRoboKill.board.add(RoboPanel2, BorderLayout.CENTER);
-                    JRoboKill.board.revalidate();
-                }
-                    repaint();
+                    if ((Xrobot > 200 && Xrobot < 600 && JRoboKill.counter==1) && (Yrobot < 40)) {
+                        JRoboKill.counter = 2;
+                        RoboPanel2 = new Level2();
+                        //JRoboKill.board.panelChanger();
+                        JRoboKill.board.remove(StartMenu.RoboPanel);
+                        JRoboKill.board.add(RoboPanel2, BorderLayout.CENTER);
+                        JRoboKill.board.revalidate();
+                    }
                 }
             }
 
             if (moveKey == KeyEvent.VK_LEFT) {
                 if (Xrobot >= 0&& pause==0) {
                     Xrobot = Xrobot - 5;
-                    repaint();
+                }
+                //soghot robat dar chale
+                if (Xrobot < 300 && JRoboKill.counter==1) {
+                    
+                    try {
+                        Thread.sleep(80);
+
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Level1.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                     JOptionPane.showMessageDialog(null, "You fall in a hole ", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                    System.exit(0);
                 }
             }
 
             if (moveKey == KeyEvent.VK_RIGHT) {
                 if (Xrobot <= 740&& pause==0) {
                     Xrobot = Xrobot + 5;
-                    repaint();
                 }
             }
             if (moveKey == KeyEvent.VK_DOWN) {
                 if (Yrobot <= 560&& pause==0) {
                     Yrobot = Yrobot + 5;
-                    repaint();
                 }
             }
 
@@ -234,5 +246,34 @@ public class Level1 extends JPanel {
 
         }
 
+    }
+    
+    private class TirHandler implements MouseListener{
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+        
     }
 }

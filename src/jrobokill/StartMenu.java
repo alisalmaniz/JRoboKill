@@ -25,7 +25,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import static jrobokill.JRoboKill.counter;
-import static jrobokill.JRoboKill.startmenu;
+import static jrobokill.MainFrame.startmenu;
 import sun.audio.AudioData;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;

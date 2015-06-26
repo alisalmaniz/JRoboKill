@@ -10,6 +10,8 @@ import java.awt.Image;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -21,7 +23,7 @@ import javax.swing.JPanel;
  *
  * @author Asus
  */
-public class Level4 extends JPanel{
+public class Level4 extends JPanel implements Runnable{
     
     private BufferedImage zamin4;
     private BufferedImage robot4;
@@ -33,7 +35,13 @@ public class Level4 extends JPanel{
     private int Xrobot4 = 400;
     private int Yrobot4 = 500;
     
+    private boolean Robo4IsAlive;
+    
     public Level4(){
+        
+        setLayout(null);
+        
+        Robo4IsAlive=true;
         //zamin
         URL resourceZamin = getClass().getResource("/pic/zamin4.png");
         try {
@@ -53,6 +61,7 @@ public class Level4 extends JPanel{
 
         //move
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new moving());
+        (new Thread(this)).start();
     }
     
     public void paint(Graphics g) {
@@ -72,6 +81,13 @@ public class Level4 extends JPanel{
         g.drawImage(robot4, Xrobot4, Yrobot4, this);
         
 
+    }
+
+    @Override
+    public void run() {
+        while (true) {            
+            repaint();
+        }
     }
     
         class moving implements KeyEventDispatcher {
@@ -126,5 +142,34 @@ public class Level4 extends JPanel{
 
         }
 
+    }
+        
+    private class TirHandler implements MouseListener{
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+        
     }
 }

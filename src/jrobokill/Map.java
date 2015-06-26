@@ -22,7 +22,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import static jrobokill.JRoboKill.startmenu;
+import static jrobokill.MainFrame.startmenu;
 import static jrobokill.StartMenu.RoboPanel;
 
 /**
@@ -90,8 +90,9 @@ public class Map extends JFrame implements ActionListener, FocusListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == ok) {
-            dispose();
-
+            
+            this.dispose();
+            
         }
     }
 

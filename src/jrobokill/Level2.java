@@ -13,6 +13,7 @@ import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -27,7 +28,7 @@ import static jrobokill.Level1.RoboPanel2;
  *
  * @author Asus
  */
-public class Level2 extends JPanel {
+public class Level2 extends JPanel implements Runnable{
 
     private int xTir = 0;
 
@@ -43,10 +44,11 @@ public class Level2 extends JPanel {
     private BufferedImage Tir;
     private BufferedImage box;
     public static Level3 RoboPanel3;
+    private boolean Robo2IsAlive;
 
     public Level2() {
         setLayout(null);
-
+        Robo2IsAlive=true;
         //zamin
         URL resourceZamin = getClass().getResource("/pic/back2.png");
         try {
@@ -96,6 +98,8 @@ public class Level2 extends JPanel {
                 }
             }
         });
+        
+        (new Thread(this)).start();
     }
 
     // ba dbuffeting
@@ -117,36 +121,23 @@ public class Level2 extends JPanel {
             g.drawImage(box, 210, 200 + 35 * i, this);
         }
 
-        g.drawImage(robot2, Xrobot2, Yrobot2, this);
-        //age az door rad shod
-        if ((Xrobot2 > 200 && Xrobot2 < 600) && (Yrobot2 < 40)) {
-            JRoboKill.counter = 3;
-            RoboPanel3 = new Level3();
-            JRoboKill.board.remove(Level1.RoboPanel2);
-            JRoboKill.board.add(RoboPanel3, BorderLayout.CENTER);
-            JRoboKill.board.revalidate();
+        if(Robo2IsAlive){
+            g.drawImage(robot2, Xrobot2, Yrobot2, this);
         }
-        //agar az roye pol oonvartar raft biyofte payin
-        if (Xrobot2 < 180 || Xrobot2 > 550) {
-            //g.drawImage(Fall, Xrobot, Yrobot, this);
-            try {
-                Thread.sleep(80);
-
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Level1.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            JOptionPane.showMessageDialog(null, "You fall in a hole ", "Game Over", JOptionPane.INFORMATION_MESSAGE);
-            System.exit(0);
+        else{
+            
         }
+        
+        
 
     }
 
-    public void update() throws InterruptedException {
 
-        x++;
-        y++;
-        repaint();
-        Thread.sleep(5);
+    @Override
+    public void run() {
+        while (true) {            
+            repaint();
+        }
     }
 
     class moving implements KeyEventDispatcher {
@@ -161,21 +152,51 @@ public class Level2 extends JPanel {
 
             if (moveKey == KeyEvent.VK_UP) {
                 Yrobot2 = Yrobot2 - 5;
-                repaint();
+                //age az door rad shod
+                if ((Xrobot2 > 200 && Xrobot2 < 600) && (Yrobot2 < 40) && JRoboKill.counter==2) {
+                    JRoboKill.counter = 3;
+                    RoboPanel3 = new Level3();
+                    JRoboKill.board.remove(Level1.RoboPanel2);
+                    JRoboKill.board.add(RoboPanel3, BorderLayout.CENTER);
+                    JRoboKill.board.revalidate();
+                }
             }
 
             if (moveKey == KeyEvent.VK_LEFT) {
                 Xrobot2 = Xrobot2 - 5;
-                repaint();
+               //agar az roye pol oonvartar raft biyofte payin
+                if (Xrobot2 < 180 && JRoboKill.counter==2) {
+                    //g.drawImage(Fall, Xrobot, Yrobot, this);
+                    try {
+                        Thread.sleep(80);
+
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Level1.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    JOptionPane.showMessageDialog(null, "You fall in a hole ", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                    System.exit(0);
+                }
             }
 
             if (moveKey == KeyEvent.VK_RIGHT) {
                 Xrobot2 = Xrobot2 + 5;
-                repaint();
+                //agar az roye pol oonvartar raft biyofte payin
+                if ( Xrobot2 > 550 && JRoboKill.counter==2) {
+                    //g.drawImage(Fall, Xrobot, Yrobot, this);
+                    try {
+                        Thread.sleep(80);
+
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Level1.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    JOptionPane.showMessageDialog(null, "You fall in a hole ", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                    System.exit(0);
+                }
+               
             }
             if (moveKey == KeyEvent.VK_DOWN) {
                 Yrobot2 = Yrobot2 + 5;
-                repaint();
+               
             }
 
             //return false;
@@ -197,5 +218,34 @@ public class Level2 extends JPanel {
             xTir = xTir - 5;
 
         }
+    }
+    
+    private class TirHandler implements MouseListener{
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+        
     }
 }
