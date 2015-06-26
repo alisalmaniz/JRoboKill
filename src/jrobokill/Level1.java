@@ -26,7 +26,7 @@ import javax.swing.JPanel;
  *
  * @author Asus
  */
-public class Level1 extends JPanel implements Runnable{
+public class Level1 extends JPanel implements Runnable {
 
     private int Xrobot = 400;
     private int Yrobot = 500;
@@ -42,14 +42,15 @@ public class Level1 extends JPanel implements Runnable{
     private BufferedImage makanAval;
     private BufferedImage ChaleFaza;
     private BufferedImage Fall;
-    private static int pause=0;
+    private static int pause = 0;
     public static Level2 RoboPanel2;
+   
     private boolean Robo1IsAlive;
 
     public Level1() {
         setLayout(null);
 
-        Robo1IsAlive=true;
+        Robo1IsAlive = true;
         //zamin
         URL resourceZamin = getClass().getResource("/pic/zamin.png");
         try {
@@ -128,7 +129,7 @@ public class Level1 extends JPanel implements Runnable{
         Graphics g2 = (Graphics) g;
 
         g.drawImage(zamin, 0, 0, this);
-         g.drawImage(shop, 600, 200, this);
+        g.drawImage(shop, 600, 200, this);
         //rasm chale 
         g.drawImage(makanAval, 400, 500, this);
         for (int i = 20; i <= 530; i += 70) {
@@ -140,32 +141,23 @@ public class Level1 extends JPanel implements Runnable{
 
         g.drawImage(exit, 350, 50, this);
 
-        
         g.drawImage(Jet, 20, 90, this);
-        
-        if(Robo1IsAlive){
-            g.drawImage(robot, Xrobot, Yrobot, this);
-        }
-        else{
-            g.drawImage(Fall, Xrobot, Yrobot, this);   
-        }
-        
-       
 
-       
-        
-        
+        if (Robo1IsAlive) {
+            g.drawImage(robot, Xrobot, Yrobot, this);
+        } else {
+            g.drawImage(Fall, Xrobot, Yrobot, this);
+        }
+
     }
 
     @Override
     public void run() {
-        
-        while (true) {            
+
+        while (true) {
             repaint();
         }
     }
-
-    
 
     class moving implements KeyEventDispatcher {
 
@@ -178,30 +170,27 @@ public class Level1 extends JPanel implements Runnable{
                 System.exit(0);
             }
             //button O & P for pause and continue
-             if (moveKey == KeyEvent.VK_P )
-             {
-                 pause=1;
-                 JOptionPane.showMessageDialog(null, "Pasue", "", JOptionPane.INFORMATION_MESSAGE);
-             }
-             if (moveKey == KeyEvent.VK_O)
-             {
-                 pause=0;
-                 JOptionPane.showMessageDialog(null, "continue ", "", JOptionPane.INFORMATION_MESSAGE);
-             }
-            
-                 if (moveKey == KeyEvent.VK_M)               
-             {
-                
-                 Map map = new Map();
-                 
-               
-             }
-              
-            if (moveKey == KeyEvent.VK_UP ) {
-                if (Yrobot >= 0 && pause==0) {
+            if (moveKey == KeyEvent.VK_P) {
+                pause = 1;
+                JOptionPane.showMessageDialog(null, "Pasue", "", JOptionPane.INFORMATION_MESSAGE);
+            }
+            if (moveKey == KeyEvent.VK_O) {
+                pause = 0;
+                JOptionPane.showMessageDialog(null, "continue ", "", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+            if (moveKey == KeyEvent.VK_M) {
+
+                Map map = new Map();
+
+            }
+
+            if (moveKey == KeyEvent.VK_UP) {
+                if (Yrobot >= 0 && pause == 0) {
                     Yrobot = Yrobot - 5;
                     //agar az x,y door gozasht bere marhale 2
-                    if ((Xrobot > 200 && Xrobot < 600 && JRoboKill.counter==1) && (Yrobot < 40)) {
+                    if ((Xrobot > 200 && Xrobot < 600 && JRoboKill.counter == 1) && (Yrobot < 40)) {
+                        
                         JRoboKill.counter = 2;
                         RoboPanel2 = new Level2();
                         //JRoboKill.board.panelChanger();
@@ -213,30 +202,30 @@ public class Level1 extends JPanel implements Runnable{
             }
 
             if (moveKey == KeyEvent.VK_LEFT) {
-                if (Xrobot >= 0&& pause==0) {
+                if (Xrobot >= 0 && pause == 0) {
                     Xrobot = Xrobot - 5;
                 }
                 //soghot robat dar chale
-                if (Xrobot < 300 && JRoboKill.counter==1) {
-                    
+                if (Xrobot < 300 && JRoboKill.counter == 1) {
+                                Robo1IsAlive=false;
                     try {
                         Thread.sleep(80);
 
                     } catch (InterruptedException ex) {
                         Logger.getLogger(Level1.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                     JOptionPane.showMessageDialog(null, "You fall in a hole ", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "You fall in a hole ", "Game Over", JOptionPane.INFORMATION_MESSAGE);
                     System.exit(0);
                 }
             }
 
             if (moveKey == KeyEvent.VK_RIGHT) {
-                if (Xrobot <= 740&& pause==0) {
+                if (Xrobot <= 740 && pause == 0) {
                     Xrobot = Xrobot + 5;
                 }
             }
             if (moveKey == KeyEvent.VK_DOWN) {
-                if (Yrobot <= 560&& pause==0) {
+                if (Yrobot <= 560 && pause == 0) {
                     Yrobot = Yrobot + 5;
                 }
             }
@@ -247,8 +236,8 @@ public class Level1 extends JPanel implements Runnable{
         }
 
     }
-    
-    private class TirHandler implements MouseListener{
+
+    private class TirHandler implements MouseListener {
 
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -257,7 +246,7 @@ public class Level1 extends JPanel implements Runnable{
 
         @Override
         public void mousePressed(MouseEvent e) {
-            
+
         }
 
         @Override
@@ -274,6 +263,6 @@ public class Level1 extends JPanel implements Runnable{
         public void mouseExited(MouseEvent e) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
-        
+
     }
 }

@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -35,6 +36,7 @@ public class Map extends JFrame implements ActionListener, FocusListener {
     private Image dbImage;
     private Graphics dbg;
     private JButton ok;
+    private JPanel PanelMap;
     public static boolean MapORLevel = false;
 
     public Map() {
@@ -43,14 +45,26 @@ public class Map extends JFrame implements ActionListener, FocusListener {
         setTitle("Map");
         setLayout(null);
         //getContentPane().setLayout(null);
+        //panel map
+        PanelMap = new JPanel();
+        PanelMap.setSize(500, 500);
+        
+        
+        
+        
+        
         //kelid ok
+       // ok.setLayout(null);
         ok = new JButton("Ok");
         ok.setFont(new Font("Arial", Font.BOLD, 20));
         ok.setSize(100, 100);
         ok.setLocation(300, 300);
         ok.setBackground(Color.WHITE);
         ok.setForeground(Color.BLACK);
-        add(ok);
+        
+        this.PanelMap.add(ok,BorderLayout.SOUTH);
+        
+        this.add(PanelMap, BorderLayout.CENTER);
 
         /* //action lister baraye ok
          ok.addActionListener(new ActionListener() {
@@ -80,17 +94,17 @@ public class Map extends JFrame implements ActionListener, FocusListener {
         } catch (IOException e) {
             System.out.println("invalid adress map");
         }
-        super.paint(g);
+     //   super.paint(g);
         g.drawImage(Map, 0, 30, null);
 //            repaint();
-        ok.repaint();
+  //      ok.repaint();
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == ok) {
-            
+            this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
             this.dispose();
             
         }

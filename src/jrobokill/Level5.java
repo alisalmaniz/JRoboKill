@@ -8,45 +8,38 @@ package jrobokill;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.JFrame;
 
 /**
  *
  * @author Asus
  */
-public class Level4 extends JPanel implements Runnable{
-    
-    private BufferedImage zamin4;
-    private BufferedImage robot4;
-    
+public class Level5 extends JFrame implements Runnable {
+    private BufferedImage zamin5;
+    private BufferedImage robot5;
     private Image dbImage;
     private Graphics dbg;
     
-    public int pause4 = 0;
-    private int Xrobot4 = 400;
-    private int Yrobot4 = 500;
+    public int pause5 = 0;
+    private int Xrobot5 = 400;
+    private int Yrobot5 = 500;
     
-    private boolean Robo4IsAlive;
-    
-    public Level4(){
+     private boolean Robo5IsAlive;
+     
+    public Level5(){
         
-        setLayout(null);
+         setLayout(null);
         
-        Robo4IsAlive=true;
+        Robo5IsAlive=true;
         //zamin
         URL resourceZamin = getClass().getResource("/pic/zamin4.png");
         try {
-            zamin4 = ImageIO.read(resourceZamin);
+            zamin5 = ImageIO.read(resourceZamin);
         } catch (IOException e) {
             System.out.println("invalid adress zamin");
         }
@@ -55,7 +48,7 @@ public class Level4 extends JPanel implements Runnable{
         //robot
         URL resourceRobot = getClass().getResource("/pic/robot.png");
         try {
-            robot4 = ImageIO.read(resourceRobot);
+            robot5 = ImageIO.read(resourceRobot);
         } catch (IOException e) {
             System.out.println("invalid adress Rabat");
         }
@@ -64,7 +57,6 @@ public class Level4 extends JPanel implements Runnable{
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new moving());
         (new Thread(this)).start();
     }
-    
     public void paint(Graphics g) {
         dbImage = createImage(getWidth(), getHeight());
         dbg = dbImage.getGraphics();
@@ -77,9 +69,9 @@ public class Level4 extends JPanel implements Runnable{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics g2 = (Graphics) g;
-        g.drawImage(zamin4, 0, 0, this);
+        g.drawImage(zamin5, 0, 0, this);
 
-        g.drawImage(robot4, Xrobot4, Yrobot4, this);
+        g.drawImage(robot5, Xrobot5, Yrobot5, this);
         
 
     }
@@ -90,8 +82,7 @@ public class Level4 extends JPanel implements Runnable{
             repaint();
         }
     }
-    
-        class moving implements KeyEventDispatcher {
+            class moving implements KeyEventDispatcher {
 
         @Override
         public boolean dispatchKeyEvent(KeyEvent e) {
@@ -103,40 +94,40 @@ public class Level4 extends JPanel implements Runnable{
             }
             //button O & P for pause and continue
             if (moveKey == KeyEvent.VK_P) {
-                pause4 = 1;
+                pause5 = 1;
                 JOptionPane.showMessageDialog(null, "Pasue", "", JOptionPane.INFORMATION_MESSAGE);
             }
             if (moveKey == KeyEvent.VK_O) {
-                pause4 = 0;
+                pause5 = 0;
                 JOptionPane.showMessageDialog(null, "continue ", "", JOptionPane.INFORMATION_MESSAGE);
             }
 
             if (moveKey == KeyEvent.VK_UP) {
-                if (Yrobot4 >= 0 && pause4 == 0) {
-                    Yrobot4 = Yrobot4 - 5;
+                if (Yrobot5 >= 0 && pause5 == 0) {
+                    Yrobot5 = Yrobot5 - 5;
                     repaint();
                 }
             }
 
             if (moveKey == KeyEvent.VK_LEFT) {
-                if (Xrobot4 >= 0 && pause4 == 0) {
-                    Xrobot4 = Xrobot4 - 5;
+                if (Xrobot5 >= 0 && pause5 == 0) {
+                    Xrobot5 = Xrobot5 - 5;
                     repaint();
                 }
             }
 
             if (moveKey == KeyEvent.VK_RIGHT) {
-                if (Xrobot4 <= 740 && pause4 == 0) {
-                    Xrobot4 = Xrobot4 + 5;
+                if (Xrobot5 <= 740 && pause5 == 0) {
+                    Xrobot5 = Xrobot5 + 5;
                     repaint();
                 }
             }
             if (moveKey == KeyEvent.VK_DOWN) {
-                if (Yrobot4 <= 560 && pause4 == 0) {
-                    Yrobot4 = Yrobot4 + 5;
+                if (Yrobot5 <= 560 && pause5 == 0) {
+                    Yrobot5 = Yrobot5 + 5;
                     repaint();
                 }
-                if ((Xrobot4 > 200 && Xrobot4 < 600 && JRoboKill.counter == 4) && (Yrobot4 > 540)) {
+                if ((Xrobot5 > 200 && Xrobot5 < 600 && JRoboKill.counter == 4) && (Yrobot5 > 540)) {
                     JRoboKill.counter = 3;
                    
                     
@@ -152,33 +143,5 @@ public class Level4 extends JPanel implements Runnable{
         }
 
     }
-        
-    private class TirHandler implements MouseListener{
-
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-            
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-        
-    }
+    
 }

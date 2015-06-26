@@ -38,8 +38,9 @@ public class Level3 extends JPanel implements Runnable{
     public int pause3 = 0;
     private int Xrobot3 = 400;
     private int Yrobot3 = 500;
-      public static Level4 RoboPanel4;
-      private boolean Robo3IsAlive;
+    public static Level4 RoboPanel4;
+    private boolean Robo3IsAlive;
+    public static Level2 RoboPanel3Back2;
 
     public Level3() {
         
@@ -146,6 +147,15 @@ public class Level3 extends JPanel implements Runnable{
             if (moveKey == KeyEvent.VK_DOWN) {
                 if (Yrobot3 <= 560 && pause3 == 0) {
                     Yrobot3 = Yrobot3 + 5;
+                }
+                
+                if ((Xrobot3 > 200 && Xrobot3 < 600 && JRoboKill.counter == 3) && (Yrobot3 > 540)) {
+                    JRoboKill.counter = 2;
+                   // RoboPanel3Back2 = new Level2();
+                    //JRoboKill.board.panelChanger();
+                    JRoboKill.board.remove(Level2.RoboPanel3);
+                    JRoboKill.board.add(Level1.RoboPanel2, BorderLayout.CENTER);
+                    JRoboKill.board.revalidate();
                 }
             }
 

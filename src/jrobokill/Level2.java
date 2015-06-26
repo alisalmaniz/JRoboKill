@@ -28,7 +28,7 @@ import static jrobokill.Level1.RoboPanel2;
  *
  * @author Asus
  */
-public class Level2 extends JPanel implements Runnable{
+public class Level2 extends JPanel implements Runnable {
 
     private int xTir = 0;
 
@@ -44,11 +44,12 @@ public class Level2 extends JPanel implements Runnable{
     private BufferedImage Tir;
     private BufferedImage box;
     public static Level3 RoboPanel3;
+    
     private boolean Robo2IsAlive;
 
     public Level2() {
         setLayout(null);
-        Robo2IsAlive=true;
+        Robo2IsAlive = true;
         //zamin
         URL resourceZamin = getClass().getResource("/pic/back2.png");
         try {
@@ -98,7 +99,7 @@ public class Level2 extends JPanel implements Runnable{
                 }
             }
         });
-        
+
         (new Thread(this)).start();
     }
 
@@ -121,21 +122,17 @@ public class Level2 extends JPanel implements Runnable{
             g.drawImage(box, 210, 200 + 35 * i, this);
         }
 
-        if(Robo2IsAlive){
+        if (Robo2IsAlive) {
             g.drawImage(robot2, Xrobot2, Yrobot2, this);
+        } else {
+
         }
-        else{
-            
-        }
-        
-        
 
     }
 
-
     @Override
     public void run() {
-        while (true) {            
+        while (true) {
             repaint();
         }
     }
@@ -153,7 +150,7 @@ public class Level2 extends JPanel implements Runnable{
             if (moveKey == KeyEvent.VK_UP) {
                 Yrobot2 = Yrobot2 - 5;
                 //age az door rad shod
-                if ((Xrobot2 > 200 && Xrobot2 < 600) && (Yrobot2 < 40) && JRoboKill.counter==2) {
+                if ((Xrobot2 > 200 && Xrobot2 < 600) && (Yrobot2 < 40) && JRoboKill.counter == 2) {
                     JRoboKill.counter = 3;
                     RoboPanel3 = new Level3();
                     JRoboKill.board.remove(Level1.RoboPanel2);
@@ -164,9 +161,10 @@ public class Level2 extends JPanel implements Runnable{
 
             if (moveKey == KeyEvent.VK_LEFT) {
                 Xrobot2 = Xrobot2 - 5;
-               //agar az roye pol oonvartar raft biyofte payin
-                if (Xrobot2 < 180 && JRoboKill.counter==2) {
+                //agar az roye pol oonvartar raft biyofte payin
+                if (Xrobot2 < 180 && JRoboKill.counter == 2) {
                     //g.drawImage(Fall, Xrobot, Yrobot, this);
+                    Robo2IsAlive=false;
                     try {
                         Thread.sleep(80);
 
@@ -181,8 +179,9 @@ public class Level2 extends JPanel implements Runnable{
             if (moveKey == KeyEvent.VK_RIGHT) {
                 Xrobot2 = Xrobot2 + 5;
                 //agar az roye pol oonvartar raft biyofte payin
-                if ( Xrobot2 > 550 && JRoboKill.counter==2) {
+                if (Xrobot2 > 550 && JRoboKill.counter == 2) {
                     //g.drawImage(Fall, Xrobot, Yrobot, this);
+                    Robo2IsAlive=false;
                     try {
                         Thread.sleep(80);
 
@@ -192,11 +191,21 @@ public class Level2 extends JPanel implements Runnable{
                     JOptionPane.showMessageDialog(null, "You fall in a hole ", "Game Over", JOptionPane.INFORMATION_MESSAGE);
                     System.exit(0);
                 }
-               
+
             }
             if (moveKey == KeyEvent.VK_DOWN) {
+
                 Yrobot2 = Yrobot2 + 5;
-               
+                //bara bargashtan
+                if ((Xrobot2 > 200 && Xrobot2 < 600 && JRoboKill.counter == 2) && (Yrobot2 > 540)) {
+                    JRoboKill.counter = 1;
+                  
+                   
+                    JRoboKill.board.remove(Level1.RoboPanel2);
+                    JRoboKill.board.add(StartMenu.RoboPanel, BorderLayout.CENTER);
+                    JRoboKill.board.revalidate();
+                }
+
             }
 
             //return false;
@@ -219,8 +228,8 @@ public class Level2 extends JPanel implements Runnable{
 
         }
     }
-    
-    private class TirHandler implements MouseListener{
+
+    private class TirHandler implements MouseListener {
 
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -229,7 +238,7 @@ public class Level2 extends JPanel implements Runnable{
 
         @Override
         public void mousePressed(MouseEvent e) {
-            
+
         }
 
         @Override
@@ -246,6 +255,6 @@ public class Level2 extends JPanel implements Runnable{
         public void mouseExited(MouseEvent e) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
-        
+
     }
 }
