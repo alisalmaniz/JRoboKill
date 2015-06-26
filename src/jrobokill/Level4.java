@@ -37,7 +37,7 @@ public class Level4 extends JPanel implements Runnable{
     private int Yrobot4 = 500;
     
     private boolean Robo4IsAlive;
-    private Level5 RoboPanel5; 
+    public static Level5 RoboPanel5; 
     
     public Level4(){
         
@@ -130,7 +130,7 @@ public class Level4 extends JPanel implements Runnable{
             if (moveKey == KeyEvent.VK_RIGHT) {
                 if (Xrobot4 <= 740 && pause4 == 0) {
                     Xrobot4 = Xrobot4 + 5;
-                     if (Xrobot4 > 600 && Yrobot4>500 && Yrobot4<600 && JRoboKill.counter == 4) {
+                     if (Xrobot4 > 700 && Yrobot4>200 && Yrobot4<400 && JRoboKill.counter == 4) {
                    
                        
                         JRoboKill.counter = 5;

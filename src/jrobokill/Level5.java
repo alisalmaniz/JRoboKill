@@ -31,8 +31,8 @@ public class Level5 extends JPanel implements Runnable {
     private Graphics dbg;
 
     public int pause5 = 0;
-    private int Xrobot5 = 400;
-    private int Yrobot5 = 500;
+    private int Xrobot5 = 20;
+    private int Yrobot5 = 300;
 
     private boolean Robo5IsAlive;
 
@@ -111,36 +111,108 @@ public class Level5 extends JPanel implements Runnable {
             if (moveKey == KeyEvent.VK_UP) {
                 if (Yrobot5 >= 0 && pause5 == 0) {
                     Yrobot5 = Yrobot5 - 5;
-                   
+                    //chale ha
+                    if (Xrobot5 < 250 && Yrobot5 < 150 && JRoboKill.counter == 5) {
+                        System.out.println("oftad 1 ");
+                        //raftan be level 1 pas az oftadan dar chale
+                        JRoboKill.counter = 1;
+                        //Level1 s = new Level1();
+                        JRoboKill.board.remove(Level4.RoboPanel5);
+                        JRoboKill.board.add(StartMenu.RoboPanel, BorderLayout.CENTER);
+                        JRoboKill.board.revalidate();
+                    }
+                    if (Xrobot5 > 500 && Yrobot5 < 150 && JRoboKill.counter == 5) {
+                        System.out.println("oftad 2 ");
+                        //raftan be level 1 pas az oftadan dar chale
+                        JRoboKill.counter = 1;
+
+                        JRoboKill.board.remove(Level4.RoboPanel5);
+                        JRoboKill.board.add(StartMenu.RoboPanel, BorderLayout.CENTER);
+                        JRoboKill.board.revalidate();
+                    }
+
                 }
             }
 
             if (moveKey == KeyEvent.VK_LEFT) {
                 if (Xrobot5 >= 0 && pause5 == 0) {
                     Xrobot5 = Xrobot5 - 5;
-                    
+                    if (Xrobot5 < 250 && Yrobot5 < 150 && JRoboKill.counter == 5) {
+                        System.out.println("oftad 1 ");
+                        //raftan be level 1 pas az oftadan dar chale
+                        JRoboKill.counter = 1;
+
+                        JRoboKill.board.remove(Level4.RoboPanel5);
+                        JRoboKill.board.add(StartMenu.RoboPanel, BorderLayout.CENTER);
+                        JRoboKill.board.revalidate();
+                    }
+                    if (Xrobot5 < 250 && Yrobot5 > 410 && JRoboKill.counter == 5) {
+                        System.out.println("oftad 3 ");
+                        //raftan be level 1 pas az oftadan dar chale
+                        JRoboKill.counter = 1;
+
+                        JRoboKill.board.remove(Level4.RoboPanel5);
+                        JRoboKill.board.add(StartMenu.RoboPanel, BorderLayout.CENTER);
+                        JRoboKill.board.revalidate();
+                    }
+
                 }
             }
 
             if (moveKey == KeyEvent.VK_RIGHT) {
                 if (Xrobot5 <= 740 && pause5 == 0) {
                     Xrobot5 = Xrobot5 + 5;
-                    
-                    
+                    if (Xrobot5 > 500 && Yrobot5 < 150 && JRoboKill.counter == 5) {
+                        System.out.println("oftad 2 ");
+                        //raftan be level 1 pas az oftadan dar chale
+                        JRoboKill.counter = 1;
+
+                        JRoboKill.board.remove(Level4.RoboPanel5);
+                        JRoboKill.board.add(StartMenu.RoboPanel, BorderLayout.CENTER);
+                        JRoboKill.board.revalidate();
+                    }
+                    if (Xrobot5 > 500 && Yrobot5 > 410 && JRoboKill.counter == 5) {
+                        System.out.println("oftad 4 ");
+                        //raftan be level 1 pas az oftadan dar chale
+                        JRoboKill.counter = 1;
+                        JRoboKill.board.remove(Level4.RoboPanel5);
+                        JRoboKill.board.add(StartMenu.RoboPanel, BorderLayout.CENTER);
+                        JRoboKill.board.revalidate();
+                    }
+
                 }
             }
             if (moveKey == KeyEvent.VK_DOWN) {
                 if (Yrobot5 <= 560 && pause5 == 0) {
                     Yrobot5 = Yrobot5 + 5;
-                   
-                }
-               /* if ((Xrobot5 > 200 && Xrobot5 < 600 && JRoboKill.counter == 4) && (Yrobot5 > 540)) {
-                    JRoboKill.counter = 3;
+                    if (Xrobot5 < 250 && Yrobot5 > 410 && JRoboKill.counter == 5) {
+                        System.out.println("oftad 3 ");
+                        JRoboKill.counter = 1;
 
-                    JRoboKill.board.remove(Level3.RoboPanel4);
-                    JRoboKill.board.add(Level2.RoboPanel3, BorderLayout.CENTER);
-                    JRoboKill.board.revalidate();
-                }*/
+                        //raftan be level 1 pas az oftadan dar chale
+                        JRoboKill.counter = 1;
+
+                        JRoboKill.board.remove(Level4.RoboPanel5);
+                        JRoboKill.board.add(StartMenu.RoboPanel, BorderLayout.CENTER);
+                        JRoboKill.board.revalidate();
+                    }
+                    if (Xrobot5 > 500 && Yrobot5 > 410 && JRoboKill.counter == 5) {
+                        System.out.println("oftad 4 ");
+                        //raftan be level 1 pas az oftadan dar chale
+                        JRoboKill.counter = 1;
+                        JRoboKill.board.remove(Level4.RoboPanel5);
+                        JRoboKill.board.add(StartMenu.RoboPanel, BorderLayout.CENTER);
+                        JRoboKill.board.revalidate();
+                    }
+
+                }
+                /* if ((Xrobot5 > 200 && Xrobot5 < 600 && JRoboKill.counter == 4) && (Yrobot5 > 540)) {
+                 JRoboKill.counter = 3;
+
+                 JRoboKill.board.remove(Level3.RoboPanel4);
+                 JRoboKill.board.add(Level2.RoboPanel3, BorderLayout.CENTER);
+                 JRoboKill.board.revalidate();
+                 }*/
             }
 
             //bayad ye chizi ro return kone,return false;
