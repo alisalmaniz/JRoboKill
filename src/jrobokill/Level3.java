@@ -151,8 +151,7 @@ public class Level3 extends JPanel implements Runnable{
                 
                 if ((Xrobot3 > 200 && Xrobot3 < 600 && JRoboKill.counter == 3) && (Yrobot3 > 540)) {
                     JRoboKill.counter = 2;
-                   // RoboPanel3Back2 = new Level2();
-                    //JRoboKill.board.panelChanger();
+                  
                     JRoboKill.board.remove(Level2.RoboPanel3);
                     JRoboKill.board.add(Level1.RoboPanel2, BorderLayout.CENTER);
                     JRoboKill.board.revalidate();

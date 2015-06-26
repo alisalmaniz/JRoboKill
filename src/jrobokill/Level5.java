@@ -8,36 +8,41 @@ package jrobokill;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
  * @author Asus
  */
-public class Level5 extends JFrame implements Runnable {
+public class Level5 extends JPanel implements Runnable {
+
     private BufferedImage zamin5;
     private BufferedImage robot5;
     private Image dbImage;
     private Graphics dbg;
-    
+
     public int pause5 = 0;
     private int Xrobot5 = 400;
     private int Yrobot5 = 500;
-    
-     private boolean Robo5IsAlive;
-     
-    public Level5(){
-        
-         setLayout(null);
-        
-        Robo5IsAlive=true;
+
+    private boolean Robo5IsAlive;
+
+    public Level5() {
+
+        setLayout(null);
+
+        Robo5IsAlive = true;
         //zamin
-        URL resourceZamin = getClass().getResource("/pic/zamin4.png");
+        URL resourceZamin = getClass().getResource("/pic/zamin5.png");
         try {
             zamin5 = ImageIO.read(resourceZamin);
         } catch (IOException e) {
@@ -57,6 +62,7 @@ public class Level5 extends JFrame implements Runnable {
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new moving());
         (new Thread(this)).start();
     }
+
     public void paint(Graphics g) {
         dbImage = createImage(getWidth(), getHeight());
         dbg = dbImage.getGraphics();
@@ -72,17 +78,17 @@ public class Level5 extends JFrame implements Runnable {
         g.drawImage(zamin5, 0, 0, this);
 
         g.drawImage(robot5, Xrobot5, Yrobot5, this);
-        
 
     }
 
     @Override
     public void run() {
-        while (true) {            
+        while (true) {
             repaint();
         }
     }
-            class moving implements KeyEventDispatcher {
+
+    class moving implements KeyEventDispatcher {
 
         @Override
         public boolean dispatchKeyEvent(KeyEvent e) {
@@ -105,36 +111,36 @@ public class Level5 extends JFrame implements Runnable {
             if (moveKey == KeyEvent.VK_UP) {
                 if (Yrobot5 >= 0 && pause5 == 0) {
                     Yrobot5 = Yrobot5 - 5;
-                    repaint();
+                   
                 }
             }
 
             if (moveKey == KeyEvent.VK_LEFT) {
                 if (Xrobot5 >= 0 && pause5 == 0) {
                     Xrobot5 = Xrobot5 - 5;
-                    repaint();
+                    
                 }
             }
 
             if (moveKey == KeyEvent.VK_RIGHT) {
                 if (Xrobot5 <= 740 && pause5 == 0) {
                     Xrobot5 = Xrobot5 + 5;
-                    repaint();
+                    
+                    
                 }
             }
             if (moveKey == KeyEvent.VK_DOWN) {
                 if (Yrobot5 <= 560 && pause5 == 0) {
                     Yrobot5 = Yrobot5 + 5;
-                    repaint();
-                }
-                if ((Xrobot5 > 200 && Xrobot5 < 600 && JRoboKill.counter == 4) && (Yrobot5 > 540)) {
-                    JRoboKill.counter = 3;
                    
-                    
+                }
+               /* if ((Xrobot5 > 200 && Xrobot5 < 600 && JRoboKill.counter == 4) && (Yrobot5 > 540)) {
+                    JRoboKill.counter = 3;
+
                     JRoboKill.board.remove(Level3.RoboPanel4);
                     JRoboKill.board.add(Level2.RoboPanel3, BorderLayout.CENTER);
                     JRoboKill.board.revalidate();
-                }
+                }*/
             }
 
             //bayad ye chizi ro return kone,return false;
@@ -143,5 +149,5 @@ public class Level5 extends JFrame implements Runnable {
         }
 
     }
-    
+
 }

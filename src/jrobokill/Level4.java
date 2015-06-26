@@ -37,6 +37,7 @@ public class Level4 extends JPanel implements Runnable{
     private int Yrobot4 = 500;
     
     private boolean Robo4IsAlive;
+    private Level5 RoboPanel5; 
     
     public Level4(){
         
@@ -114,27 +115,38 @@ public class Level4 extends JPanel implements Runnable{
             if (moveKey == KeyEvent.VK_UP) {
                 if (Yrobot4 >= 0 && pause4 == 0) {
                     Yrobot4 = Yrobot4 - 5;
-                    repaint();
+                   
                 }
             }
 
             if (moveKey == KeyEvent.VK_LEFT) {
                 if (Xrobot4 >= 0 && pause4 == 0) {
                     Xrobot4 = Xrobot4 - 5;
-                    repaint();
+                    //vared shodan be marhale 5
+                    
                 }
             }
 
             if (moveKey == KeyEvent.VK_RIGHT) {
                 if (Xrobot4 <= 740 && pause4 == 0) {
                     Xrobot4 = Xrobot4 + 5;
-                    repaint();
+                     if (Xrobot4 > 600 && Yrobot4>500 && Yrobot4<600 && JRoboKill.counter == 4) {
+                   
+                       
+                        JRoboKill.counter = 5;
+                        RoboPanel5 = new Level5();
+                        JRoboKill.board.remove(Level3.RoboPanel4);
+                        JRoboKill.board.add(RoboPanel5, BorderLayout.CENTER);
+                        JRoboKill.board.revalidate();
+                    
+                }
+                    
                 }
             }
             if (moveKey == KeyEvent.VK_DOWN) {
                 if (Yrobot4 <= 560 && pause4 == 0) {
                     Yrobot4 = Yrobot4 + 5;
-                    repaint();
+                    
                 }
                 if ((Xrobot4 > 200 && Xrobot4 < 600 && JRoboKill.counter == 4) && (Yrobot4 > 540)) {
                     JRoboKill.counter = 3;
