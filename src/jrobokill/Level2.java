@@ -7,6 +7,7 @@ package jrobokill;
 
 import java.awt.BorderLayout;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
@@ -16,6 +17,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import static java.lang.Math.atan;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +25,11 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import static jrobokill.Level1.RoboPanel2;
+import static jrobokill.Level1.T1l;
+import static jrobokill.Level1.T1r;
+import static jrobokill.Level1.tirCunter;
+import static jrobokill.Level1.tirCunterT;
+import static jrobokill.Level1.tirVector;
 
 /**
  *
@@ -30,7 +37,6 @@ import static jrobokill.Level1.RoboPanel2;
  */
 public class Level2 extends JPanel implements Runnable {
 
-    private int xTir = 0;
 
     private int Xrobot2 = 400;
     private int Yrobot2 = 500;
@@ -49,6 +55,10 @@ public class Level2 extends JPanel implements Runnable {
 
     public Level2() {
         setLayout(null);
+        
+        TirHandler tirHandler = new TirHandler();
+        addMouseListener(tirHandler);
+        
         Robo2IsAlive = true;
         //zamin
         URL resourceZamin = getClass().getResource("/pic/back2.png");
@@ -88,17 +98,7 @@ public class Level2 extends JPanel implements Runnable {
 
         //move
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new moving());
-        //mouse action listener baraye tirandazi 
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent evt) {
-                if (evt.getClickCount() == 1) {
-                    //  **  xClick = evt.getX();
-                    // ** yClick = evt.getY();
-
-                }
-            }
-        });
+      
 
         (new Thread(this)).start();
     }
@@ -115,7 +115,7 @@ public class Level2 extends JPanel implements Runnable {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Graphics g2 = (Graphics) g;
+        Graphics2D g2d = (Graphics2D) g;
         g.drawImage(zamin2, 0, 0, this);
         g.drawImage(pol, 200, 0, this);
         for (int i = 0; i < 4; i++) {
@@ -128,6 +128,18 @@ public class Level2 extends JPanel implements Runnable {
 
         }
 
+        for( tirCunter=0;tirCunter<tirVector.size();tirCunter++){
+            //System.out.println(tirVector.size());
+            g2d.rotate(atan((tirVector.get(tirCunter).getyMouse()-tirVector.get(tirCunter).getyFirstRobot())/(tirVector.get(tirCunter).getxMouse()-tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxFirstRobot(), tirVector.get(tirCunter).getyFirstRobot());
+                System.out.println(tirVector.size()+"/"+tirVector.get(tirCunter).getxMouse()+"/"+tirVector.get(tirCunter).getxTir());
+             
+            if(tirVector.get(tirCunter).getxMouse()>tirVector.get(tirCunter).getxFirstRobot())
+                g.drawImage(T1r,tirVector.get(tirCunter).getxTir(),tirVector.get(tirCunter).getyTir(),this);
+            else
+                g.drawImage(T1l,tirVector.get(tirCunter).getxTir()-35,tirVector.get(tirCunter).getyTir()-10,this);
+                    
+            g2d.rotate(-atan((tirVector.get(tirCunter).getyMouse()-tirVector.get(tirCunter).getyFirstRobot())/(tirVector.get(tirCunter).getxMouse()-tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxFirstRobot(), tirVector.get(tirCunter).getyFirstRobot());
+        }
     }
 
     @Override
@@ -156,6 +168,7 @@ public class Level2 extends JPanel implements Runnable {
                     JRoboKill.board.remove(Level1.RoboPanel2);
                     JRoboKill.board.add(RoboPanel3, BorderLayout.CENTER);
                     JRoboKill.board.revalidate();
+                    tirVector.removeAllElements();
                 }
             }
 
@@ -204,6 +217,7 @@ public class Level2 extends JPanel implements Runnable {
                     JRoboKill.board.remove(Level1.RoboPanel2);
                     JRoboKill.board.add(StartMenu.RoboPanel, BorderLayout.CENTER);
                     JRoboKill.board.revalidate();
+                    tirVector.removeAllElements();
                 }
 
             }
@@ -215,25 +229,11 @@ public class Level2 extends JPanel implements Runnable {
 
     }
 
-    public void masirTirX(int xR, int xC) {
-
-        if (xR > xC) {
-
-            xTir = xTir + 5;
-
-        }
-        if (xR < xC) {
-
-            xTir = xTir - 5;
-
-        }
-    }
-
     private class TirHandler implements MouseListener {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            tirVector.add( new TirThread(Xrobot2,Yrobot2, e.getX(),e.getY(),tirCunterT));
         }
 
         @Override
@@ -243,17 +243,17 @@ public class Level2 extends JPanel implements Runnable {
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            
         }
 
         @Override
         public void mouseEntered(MouseEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            
         }
 
         @Override
         public void mouseExited(MouseEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            
         }
 
     }

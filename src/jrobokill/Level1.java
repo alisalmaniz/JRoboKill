@@ -7,6 +7,7 @@ package jrobokill;
 
 import java.awt.BorderLayout;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
@@ -15,7 +16,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import static java.lang.Math.atan;
 import java.net.URL;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -27,6 +30,7 @@ import javax.swing.JPanel;
  * @author Asus
  */
 public class Level1 extends JPanel implements Runnable {
+    
 
     private int Xrobot = 400;
     private int Yrobot = 500;
@@ -46,10 +50,20 @@ public class Level1 extends JPanel implements Runnable {
     public static Level2 RoboPanel2;
    
     private boolean Robo1IsAlive;
+    
+    //thread
+    public static int tirCunter=0;
+    public static int tirCunterT=0;
+    public static Vector<TirThread> tirVector;
+    public static BufferedImage T1r;
+    public static BufferedImage T1l;
 
     public Level1() {
         setLayout(null);
 
+        TirHandler tirHandler = new TirHandler();
+        addMouseListener(tirHandler);
+        
         Robo1IsAlive = true;
         //zamin
         URL resourceZamin = getClass().getResource("/pic/zamin.png");
@@ -109,6 +123,25 @@ public class Level1 extends JPanel implements Runnable {
             System.out.println("invalid adress Rabat");
         }
 
+        //Tir1 right
+        URL resourceT1r = getClass().getResource("/pic/T1r.png");
+        try {
+            T1r = ImageIO.read(resourceT1r);
+        } catch (IOException e) {
+            System.out.println("invalid adress exit");
+        }
+        //Tir1 left
+        URL resourceT1l = getClass().getResource("/pic/T1l.png");
+        try {
+            T1l = ImageIO.read(resourceT1l);
+        } catch (IOException e) {
+            System.out.println("invalid adress exit");
+        }
+
+        
+        tirVector = new Vector<TirThread>();
+        
+        
         //move
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new moving());
 
@@ -123,10 +156,12 @@ public class Level1 extends JPanel implements Runnable {
         g.drawImage(dbImage, 0, 0, this);
     }
 
+   
+    
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Graphics g2 = (Graphics) g;
+        Graphics2D g2d = (Graphics2D) g;
 
         g.drawImage(zamin, 0, 0, this);
         g.drawImage(shop, 600, 200, this);
@@ -149,6 +184,19 @@ public class Level1 extends JPanel implements Runnable {
             g.drawImage(Fall, Xrobot, Yrobot, this);
         }
 
+        
+        for( tirCunter=0;tirCunter<tirVector.size();tirCunter++){
+            //System.out.println(tirVector.size());
+            g2d.rotate(atan((tirVector.get(tirCunter).getyMouse()-tirVector.get(tirCunter).getyFirstRobot())/(tirVector.get(tirCunter).getxMouse()-tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxFirstRobot(), tirVector.get(tirCunter).getyFirstRobot());
+                System.out.println(tirVector.size()+"/"+tirVector.get(tirCunter).getxMouse()+"/"+tirVector.get(tirCunter).getxTir());
+             
+            if(tirVector.get(tirCunter).getxMouse()>tirVector.get(tirCunter).getxFirstRobot())
+                g.drawImage(T1r,tirVector.get(tirCunter).getxTir(),tirVector.get(tirCunter).getyTir(),this);
+            else
+                g.drawImage(T1l,tirVector.get(tirCunter).getxTir()-35,tirVector.get(tirCunter).getyTir()-10,this);
+                    
+            g2d.rotate(-atan((tirVector.get(tirCunter).getyMouse()-tirVector.get(tirCunter).getyFirstRobot())/(tirVector.get(tirCunter).getxMouse()-tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxFirstRobot(), tirVector.get(tirCunter).getyFirstRobot());
+        }
     }
 
     @Override
@@ -197,6 +245,7 @@ public class Level1 extends JPanel implements Runnable {
                         JRoboKill.board.remove(StartMenu.RoboPanel);
                         JRoboKill.board.add(RoboPanel2, BorderLayout.CENTER);
                         JRoboKill.board.revalidate();
+                        tirVector.removeAllElements();
                     }
                 }
             }
@@ -241,27 +290,28 @@ public class Level1 extends JPanel implements Runnable {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            tirVector.add( new TirThread(Xrobot,Yrobot, e.getX(),e.getY(),tirCunterT));
+            //tirCunterT++;
         }
 
         @Override
         public void mousePressed(MouseEvent e) {
-
+            
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            
         }
 
         @Override
         public void mouseEntered(MouseEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            
         }
 
         @Override
         public void mouseExited(MouseEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            
         }
 
     }

@@ -99,7 +99,7 @@ public class StartMenu extends JPanel {
                 //use a try block in case the file doesn't exist.
                 try {
                     AudioStream myBackgroundMusic
-                            = new AudioStream(new FileInputStream(new File(getClass().getResource("j.wav").toURI())));
+                            = new AudioStream(new FileInputStream(new File(getClass().getResource("/seda/j.wav").toURI())));
                     AudioData myData = myBackgroundMusic.getData();
                     myLoop = new ContinuousAudioDataStream(myData);
                 } catch (Exception error) {
