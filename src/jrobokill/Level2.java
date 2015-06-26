@@ -118,7 +118,7 @@ public class Level2 extends JPanel {
         }
 
         g.drawImage(robot2, Xrobot2, Yrobot2, this);
-
+        //age az door rad shod
         if ((Xrobot2 > 200 && Xrobot2 < 600) && (Yrobot2 < 40)) {
             JRoboKill.counter = 3;
             RoboPanel3 = new Level3();

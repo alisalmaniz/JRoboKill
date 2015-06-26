@@ -141,14 +141,7 @@ public class Level1 extends JPanel {
        
 
        
-        //agar az x,y door gozasht bere marhale 2
-        if ((Xrobot > 200 && Xrobot < 600) && (Yrobot < 40)) {
-            JRoboKill.counter = 2;
-            RoboPanel2 = new Level2();
-            JRoboKill.board.remove(StartMenu.RoboPanel);
-            JRoboKill.board.add(RoboPanel2, BorderLayout.CENTER);
-            JRoboKill.board.revalidate();
-        }
+        
         //soghot robat dar chale
         if (Xrobot < 300) {
             g.drawImage(Fall, Xrobot, Yrobot, this);
@@ -192,10 +185,26 @@ public class Level1 extends JPanel {
                  pause=0;
                  JOptionPane.showMessageDialog(null, "continue ", "", JOptionPane.INFORMATION_MESSAGE);
              }
+            
+                 if (moveKey == KeyEvent.VK_M)               
+             {
+                
+                 Map map = new Map();
                  
+               
+             }
+              
             if (moveKey == KeyEvent.VK_UP) {
                 if (Yrobot >= 0 && pause==0) {
                     Yrobot = Yrobot - 5;
+                    //agar az x,y door gozasht bere marhale 2
+                if ((Xrobot > 200 && Xrobot < 600) && (Yrobot < 40)) {
+                    JRoboKill.counter = 2;
+                    RoboPanel2 = new Level2();
+                    JRoboKill.board.remove(StartMenu.RoboPanel);
+                    JRoboKill.board.add(RoboPanel2, BorderLayout.CENTER);
+                    JRoboKill.board.revalidate();
+                }
                     repaint();
                 }
             }
