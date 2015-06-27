@@ -32,8 +32,8 @@ import javax.swing.JPanel;
 public class Level1 extends JPanel implements Runnable {
     
 
-    private int Xrobot = 400;
-    private int Yrobot = 500;
+    static int Xrobot = 400;
+    public static int Yrobot = 500;
     public static int x = 0;
     public static int y = 0;
     private Image dbImage;
@@ -207,12 +207,17 @@ public class Level1 extends JPanel implements Runnable {
         }
     }
 
+    
     class moving implements KeyEventDispatcher {
-
+        
+        
+        
         @Override
         public boolean dispatchKeyEvent(KeyEvent e) {
             int moveKey = e.getKeyCode();
-
+            
+            if(JRoboKill.counter == 1){
+            
             if (moveKey == KeyEvent.VK_ESCAPE) {
 
                 System.exit(0);
@@ -255,7 +260,7 @@ public class Level1 extends JPanel implements Runnable {
                     Xrobot = Xrobot - 5;
                 }
                 //soghot robat dar chale
-                if (Xrobot < 300 && JRoboKill.counter == 1) {
+                if (Xrobot < 300 ) {
                                 Robo1IsAlive=false;
                     try {
                         Thread.sleep(80);
@@ -278,11 +283,15 @@ public class Level1 extends JPanel implements Runnable {
                     Yrobot = Yrobot + 5;
                 }
             }
+            
+            }
 
             //bayad ye chizi ro return kone,return false;
             return false;
 
         }
+        
+        
 
     }
 
