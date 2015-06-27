@@ -230,13 +230,9 @@ public class Level2 extends JPanel implements Runnable {
         
         //enemy
         for( enemyCunter=0;enemyCunter<enemyVector.size(); enemyCunter++){
-            
-           
-            double firstXEnemyforRotate=enemyVector.get(enemyCunter).getxEnemy();
-            double firstYEnemyforRotate=enemyVector.get(enemyCunter).getyEnemy();
                     
             g2d.rotate(atan((enemyVector.get(enemyCunter).getyEnemy()-Level1.Yrobot)/(enemyVector.get(enemyCunter).getxEnemy()-Level1.Xrobot)),enemyVector.get(enemyCunter).getxEnemy(),enemyVector.get(enemyCunter).getyEnemy());
-            //System.out.println(enemyVector.get(enemyCunter).getyEnemy()+"/"+enemyVector.get(enemyCunter).getxEnemy());//+"+"+enemyVector.get(enemyCunter).getxEnemy()+"+"+enemyVector.get(enemyCunter).getyEnemy());
+            System.out.println(enemyVector.get(enemyCunter).getyEnemy()+"/"+enemyVector.get(enemyCunter).getxEnemy());
             
             if(enemyVector.get(enemyCunter).getEnemyNumber()==1){
                 
