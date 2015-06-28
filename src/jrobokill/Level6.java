@@ -12,6 +12,8 @@ import java.awt.Image;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import static java.lang.Math.atan;
@@ -21,7 +23,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import static jrobokill.Level1.T1l;
 import static jrobokill.Level1.T1r;
+import static jrobokill.Level1.Xrobot;
 import static jrobokill.Level1.tirCunter;
+import static jrobokill.Level1.tirCunterT;
 import static jrobokill.Level1.tirVector;
 
 /**
@@ -173,6 +177,37 @@ public class Level6 extends JPanel implements Runnable{
             //bayad ye chizi ro return kone,return false;
             return false;
 
+        }
+
+    }
+        
+        private class TirHandler implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            tirVector.add( new TirThread(Level1.Xrobot,Level1.Yrobot, e.getX(),e.getY(),tirCunterT));
+            //tirCunterT++;
+            
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            
         }
 
     }
