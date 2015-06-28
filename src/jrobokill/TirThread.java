@@ -5,6 +5,10 @@
  */
 package jrobokill;
 
+import static java.lang.Math.atan;
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
+import static java.lang.Math.tan;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,16 +18,19 @@ import java.util.logging.Logger;
  */
 public class TirThread implements Runnable{
 
-    int j;
+   
     int xRobot;
     int yRobot;
     double xMouse;
     double yMouse;
     int xFirstRobot;
     int yFirstRobot;
-    int xTir;
-    int yTir;
+    double xTir;
+    double yTir;
     int threadNumber;
+    double degree;
+    double r;
+    boolean runs;
     
     public TirThread(int xRobot, int yRobot, double xMouse,  double yMouse,int threadNumber) {
     
@@ -37,12 +44,18 @@ public class TirThread implements Runnable{
         xTir=xRobot+20;
         yFirstRobot=yRobot+20;
         yTir=yRobot+20;
-        j=1000;
+        runs=true;
+        
+        degree=-atan((yMouse-yFirstRobot)/(xMouse-xFirstRobot));
+        
+        r=(yMouse-yFirstRobot)*(yMouse-yFirstRobot)+(xMouse-xFirstRobot)*(xMouse-xFirstRobot);
+        
+        System.out.println(1.23/2);
         
         
         (new Thread(this)).start();
         
-       
+        
     }
 
     
@@ -50,25 +63,57 @@ public class TirThread implements Runnable{
     @Override
     public synchronized void run() {
         
-        while (j>0) {
-            
+        
+        
+        
+        while (runs) {
+            if(JRoboKill.counter==2)
+            for(int j=0;j<Level2.enemyVector.size();j++){
+            if(xTir>Level2.enemyVector.get(j).getxEnemy() && xTir<Level2.enemyVector.get(j).getxEnemy()+25 && yTir>Level2.enemyVector.get(j).getyEnemy() && yTir<Level2.enemyVector.get(j).getyEnemy()+25){
+                runs=false;
+                Level2.enemyVector.get(j).setEnemySmash(true);
+            }
+        }
             
             try {
-                Thread.sleep(2);
+
+                
+                if(r>360000)
+                    Thread.sleep(1000000/(int)r);
+                else if(r>160000)
+                    Thread.sleep(800000/(int)r);
+                else if(r>30000)
+                    Thread.sleep(500000/(int)r);
+                else if(r>10000)
+                    Thread.sleep(400000/(int)r);
+                else if(r>1000)
+                    Thread.sleep(200000/(int)r);
+                else
+                    Thread.sleep(1000/(int)r);
+                 
             } catch (InterruptedException ex) {
                 Logger.getLogger(TirThread.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-            if(xMouse>xRobot+20){
+            if(r<1000)
+                r=100*r;
+            
+            if(r<100)
+                r=10*r;
+            
+            if(xMouse>=xRobot+20 ){
                 
-                xTir++;
-            }
-            else{
-                xTir--;
+                xTir+=(double)(xMouse-xFirstRobot)*1000/r;
+                yTir-=-(double)(yMouse-yFirstRobot)*1000/r;
             }
             
+            else if(xMouse<=xRobot+20){
+                xTir+=(double)(xMouse-xFirstRobot)*1000/r;
+                yTir-=-(double)(yMouse-yFirstRobot)*1000/r;
+            }
+           
             
-            j--;
+          
         }
         
         //Level1.tirVector.remove(threadNumber);
@@ -91,14 +136,16 @@ public class TirThread implements Runnable{
         return yFirstRobot;
     }
 
-    public int getxTir() {
+    public double getxTir() {
         return xTir;
     }
 
-    public int getyTir() {
+    public double getyTir() {
         return yTir;
     }
     
-    
+     public boolean getruns() {
+        return runs;
+    }
     
 }

@@ -23,8 +23,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import static jrobokill.Level1.T1l;
 import static jrobokill.Level1.T1r;
-import static jrobokill.Level1.tirCunterT;
 import static jrobokill.Level1.tirCunter;
+import static jrobokill.Level1.tirCunterT;
 import static jrobokill.Level1.tirVector;
 
 /**
@@ -104,22 +104,11 @@ public class Level6 extends JPanel implements Runnable {
         Graphics2D g2d = (Graphics2D) g;
         g.drawImage(zamin6, 0, 0, this);
 
+
         g.drawImage(robot6, Level1.Xrobot, Level1.Yrobot, this);
+        
         g.drawImage(mane, Xmane, Ymane, this);
 
-        for (tirCunter = 0; tirCunter < tirVector.size(); tirCunter++) {
-            //System.out.println(tirVector.size());
-            g2d.rotate(atan((tirVector.get(tirCunter).getyMouse() - tirVector.get(tirCunter).getyFirstRobot()) / (tirVector.get(tirCunter).getxMouse() - tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxFirstRobot(), tirVector.get(tirCunter).getyFirstRobot());
-            System.out.println(tirVector.size() + "/" + tirVector.get(tirCunter).getxMouse() + "/" + tirVector.get(tirCunter).getxTir());
-
-            if (tirVector.get(tirCunter).getxMouse() > tirVector.get(tirCunter).getxFirstRobot()) {
-                g.drawImage(T1r, tirVector.get(tirCunter).getxTir(), tirVector.get(tirCunter).getyTir(), this);
-            } else {
-                g.drawImage(T1l, tirVector.get(tirCunter).getxTir() - 35, tirVector.get(tirCunter).getyTir() - 10, this);
-            }
-
-            g2d.rotate(-atan((tirVector.get(tirCunter).getyMouse() - tirVector.get(tirCunter).getyFirstRobot()) / (tirVector.get(tirCunter).getxMouse() - tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxFirstRobot(), tirVector.get(tirCunter).getyFirstRobot());
-        }
     }
 
     @Override

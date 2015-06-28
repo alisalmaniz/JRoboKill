@@ -8,6 +8,7 @@ package jrobokill;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
+import java.awt.event.ComponentEvent;
 import javax.swing.JFrame;
 import static jrobokill.JRoboKill.board;
 
@@ -22,7 +23,7 @@ public class MainFrame extends JFrame{
     public MainFrame() {
         super("JRoboKill");
         
-            startmenu = new StartMenu();
+            startmenu = new StartMenu(this);
             setLayout(new BorderLayout());
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setVisible(true);
@@ -33,6 +34,25 @@ public class MainFrame extends JFrame{
             //amir:add kardan start menu be Jfram
             add(startmenu, BorderLayout.CENTER);
     }
+
+    @Override
+    protected void processComponentEvent(ComponentEvent e) {
+        System.out.println("p");
+        if(e.getID()== 01){
+            System.out.println("wov");
+            Level1 level1= new Level1();
+            this.remove(startmenu);
+            this.add(level1,BorderLayout.CENTER);
+            repaint();
+            
+        }
+        
+        
+        
+        super.processComponentEvent(e); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
     
     
 }
