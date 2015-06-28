@@ -43,7 +43,7 @@ public class StartMenu extends JPanel implements ActionListener{
     private JButton exit;
     public static Level1 RoboPanel;
     private BufferedImage PicStart;
-    
+
     public static boolean GoToGame = false;
     
     MainFrame mainFrame;
@@ -60,7 +60,8 @@ public class StartMenu extends JPanel implements ActionListener{
             System.out.println("invalid adress pic start");
         }
         //tamom
-
+        
+        
         //kelid start
         Start = new JButton("Start");
         Start.setFont(new Font("Arial", Font.BOLD, 20));

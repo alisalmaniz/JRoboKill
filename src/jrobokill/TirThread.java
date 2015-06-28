@@ -76,6 +76,7 @@ public class TirThread implements Runnable{
         }
             
             try {
+
                 
                 if(r>360000)
                     Thread.sleep(1000000/(int)r);
