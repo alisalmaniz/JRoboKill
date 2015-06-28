@@ -37,7 +37,6 @@ import static jrobokill.Level1.tirVector;
  */
 public class Level2 extends JPanel implements Runnable {
 
-
     private int Xrobot2 = 400;
     private int Yrobot2 = 500;
     public static int x = 0;
@@ -47,18 +46,27 @@ public class Level2 extends JPanel implements Runnable {
     private BufferedImage pol;
     private BufferedImage zamin2;
     private BufferedImage robot2;
+    private BufferedImage bang;
     private BufferedImage Tir;
     private BufferedImage box;
     public static Level3 RoboPanel3;
-    
+    public static TanzimRobat tanzimRob2;
+    public static Map map2;
+    private int bangBox1 = 0;
+    private int bangBox2 = 0;
+    private int bangBoxCounter1 = 0;
+    private int bangBoxCounter2 = 0;
+     private int xBox1=210;
+    private int yBox1=200;
+
     private boolean Robo2IsAlive;
 
     public Level2() {
         setLayout(null);
-        
+
         TirHandler tirHandler = new TirHandler();
         addMouseListener(tirHandler);
-        
+
         Robo2IsAlive = true;
         //zamin
         URL resourceZamin = getClass().getResource("/pic/back2.png");
@@ -95,10 +103,16 @@ public class Level2 extends JPanel implements Runnable {
         } catch (IOException e) {
             System.out.println("invalid adress Tir");
         }
+        //bang box
+        URL resourceBang = getClass().getResource("/pic/bang.png");
+        try {
+            bang = ImageIO.read(resourceBang);
+        } catch (IOException e) {
+            System.out.println("invalid adress bang");
+        }
 
         //move
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new moving());
-      
 
         (new Thread(this)).start();
     }
@@ -118,8 +132,15 @@ public class Level2 extends JPanel implements Runnable {
         Graphics2D g2d = (Graphics2D) g;
         g.drawImage(zamin2, 0, 0, this);
         g.drawImage(pol, 200, 0, this);
-        for (int i = 0; i < 4; i++) {
-            g.drawImage(box, 210, 200 + 35 * i, this);
+        for (int i = 0; i < 2; i++) {
+            g.drawImage(box, xBox1, yBox1 + 38 * i, this);
+        }
+        //tekidan box
+        if (bangBox1 == 1 && bangBoxCounter1>=4) {
+            g.drawImage(bang, 200, 190, this);
+        }
+        if (bangBox2 == 2 && bangBoxCounter2>=4) {
+            g.drawImage(bang, 200, 234, this);
         }
 
         if (Robo2IsAlive) {
@@ -128,17 +149,18 @@ public class Level2 extends JPanel implements Runnable {
 
         }
 
-        for( tirCunter=0;tirCunter<tirVector.size();tirCunter++){
+        for (tirCunter = 0; tirCunter < tirVector.size(); tirCunter++) {
             //System.out.println(tirVector.size());
-            g2d.rotate(atan((tirVector.get(tirCunter).getyMouse()-tirVector.get(tirCunter).getyFirstRobot())/(tirVector.get(tirCunter).getxMouse()-tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxFirstRobot(), tirVector.get(tirCunter).getyFirstRobot());
-                System.out.println(tirVector.size()+"/"+tirVector.get(tirCunter).getxMouse()+"/"+tirVector.get(tirCunter).getxTir());
-             
-            if(tirVector.get(tirCunter).getxMouse()>tirVector.get(tirCunter).getxFirstRobot())
-                g.drawImage(T1r,tirVector.get(tirCunter).getxTir(),tirVector.get(tirCunter).getyTir(),this);
-            else
-                g.drawImage(T1l,tirVector.get(tirCunter).getxTir()-35,tirVector.get(tirCunter).getyTir()-10,this);
-                    
-            g2d.rotate(-atan((tirVector.get(tirCunter).getyMouse()-tirVector.get(tirCunter).getyFirstRobot())/(tirVector.get(tirCunter).getxMouse()-tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxFirstRobot(), tirVector.get(tirCunter).getyFirstRobot());
+            g2d.rotate(atan((tirVector.get(tirCunter).getyMouse() - tirVector.get(tirCunter).getyFirstRobot()) / (tirVector.get(tirCunter).getxMouse() - tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxFirstRobot(), tirVector.get(tirCunter).getyFirstRobot());
+            System.out.println(tirVector.size() + "/" + tirVector.get(tirCunter).getxMouse() + "/" + tirVector.get(tirCunter).getxTir());
+
+            if (tirVector.get(tirCunter).getxMouse() > tirVector.get(tirCunter).getxFirstRobot()) {
+                g.drawImage(T1r, tirVector.get(tirCunter).getxTir(), tirVector.get(tirCunter).getyTir(), this);
+            } else {
+                g.drawImage(T1l, tirVector.get(tirCunter).getxTir() - 35, tirVector.get(tirCunter).getyTir() - 10, this);
+            }
+
+            g2d.rotate(-atan((tirVector.get(tirCunter).getyMouse() - tirVector.get(tirCunter).getyFirstRobot()) / (tirVector.get(tirCunter).getxMouse() - tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxFirstRobot(), tirVector.get(tirCunter).getyFirstRobot());
         }
     }
 
@@ -155,11 +177,38 @@ public class Level2 extends JPanel implements Runnable {
         public boolean dispatchKeyEvent(KeyEvent e) {
             int moveKey = e.getKeyCode();
 
-            if (moveKey == KeyEvent.VK_M) {
-                JRoboKill.counter = 2;
+            if (moveKey == KeyEvent.VK_Q && JRoboKill.counter == 2) {
+                tanzimRob2 = new TanzimRobat();
+
+                JRoboKill.board.remove(Level1.RoboPanel2);
+                JRoboKill.board.add(Level2.tanzimRob2, BorderLayout.CENTER);
+                JRoboKill.board.revalidate();
+            }
+            if (moveKey == KeyEvent.VK_W && JRoboKill.counter == 2) {
+                JRoboKill.board.remove(Level2.tanzimRob2);
+                JRoboKill.board.add(Level1.RoboPanel2, BorderLayout.CENTER);
+                JRoboKill.board.revalidate();
+            }
+            if (moveKey == KeyEvent.VK_M && JRoboKill.counter == 2) {
+                map2 = new Map();
+
+                JRoboKill.board.remove(Level1.RoboPanel2);
+                JRoboKill.board.add(map2, BorderLayout.CENTER);
+                JRoboKill.board.revalidate();
+            }
+            
+            if (moveKey == KeyEvent.VK_N && JRoboKill.counter ==2) {
+
+                //kelid baraye map robat
+               
+                JRoboKill.board.remove(Level2.map2);
+                JRoboKill.board.add(Level1.RoboPanel2, BorderLayout.CENTER);
+                JRoboKill.board.revalidate();
+
             }
 
             if (moveKey == KeyEvent.VK_UP) {
+                if((Xrobot2>=xBox1+40 && (Yrobot2>280 || Yrobot2<180))||(Xrobot2>=xBox1+40 && (Yrobot2<=280 && Yrobot2>=180))||/*(Xrobot2<=300 && (Yrobot2<280 && Yrobot2>200))||*/(Xrobot2<=xBox1+40 && (Yrobot2>=280 || Yrobot2<=180))){
                 Yrobot2 = Yrobot2 - 5;
                 //age az door rad shod
                 if ((Xrobot2 > 200 && Xrobot2 < 600) && (Yrobot2 < 40) && JRoboKill.counter == 2) {
@@ -170,14 +219,17 @@ public class Level2 extends JPanel implements Runnable {
                     JRoboKill.board.revalidate();
                     tirVector.removeAllElements();
                 }
+                }
             }
 
             if (moveKey == KeyEvent.VK_LEFT) {
-                Xrobot2 = Xrobot2 - 5;
+                 if((Xrobot2>=xBox1+40 && (Yrobot2>280 || Yrobot2<180))||(Xrobot2>=xBox1+40 && (Yrobot2<280 && Yrobot2>180))||/*(Xrobot2<=300 && (Yrobot2<280 && Yrobot2>200))||*/(Xrobot2<=xBox1+40 && (Yrobot2>280 || Yrobot2<180))){
+                   //if( !(Xrobot2<xBox1 && (Yrobot2<280 || Yrobot2>200))){
+                     Xrobot2 = Xrobot2 - 5;
                 //agar az roye pol oonvartar raft biyofte payin
                 if (Xrobot2 < 180 && JRoboKill.counter == 2) {
                     //g.drawImage(Fall, Xrobot, Yrobot, this);
-                    Robo2IsAlive=false;
+                    Robo2IsAlive = false;
                     try {
                         Thread.sleep(80);
 
@@ -187,14 +239,18 @@ public class Level2 extends JPanel implements Runnable {
                     JOptionPane.showMessageDialog(null, "You fall in a hole ", "Game Over", JOptionPane.INFORMATION_MESSAGE);
                     System.exit(0);
                 }
+                 }
+                
             }
 
             if (moveKey == KeyEvent.VK_RIGHT) {
-                Xrobot2 = Xrobot2 + 5;
+               
+                    
+                    Xrobot2 = Xrobot2 + 5;
                 //agar az roye pol oonvartar raft biyofte payin
                 if (Xrobot2 > 550 && JRoboKill.counter == 2) {
                     //g.drawImage(Fall, Xrobot, Yrobot, this);
-                    Robo2IsAlive=false;
+                    Robo2IsAlive = false;
                     try {
                         Thread.sleep(80);
 
@@ -204,22 +260,22 @@ public class Level2 extends JPanel implements Runnable {
                     JOptionPane.showMessageDialog(null, "You fall in a hole ", "Game Over", JOptionPane.INFORMATION_MESSAGE);
                     System.exit(0);
                 }
-
+                
+                
             }
             if (moveKey == KeyEvent.VK_DOWN) {
-
+                 if((Xrobot2>=xBox1+40 && (Yrobot2>280 || Yrobot2<180))||(Xrobot2>=xBox1+40 && (Yrobot2<=280 && Yrobot2>=180))||/*(Xrobot2<=300 && (Yrobot2<280 && Yrobot2>200))||*/(Xrobot2<=xBox1+40 && (Yrobot2>=280 || Yrobot2<=180))){
                 Yrobot2 = Yrobot2 + 5;
                 //bara bargashtan
                 if ((Xrobot2 > 200 && Xrobot2 < 600 && JRoboKill.counter == 2) && (Yrobot2 > 540)) {
                     JRoboKill.counter = 1;
-                  
-                   
+
                     JRoboKill.board.remove(Level1.RoboPanel2);
                     JRoboKill.board.add(StartMenu.RoboPanel, BorderLayout.CENTER);
                     JRoboKill.board.revalidate();
                     tirVector.removeAllElements();
                 }
-
+            }
             }
 
             //return false;
@@ -233,7 +289,21 @@ public class Level2 extends JPanel implements Runnable {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            tirVector.add( new TirThread(Xrobot2,Yrobot2, e.getX(),e.getY(),tirCunterT));
+            tirVector.add(new TirThread(Xrobot2, Yrobot2, e.getX(), e.getY(), tirCunterT));
+           
+            if (e.getX() >= 200 && e.getX() <= 250 && e.getY() >= 200 && e.getY() <= 238) {
+                bangBox1 = 1;
+                bangBoxCounter1++;
+                //JOptionPane.showMessageDialog(null, "khord ", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+
+            }
+            if (e.getX() >= 200 && e.getX() <= 250 && e.getY() >= 240 && e.getY() <= 280) {
+                bangBox2 = 2;
+                bangBoxCounter2++;
+                // JOptionPane.showMessageDialog(null, "khord ", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+
+            }
+
         }
 
         @Override
@@ -243,17 +313,17 @@ public class Level2 extends JPanel implements Runnable {
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            
+
         }
 
         @Override
         public void mouseEntered(MouseEvent e) {
-            
+
         }
 
         @Override
         public void mouseExited(MouseEvent e) {
-            
+
         }
 
     }

@@ -54,7 +54,7 @@ public class TirThread implements Runnable{
             
             
             try {
-                Thread.sleep(3);
+                Thread.sleep(2);
             } catch (InterruptedException ex) {
                 Logger.getLogger(TirThread.class.getName()).log(Level.SEVERE, null, ex);
             }

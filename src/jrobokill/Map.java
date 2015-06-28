@@ -7,117 +7,105 @@ package jrobokill;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import static jrobokill.MainFrame.startmenu;
-import static jrobokill.StartMenu.RoboPanel;
 
 /**
  *
  * @author Asus
  */
-public class Map extends JFrame implements ActionListener, FocusListener {
+public class Map extends JPanel {
 
-    private BufferedImage Map;
-    private Image dbImage;
-    private Graphics dbg;
+    private BufferedImage zaminMap;
     private JButton ok;
-    private JPanel PanelMap;
-    public static boolean MapORLevel = false;
 
     public Map() {
-        //setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setResizable(false);
-        setTitle("Map");
         setLayout(null);
-        //getContentPane().setLayout(null);
-        //panel map
-        PanelMap = new JPanel();
-        PanelMap.setSize(500, 500);
-        
-        
-        
-        
-        
-        //kelid ok
-       // ok.setLayout(null);
-        ok = new JButton("Ok");
-        ok.setFont(new Font("Arial", Font.BOLD, 20));
-        ok.setSize(100, 100);
-        ok.setLocation(300, 300);
-        ok.setBackground(Color.WHITE);
-        ok.setForeground(Color.BLACK);
-        
-        this.PanelMap.add(ok,BorderLayout.SOUTH);
-        
-        this.add(PanelMap, BorderLayout.CENTER);
 
-        /* //action lister baraye ok
-         ok.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-         MapORLevel=true;
-         }
-         });*/
-        //map
-      /*  URL resourceMap = getClass().getResource("/pic/map.png");
-         try {
-         Map = ImageIO.read(resourceMap);
-         } catch (IOException e) {
-         System.out.println("invalid adress map");
-         }*/
-        //tnazim
-        setVisible(true);
-
-        Dimension size = new Dimension(805, 630);
-        setSize(size);
-
-    }
-
-    public void paint(Graphics g) {
-        URL sbg = getClass().getResource("/pic/map.png");
+        //zamin
+        URL resourceMap = getClass().getResource("/pic/mapLevel.png");
         try {
-            Map = ImageIO.read(sbg);
+            zaminMap = ImageIO.read(resourceMap);
         } catch (IOException e) {
-            System.out.println("invalid adress map");
+            System.out.println("invalid adress zamin Map");
         }
-     //   super.paint(g);
-        g.drawImage(Map, 0, 30, null);
-//            repaint();
-  //      ok.repaint();
 
+        //tamoom
+       /* ok = new JButton("Ok");
+         ok.setFont(new Font("Arial", Font.BOLD, 20));
+         ok.setSize(100, 100);
+         ok.setLocation(300, 300);
+         ok.setBackground(Color.WHITE);
+         ok.setForeground(Color.BLACK);
+
+         add(ok);
+         ok.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+         if (JRoboKill.counter == 1) {
+         JRoboKill.board.remove(Level1.map1);
+         JRoboKill.board.add(StartMenu.RoboPanel, BorderLayout.CENTER);
+         JRoboKill.board.revalidate();
+         }
+         if (JRoboKill.counter == 2) {
+         JRoboKill.board.remove(Level2.map2);
+         JRoboKill.board.add(Level1.RoboPanel2, BorderLayout.CENTER);
+         JRoboKill.board.revalidate();
+         }
+
+         }
+
+         });*/
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == ok) {
-            this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-            this.dispose();
-            
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+        g.drawImage(zaminMap, 0, 0, this);
+        if (JRoboKill.counter == 1) {
+            g.setColor(Color.RED);
+            g.fillOval(400, 470, 20, 20);
+        }
+        if (JRoboKill.counter == 2) {
+            g.setColor(Color.RED);
+            g.fillOval(400, 400, 20, 20);
+        }
+         if (JRoboKill.counter == 3) {
+            g.setColor(Color.RED);
+            g.fillOval(400, 300, 20, 20);
+        }
+         if (JRoboKill.counter == 4) {
+            g.setColor(Color.RED);
+            g.fillOval(400, 200, 20, 20);
+        }
+         if (JRoboKill.counter == 10) {
+            g.setColor(Color.RED);
+            g.fillOval(400, 100, 20, 20);
+        }
+         if (JRoboKill.counter ==5) {
+            g.setColor(Color.RED);
+            g.fillOval(600, 250, 20, 20);
+        }
+         if (JRoboKill.counter ==6) {
+            g.setColor(Color.RED);
+            g.fillOval(200, 200, 20, 20);
+        }
+         if (JRoboKill.counter ==7) {
+            g.setColor(Color.RED);
+            g.fillOval(600, 270, 20, 20);
+        }
+         if (JRoboKill.counter ==8) {
+            g.setColor(Color.RED);
+            g.fillOval(700, 230, 20, 20);
         }
     }
-
-    @Override
-    public void focusGained(FocusEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void focusLost(FocusEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }

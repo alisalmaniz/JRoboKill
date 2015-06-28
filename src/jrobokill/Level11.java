@@ -23,47 +23,41 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import static jrobokill.Level1.T1l;
 import static jrobokill.Level1.T1r;
-import static jrobokill.Level1.tirCunterT;
 import static jrobokill.Level1.tirCunter;
+import static jrobokill.Level1.tirCunterT;
 import static jrobokill.Level1.tirVector;
 
 /**
  *
- * @author Ali salmani
+ * @author Asus
  */
-public class Level6 extends JPanel implements Runnable {
+public class Level11 extends JPanel implements Runnable {
 
-    private BufferedImage zamin6;
+    private BufferedImage zamin11;
     private BufferedImage mane;
-    private BufferedImage robot6;
+    private BufferedImage robot11;
     private Image dbImage;
     private Graphics dbg;
-
-    public int pause6 = 0;
-    //private int Level1Xrobot = 20;
-    //private int Level1Yrobot = 300;
+    public int pause11 = 0;
+    private boolean Robo11IsAlive;
     private int Xmane = 300;
     private int Ymane = 300;
-    public static Level11 RoboPanel11;
-    public static Map map6;
+    public static Level6 RoboPanel6;
 
-    private boolean Robo6IsAlive;
-    public static TanzimRobat tanzimRob6;
-
-    public Level6() {
-        Level1.Xrobot = 740;
-        Level1.Yrobot = 300;
+    public Level11() {
+        Level1.Xrobot = 450;
+        Level1.Yrobot = 30;
 
         setLayout(null);
         TirHandler tirHandler = new TirHandler();
         addMouseListener(tirHandler);
 
-        Robo6IsAlive = true;
+        Robo11IsAlive = true;
 
         //zamin
-        URL resourceZamin = getClass().getResource("/pic/zamin6.png");
+        URL resourceZamin = getClass().getResource("/pic/zamin11.png");
         try {
-            zamin6 = ImageIO.read(resourceZamin);
+            zamin11 = ImageIO.read(resourceZamin);
         } catch (IOException e) {
             System.out.println("invalid adress zamin");
         }
@@ -80,7 +74,7 @@ public class Level6 extends JPanel implements Runnable {
         //robot
         URL resourceRobot = getClass().getResource("/pic/robot.png");
         try {
-            robot6 = ImageIO.read(resourceRobot);
+            robot11 = ImageIO.read(resourceRobot);
         } catch (IOException e) {
             System.out.println("invalid adress Rabat");
         }
@@ -102,9 +96,9 @@ public class Level6 extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        g.drawImage(zamin6, 0, 0, this);
+        g.drawImage(zamin11, 0, 0, this);
 
-        g.drawImage(robot6, Level1.Xrobot, Level1.Yrobot, this);
+        g.drawImage(robot11, Level1.Xrobot, Level1.Yrobot, this);
         g.drawImage(mane, Xmane, Ymane, this);
 
         for (tirCunter = 0; tirCunter < tirVector.size(); tirCunter++) {
@@ -127,109 +121,6 @@ public class Level6 extends JPanel implements Runnable {
         while (true) {
             repaint();
         }
-    }
-
-    class moving implements KeyEventDispatcher {
-
-        @Override
-        public boolean dispatchKeyEvent(KeyEvent e) {
-            int moveKey = e.getKeyCode();
-
-            if (JRoboKill.counter == 6) {
-                if (moveKey == KeyEvent.VK_ESCAPE) {
-
-                    System.exit(0);
-                }
-                //button O & P for pause and continue
-                if (moveKey == KeyEvent.VK_P) {
-                    pause6 = 1;
-                    JOptionPane.showMessageDialog(null, "Pasue", "", JOptionPane.INFORMATION_MESSAGE);
-                }
-                if (moveKey == KeyEvent.VK_O) {
-                    pause6 = 0;
-                    JOptionPane.showMessageDialog(null, "continue ", "", JOptionPane.INFORMATION_MESSAGE);
-                }
-
-                if (moveKey == KeyEvent.VK_M && JRoboKill.counter == 6) {
-                    map6 = new Map();
-
-                    JRoboKill.board.remove(Level4.RoboPanel6);
-                    JRoboKill.board.add(map6, BorderLayout.CENTER);
-                    JRoboKill.board.revalidate();
-                }
-
-                if (moveKey == KeyEvent.VK_N && JRoboKill.counter == 6) {
-
-                    //kelid baraye map robat
-                    JRoboKill.board.remove(Level6.map6);
-                    JRoboKill.board.add(Level4.RoboPanel6, BorderLayout.CENTER);
-                    JRoboKill.board.revalidate();
-
-                }
-                if (moveKey == KeyEvent.VK_Q && JRoboKill.counter == 6) {
-                    tanzimRob6 = new TanzimRobat();
-
-                    JRoboKill.board.remove(Level4.RoboPanel6);
-                    JRoboKill.board.add(Level6.tanzimRob6, BorderLayout.CENTER);
-                    JRoboKill.board.revalidate();
-                }
-                if (moveKey == KeyEvent.VK_W && JRoboKill.counter == 6) {
-                    JRoboKill.board.remove(Level6.tanzimRob6);
-                    JRoboKill.board.add(Level4.RoboPanel6, BorderLayout.CENTER);
-                    JRoboKill.board.revalidate();
-                }
-                if (moveKey == KeyEvent.VK_UP) {
-                    if (Level1.Yrobot >= 0 && pause6 == 0) {
-                        Level1.Yrobot = Level1.Yrobot - 5;
-
-                    }
-                }
-
-                if (moveKey == KeyEvent.VK_LEFT) {
-                    if (Level1.Xrobot >= 0 && pause6 == 0) {
-                        Level1.Xrobot = Level1.Xrobot - 5;
-                    }
-                    if (Level1.Yrobot > 160 && Level1.Yrobot < 390 && Level1.Xrobot < 50 && JRoboKill.counter == 6) {
-
-                        //raftan be level 11
-                        JRoboKill.counter = 11;
-                        RoboPanel11 = new Level11();
-                        JRoboKill.board.remove(Level4.RoboPanel6);
-                        JRoboKill.board.add(RoboPanel11, BorderLayout.CENTER);
-                        JRoboKill.board.revalidate();
-                        tirVector.removeAllElements();
-
-                    }
-                }
-
-                if (moveKey == KeyEvent.VK_RIGHT) {
-                    if (Level1.Xrobot <= 740 && pause6 == 0) {
-                        Level1.Xrobot = Level1.Xrobot + 5;
-                        if ((Level1.Yrobot > 180 && Level1.Yrobot < 380 && JRoboKill.counter == 6) && (Level1.Xrobot > 740)) {
-                            //bargashtan be level 4
-                            JRoboKill.counter = 4;
-
-                            JRoboKill.board.remove(Level4.RoboPanel6);
-                            JRoboKill.board.add(Level3.RoboPanel4, BorderLayout.CENTER);
-                            JRoboKill.board.revalidate();
-                            tirVector.removeAllElements();
-                        }
-
-                    }
-                }
-                if (moveKey == KeyEvent.VK_DOWN) {
-                    if (Level1.Yrobot <= 560 && pause6 == 0) {
-                        Level1.Yrobot = Level1.Yrobot + 5;
-
-                    }
-
-                }
-
-            }
-            //bayad ye chizi ro return kone,return false;
-            return false;
-        }
-
     }
 
     private class TirHandler implements MouseListener {
@@ -257,6 +148,81 @@ public class Level6 extends JPanel implements Runnable {
         @Override
         public void mouseExited(MouseEvent e) {
 
+        }
+
+    }
+
+    class moving implements KeyEventDispatcher {
+
+        @Override
+        public boolean dispatchKeyEvent(KeyEvent e) {
+            int moveKey = e.getKeyCode();
+
+            if (JRoboKill.counter == 8) {
+                if (moveKey == KeyEvent.VK_ESCAPE) {
+
+                    System.exit(0);
+                }
+                //button O & P for pause and continue
+                if (moveKey == KeyEvent.VK_P) {
+                    pause11 = 1;
+                    JOptionPane.showMessageDialog(null, "Pasue", "", JOptionPane.INFORMATION_MESSAGE);
+                }
+                if (moveKey == KeyEvent.VK_O) {
+                    pause11 = 0;
+                    JOptionPane.showMessageDialog(null, "continue ", "", JOptionPane.INFORMATION_MESSAGE);
+                }
+
+                if (moveKey == KeyEvent.VK_UP) {
+                    if (Level1.Yrobot >= 0 && pause11 == 0) {
+                        Level1.Yrobot = Level1.Yrobot - 5;
+
+                    }
+                }
+
+                if (moveKey == KeyEvent.VK_LEFT) {
+                    if (Level1.Xrobot >= 0 && pause11 == 0) {
+                        Level1.Xrobot = Level1.Xrobot - 5;
+
+                    }
+                    //bargasht be level5
+                    if ((Level1.Yrobot > 170 && Level1.Yrobot < 390 && JRoboKill.counter == 8) && (Level1.Xrobot < 50)) {
+                        //bargashtan be level 5
+                        JRoboKill.counter = 5;
+
+                        JRoboKill.board.remove(Level5.RoboPanel8);
+                        JRoboKill.board.add(Level4.RoboPanel5, BorderLayout.CENTER);
+                        JRoboKill.board.revalidate();
+                        tirVector.removeAllElements();
+                    }
+                }
+
+                if (moveKey == KeyEvent.VK_RIGHT) {
+                    if (Level1.Xrobot <= 740 && pause11 == 0) {
+                        Level1.Xrobot = Level1.Xrobot + 5;
+                    }
+                    if (Level1.Yrobot > 200 && Level1.Yrobot < 400 && Level1.Xrobot > 600) {
+                        JOptionPane.showMessageDialog(null, "khkhkh ", "", JOptionPane.INFORMATION_MESSAGE);                        //raftan be level 6
+                        JRoboKill.counter = 6;
+                        RoboPanel6 = new Level6();
+                        JRoboKill.board.remove(Level6.RoboPanel11);
+                        JRoboKill.board.add(RoboPanel6, BorderLayout.CENTER);
+                        JRoboKill.board.revalidate();
+                        tirVector.removeAllElements();
+
+                    }
+                }
+                if (moveKey == KeyEvent.VK_DOWN) {
+                    if (Level1.Yrobot <= 560 && pause11 == 0) {
+                        Level1.Yrobot = Level1.Yrobot + 5;
+
+                    }
+
+                }
+
+            }
+            //bayad ye chizi ro return kone,return false;
+            return false;
         }
 
     }
