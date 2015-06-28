@@ -13,6 +13,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,19 +36,22 @@ import sun.audio.ContinuousAudioDataStream;
  *
  * @author Asus
  */
-public class StartMenu extends JPanel {
+public class StartMenu extends JPanel implements ActionListener{
 
     private JButton Start;
     private JButton option;
     private JButton exit;
     public static Level1 RoboPanel;
     private BufferedImage PicStart;
-
+    
     public static boolean GoToGame = false;
-
-    public StartMenu() {
+    
+    MainFrame mainFrame;
+    
+    public StartMenu(MainFrame mainFrame) {
         setLayout(null);
 
+        this.mainFrame=mainFrame;
         //zamin
         URL resourcePicStart = getClass().getResource("/pic/start.jpg");
         try {
@@ -85,8 +89,40 @@ public class StartMenu extends JPanel {
         add(exit);
         //tamom
         //action listener for option
-        option.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        option.addActionListener(this);
+                
+                
+        
+            
+        
+        //tamom
+        //action listener for exit
+        exit.addActionListener(this);
+            
+        
+        //tamom
+        //action listener for start 
+        Start.addActionListener(this);
+                
+               
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics g2 = (Graphics) g;
+        g.drawImage(PicStart, 0, 0, this);
+
+        //debug amir :g.fillOval(x, y, 100, 100);
+    }
+    
+    
+    
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        
+        if(e.getSource()==option){
 
                 /*    URL url = getClass().getClassLoader().getResource("/seda/seda11.wav");
                 
@@ -109,23 +145,23 @@ public class StartMenu extends JPanel {
                 // play background music.
                 myBackgroundPlayer.start(myLoop);
             }
-        });
-        //tamom
-        //action listener for exit
-        exit.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+    
+    
+    else if(e.getSource()==exit){
                 System.exit(0);
                 System.out.println("debug amir: exit shod");
             }
-        });
-        //tamom
-        //action listener for start 
-        Start.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+    
+    
+    else if(e.getSource()==Start){
                 //GoToGame = true;
                 // System.out.println("debug amir: start zade shod" + GoToGame);
 
                 //new kardan level ha
+                
+                System.out.println("w1");
+                mainFrame.dispatchEvent(new ComponentEvent(this, 01));
+        
                 RoboPanel = new Level1();
 
                 //tamam
@@ -134,19 +170,11 @@ public class StartMenu extends JPanel {
                 JRoboKill.board.revalidate();
                 //
                 System.out.println("debug amir: 123");
-
+        
             }
-        });
+        
         //tamoom
-
     }
-
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics g2 = (Graphics) g;
-        g.drawImage(PicStart, 0, 0, this);
-
-        //debug amir :g.fillOval(x, y, 100, 100);
-    }
+    
+    
 }

@@ -23,7 +23,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import static jrobokill.MainFrame.startmenu;
+//import static jrobokill.MainFrame.startmenu;
 import static jrobokill.StartMenu.RoboPanel;
 
 /**

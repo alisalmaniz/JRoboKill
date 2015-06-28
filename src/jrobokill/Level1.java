@@ -39,7 +39,24 @@ public class Level1 extends JPanel implements Runnable {
     private Image dbImage;
     private Graphics dbg;
     private BufferedImage zamin;
-    private BufferedImage robot;
+    public static BufferedImage Robo1;
+    public static BufferedImage Robo2;
+    public static BufferedImage Robo3;
+    public static BufferedImage Robo4;
+    public static BufferedImage Robo5;
+    public static BufferedImage Robo6;
+    public static BufferedImage Robo7;
+    public static BufferedImage Robo8;
+    public static BufferedImage Robo9;
+    public static BufferedImage Robo10;
+    public static BufferedImage Robo11;
+    public static BufferedImage Robo12;
+    public static BufferedImage Robo13;
+    public static BufferedImage Robo14;
+    public static BufferedImage Robo15;
+    public static BufferedImage[] robots;
+    
+    
     private BufferedImage Jet;
     private BufferedImage exit;
     private BufferedImage shop;
@@ -50,7 +67,8 @@ public class Level1 extends JPanel implements Runnable {
     public static Level2 RoboPanel2;
    
     private boolean Robo1IsAlive;
-    
+    private int moveRobots;
+    private int nowMoving;
     //thread
     public static int tirCunter=0;
     public static int tirCunterT=0;
@@ -65,7 +83,53 @@ public class Level1 extends JPanel implements Runnable {
         addMouseListener(tirHandler);
         
         Robo1IsAlive = true;
-        //zamin
+        moveRobots=0;
+        nowMoving=0;
+        robots = new BufferedImage[15];
+        
+        //robot
+        URL resourceRobo1 = getClass().getResource("/pic/Robo1.png");
+        URL resourceRobo2 = getClass().getResource("/pic/Robo2.png");
+        URL resourceRobo3 = getClass().getResource("/pic/Robo3.png");
+        URL resourceRobo4 = getClass().getResource("/pic/Robo4.png");
+        URL resourceRobo5 = getClass().getResource("/pic/Robo5.png");
+        URL resourceRobo6 = getClass().getResource("/pic/Robo6.png");
+        URL resourceRobo7 = getClass().getResource("/pic/Robo7.png");
+        URL resourceRobo8 = getClass().getResource("/pic/Robo8.png");
+        URL resourceRobo9 = getClass().getResource("/pic/Robo9.png");
+        URL resourceRobo10 = getClass().getResource("/pic/Robo10.png");
+        URL resourceRobo11 = getClass().getResource("/pic/Robo11.png");
+        URL resourceRobo12 = getClass().getResource("/pic/Robo12.png");
+        URL resourceRobo13 = getClass().getResource("/pic/Robo13.png");
+        URL resourceRobo14 = getClass().getResource("/pic/Robo14.png");
+        URL resourceRobo15 = getClass().getResource("/pic/Robo15.png");
+
+        try {
+            
+            robots[0] = ImageIO.read(resourceRobo1);
+            robots[1] = ImageIO.read(resourceRobo2);
+            robots[2] = ImageIO.read(resourceRobo3);
+            robots[3] = ImageIO.read(resourceRobo4);
+            robots[4] = ImageIO.read(resourceRobo5);
+            robots[5] = ImageIO.read(resourceRobo6);
+            robots[6] = ImageIO.read(resourceRobo7);
+            robots[7] = ImageIO.read(resourceRobo8);
+            robots[8] = ImageIO.read(resourceRobo9);
+            robots[9] = ImageIO.read(resourceRobo10);
+            robots[10] = ImageIO.read(resourceRobo11);
+            robots[11] = ImageIO.read(resourceRobo12);
+            robots[12] = ImageIO.read(resourceRobo13);
+            robots[13] = ImageIO.read(resourceRobo14);
+            robots[14] = ImageIO.read(resourceRobo15);
+            
+        } catch (IOException e) {
+            System.out.println("invalid adress Robots");
+        }
+
+        
+
+
+    //zamin
         URL resourceZamin = getClass().getResource("/pic/zamin.png");
         try {
             zamin = ImageIO.read(resourceZamin);
@@ -114,14 +178,6 @@ public class Level1 extends JPanel implements Runnable {
         } catch (IOException e) {
             System.out.println("invalid adress pic chaleh");
         }
-        //tamoom
-        //robot
-        URL resourceRobot = getClass().getResource("/pic/robot.png");
-        try {
-            robot = ImageIO.read(resourceRobot);
-        } catch (IOException e) {
-            System.out.println("invalid adress Rabat");
-        }
 
         //Tir1 right
         URL resourceT1r = getClass().getResource("/pic/T1r.png");
@@ -163,6 +219,15 @@ public class Level1 extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
+        if(moveRobots==15)
+            moveRobots=0;
+        
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Level1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         g.drawImage(zamin, 0, 0, this);
         g.drawImage(shop, 600, 200, this);
         //rasm chale 
@@ -178,25 +243,37 @@ public class Level1 extends JPanel implements Runnable {
 
         g.drawImage(Jet, 20, 90, this);
 
-        if (Robo1IsAlive) {
-            g.drawImage(robot, Xrobot, Yrobot, this);
+        if (Robo1IsAlive ) {
+            
+            
+            g.drawImage(robots[moveRobots], Xrobot, Yrobot, this);
+            
+            if(nowMoving>0){
+                
+                moveRobots++;
+                nowMoving--;
+            }
+            
         } else {
             g.drawImage(Fall, Xrobot, Yrobot, this);
         }
-
         
+        
+        System.out.println("**************"+tirVector.size());
         for( tirCunter=0;tirCunter<tirVector.size();tirCunter++){
+            
             //System.out.println(tirVector.size());
-            g2d.rotate(atan((tirVector.get(tirCunter).getyMouse()-tirVector.get(tirCunter).getyFirstRobot())/(tirVector.get(tirCunter).getxMouse()-tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxFirstRobot(), tirVector.get(tirCunter).getyFirstRobot());
-                System.out.println(tirVector.size()+"/"+tirVector.get(tirCunter).getxMouse()+"/"+tirVector.get(tirCunter).getxTir());
+            g2d.rotate(atan((tirVector.get(tirCunter).getyMouse()-tirVector.get(tirCunter).getyFirstRobot())/(tirVector.get(tirCunter).getxMouse()-tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxTir(), tirVector.get(tirCunter).getyTir());
+                //System.out.println(Xrobot+"/"+tirVector.get(tirCunter).getxTir());
              
             if(tirVector.get(tirCunter).getxMouse()>tirVector.get(tirCunter).getxFirstRobot())
-                g.drawImage(T1r,tirVector.get(tirCunter).getxTir(),tirVector.get(tirCunter).getyTir(),this);
+                g.drawImage(T1r,(int)tirVector.get(tirCunter).getxTir(),(int)tirVector.get(tirCunter).getyTir(),this);
             else
-                g.drawImage(T1l,tirVector.get(tirCunter).getxTir()-35,tirVector.get(tirCunter).getyTir()-10,this);
+                g.drawImage(T1l,(int)tirVector.get(tirCunter).getxTir()-35,(int)tirVector.get(tirCunter).getyTir()-10,this);
                     
-            g2d.rotate(-atan((tirVector.get(tirCunter).getyMouse()-tirVector.get(tirCunter).getyFirstRobot())/(tirVector.get(tirCunter).getxMouse()-tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxFirstRobot(), tirVector.get(tirCunter).getyFirstRobot());
+            g2d.rotate(-atan((tirVector.get(tirCunter).getyMouse()-tirVector.get(tirCunter).getyFirstRobot())/(tirVector.get(tirCunter).getxMouse()-tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxTir(), tirVector.get(tirCunter).getyTir());
         }
+        
     }
 
     @Override
@@ -216,7 +293,7 @@ public class Level1 extends JPanel implements Runnable {
         public boolean dispatchKeyEvent(KeyEvent e) {
             int moveKey = e.getKeyCode();
             
-            if(JRoboKill.counter == 1){
+            if(JRoboKill.counter == 1 ){
             
             if (moveKey == KeyEvent.VK_ESCAPE) {
 
@@ -240,6 +317,7 @@ public class Level1 extends JPanel implements Runnable {
 
             if (moveKey == KeyEvent.VK_UP) {
                 if (Yrobot >= 0 && pause == 0) {
+                    nowMoving+=2;
                     Yrobot = Yrobot - 5;
                     //agar az x,y door gozasht bere marhale 2
                     if ((Xrobot > 200 && Xrobot < 600 && JRoboKill.counter == 1) && (Yrobot < 40)) {
@@ -256,6 +334,7 @@ public class Level1 extends JPanel implements Runnable {
             }
 
             if (moveKey == KeyEvent.VK_LEFT) {
+                nowMoving+=2;
                 if (Xrobot >= 0 && pause == 0) {
                     Xrobot = Xrobot - 5;
                 }
@@ -274,11 +353,13 @@ public class Level1 extends JPanel implements Runnable {
             }
 
             if (moveKey == KeyEvent.VK_RIGHT) {
+                nowMoving+=2;
                 if (Xrobot <= 740 && pause == 0) {
                     Xrobot = Xrobot + 5;
                 }
             }
             if (moveKey == KeyEvent.VK_DOWN) {
+                nowMoving+=2;
                 if (Yrobot <= 560 && pause == 0) {
                     Yrobot = Yrobot + 5;
                 }
@@ -301,6 +382,7 @@ public class Level1 extends JPanel implements Runnable {
         public void mouseClicked(MouseEvent e) {
             tirVector.add( new TirThread(Xrobot,Yrobot, e.getX(),e.getY(),tirCunterT));
             //tirCunterT++;
+            
         }
 
         @Override
