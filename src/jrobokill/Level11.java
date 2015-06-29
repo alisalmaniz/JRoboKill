@@ -5,6 +5,8 @@
  */
 package jrobokill;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -34,7 +36,7 @@ import static jrobokill.Level1.tirVector;
 public class Level11 extends JPanel implements Runnable {
 
     private BufferedImage zamin11;
-    private BufferedImage mane;
+   // private BufferedImage mane;
     private BufferedImage robot11;
     private Image dbImage;
     private Graphics dbg;
@@ -45,8 +47,8 @@ public class Level11 extends JPanel implements Runnable {
     public static Level6 RoboPanel6;
 
     public Level11() {
-        Level1.Xrobot = 450;
-        Level1.Yrobot = 30;
+        Level1.Xrobot = 690;
+        Level1.Yrobot = 300;
 
         setLayout(null);
         TirHandler tirHandler = new TirHandler();
@@ -63,14 +65,7 @@ public class Level11 extends JPanel implements Runnable {
         }
 
         //tamoom
-        //mane
-        URL resourceMane = getClass().getResource("/pic/mane.png");
-        try {
-            mane = ImageIO.read(resourceMane);
-        } catch (IOException e) {
-            System.out.println("invalid adress mane");
-        }
-
+        
         //robot
         URL resourceRobot = getClass().getResource("/pic/robot.png");
         try {
@@ -99,9 +94,8 @@ public class Level11 extends JPanel implements Runnable {
         g.drawImage(zamin11, 0, 0, this);
 
         g.drawImage(robot11, Level1.Xrobot, Level1.Yrobot, this);
-        g.drawImage(mane, Xmane, Ymane, this);
+        //g.drawImage(mane, Xmane, Ymane, this);
 
-        
     }
 
     @Override
@@ -115,6 +109,10 @@ public class Level11 extends JPanel implements Runnable {
 
         @Override
         public void mouseClicked(MouseEvent e) {
+            //sedaye shlik
+            URL url = getClass().getClassLoader().getResource("seda/Tir.wav");
+            AudioClip clip2 = Applet.newAudioClip(url);
+            clip2.loop();
             tirVector.add(new TirThread(Level1.Xrobot, Level1.Yrobot, e.getX(), e.getY(), tirCunterT));
         }
 
@@ -146,7 +144,7 @@ public class Level11 extends JPanel implements Runnable {
         public boolean dispatchKeyEvent(KeyEvent e) {
             int moveKey = e.getKeyCode();
 
-            if (JRoboKill.counter == 8) {
+            if (JRoboKill.counter == 11) {
                 if (moveKey == KeyEvent.VK_ESCAPE) {
 
                     System.exit(0);
@@ -162,7 +160,9 @@ public class Level11 extends JPanel implements Runnable {
                 }
 
                 if (moveKey == KeyEvent.VK_UP) {
-                    if (Level1.Yrobot >= 0 && pause11 == 0) {
+                    System.out.println("Yrobo" + Level1.Yrobot);
+                    if (Level1.Yrobot >= 5 && pause11 == 0) {
+
                         Level1.Yrobot = Level1.Yrobot - 5;
 
                     }
@@ -174,7 +174,7 @@ public class Level11 extends JPanel implements Runnable {
 
                     }
                     //bargasht be level5
-                    if ((Level1.Yrobot > 170 && Level1.Yrobot < 390 && JRoboKill.counter == 8) && (Level1.Xrobot < 50)) {
+                    if ((Level1.Yrobot > 170 && Level1.Yrobot < 390 && JRoboKill.counter == 1) && (Level1.Xrobot < 50)) {
                         //bargashtan be level 5
                         JRoboKill.counter = 5;
 
@@ -189,12 +189,15 @@ public class Level11 extends JPanel implements Runnable {
                     if (Level1.Xrobot <= 740 && pause11 == 0) {
                         Level1.Xrobot = Level1.Xrobot + 5;
                     }
-                    if (Level1.Yrobot > 200 && Level1.Yrobot < 400 && Level1.Xrobot > 600) {
-                        JOptionPane.showMessageDialog(null, "khkhkh ", "", JOptionPane.INFORMATION_MESSAGE);                        //raftan be level 6
+                    if (Level1.Yrobot > 200 && Level1.Yrobot < 400 && Level1.Xrobot > 650) {
+                       // JOptionPane.showMessageDialog(null, "khkhkh ", "", JOptionPane.INFORMATION_MESSAGE);                        //raftan be level 6
                         JRoboKill.counter = 6;
-                        RoboPanel6 = new Level6();
+                        Level1.Xrobot=50;
+                        Level1.Yrobot=300;
+                       // RoboPanel6 = new Level6();
+                        JRoboKill.counter=6;
                         JRoboKill.board.remove(Level6.RoboPanel11);
-                        JRoboKill.board.add(RoboPanel6, BorderLayout.CENTER);
+                        JRoboKill.board.add(Level4.RoboPanel6, BorderLayout.CENTER);
                         JRoboKill.board.revalidate();
                         tirVector.removeAllElements();
 
@@ -202,7 +205,9 @@ public class Level11 extends JPanel implements Runnable {
                 }
                 if (moveKey == KeyEvent.VK_DOWN) {
                     if (Level1.Yrobot <= 560 && pause11 == 0) {
+
                         Level1.Yrobot = Level1.Yrobot + 5;
+                        System.out.println("sds");
 
                     }
 

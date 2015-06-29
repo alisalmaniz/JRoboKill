@@ -5,6 +5,8 @@
  */
 package jrobokill;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -25,11 +27,17 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import static jrobokill.Level1.Health;
 import static jrobokill.Level1.RoboPanel2;
 import static jrobokill.Level1.T1l;
 import static jrobokill.Level1.T1r;
 import static jrobokill.Level1.Xrobot;
 import static jrobokill.Level1.Yrobot;
+import static jrobokill.Level1.healthBar1;
+import static jrobokill.Level1.healthBar2;
+import static jrobokill.Level1.healthBar3;
+import static jrobokill.Level1.healthBar4;
+import static jrobokill.Level1.healthBar5;
 import static jrobokill.Level1.tirCunter;
 import static jrobokill.Level1.tirCunterT;
 import static jrobokill.Level1.tirVector;
@@ -49,6 +57,8 @@ public class Level2 extends JPanel implements Runnable {
     private BufferedImage bang;
     private BufferedImage Tir;
     private BufferedImage box;
+    
+    
     public static BufferedImage enemy1r;
     public static BufferedImage enemy2r;
     public static BufferedImage enemy3r;
@@ -79,9 +89,9 @@ public class Level2 extends JPanel implements Runnable {
         setLayout(null);
         
         edflag=0;
-        
-        Level1.Xrobot=400;
-        Level1.Yrobot=400;
+        Level1.Health=40;
+        //Level1.Xrobot=400;
+       // Level1.Yrobot=400;
         
         TirHandler tirHandler = new TirHandler();
         addMouseListener(tirHandler);
@@ -272,6 +282,21 @@ public class Level2 extends JPanel implements Runnable {
         } else {
 
         }
+        
+        if (Health == 100) {
+            g.drawImage(healthBar1, 0, 555, this);
+        } else if (Health == 80) {
+              g.drawImage(healthBar2, 0, 555, this);
+        }
+        else if (Health == 60) {
+             g.drawImage(healthBar3, 0, 555, this);
+        }
+        else if (Health == 40) {
+              g.drawImage(healthBar4, 0, 555, this);
+        }
+        else if (Health == 20) {
+             g.drawImage(healthBar5, 0, 555, this);
+        }
 
 
         //tir
@@ -344,7 +369,8 @@ public class Level2 extends JPanel implements Runnable {
         @Override
         public boolean dispatchKeyEvent(KeyEvent e) {
             int moveKey = e.getKeyCode();
-
+            
+            if(JRoboKill.counter==2){
             if (moveKey == KeyEvent.VK_Q && JRoboKill.counter == 2) {
                 tanzimRob2 = new TanzimRobat();
 
@@ -380,9 +406,10 @@ public class Level2 extends JPanel implements Runnable {
                 if((Level1.Xrobot>=xBox1+40 && (Level1.Yrobot>280 || Level1.Yrobot<180))||(Level1.Xrobot>=xBox1+40 && (Level1.Yrobot<=280 && Level1.Yrobot>=180))||/*(Xrobot2<=300 && (Yrobot2<280 && Yrobot2>200))||*/(Level1.Xrobot<=xBox1+40 && (Level1.Yrobot>=280 || Level1.Yrobot<=180))){
                 Level1.Yrobot = Level1.Yrobot - 5;
                 //age az door rad shod
-                if ((Level1.Xrobot > 200 && Level1.Xrobot < 600) && (Level1.Yrobot < 40) && JRoboKill.counter == 2) {
+                if ((Level1.Xrobot > 200 && Level1.Xrobot < 600) && (Level1.Yrobot < 40) && JRoboKill.counter == 2 && enemyVector.size()==0) {
                     JRoboKill.counter = 3;
                     RoboPanel3 = new Level3();
+                    
                     JRoboKill.board.remove(Level1.RoboPanel2);
                     JRoboKill.board.add(RoboPanel3, BorderLayout.CENTER);
                     JRoboKill.board.revalidate();
@@ -443,7 +470,8 @@ public class Level2 extends JPanel implements Runnable {
                 //bara bargashtan
                 if ((Level1.Xrobot > 200 && Level1.Xrobot < 600 && JRoboKill.counter == 2) && (Level1.Yrobot > 540)) {
                     JRoboKill.counter = 1;
-
+                    Level1.Xrobot=400;
+                    Level1.Yrobot=100;
                     JRoboKill.board.remove(Level1.RoboPanel2);
                     JRoboKill.board.add(StartMenu.RoboPanel, BorderLayout.CENTER);
                     JRoboKill.board.revalidate();
@@ -451,7 +479,7 @@ public class Level2 extends JPanel implements Runnable {
                 }
             }
             }
-
+            }
             //return false;
             return false;
 
@@ -463,7 +491,11 @@ public class Level2 extends JPanel implements Runnable {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-
+            //sedaye shlik
+            if(Option.OnSound){
+            URL url = getClass().getClassLoader().getResource("seda/Tir.wav");
+            AudioClip clip2 = Applet.newAudioClip(url);
+            clip2.loop();}
             tirVector.add( new TirThread(Level1.Xrobot,Level1.Yrobot, e.getX(),e.getY(),tirCunterT));
         }
 

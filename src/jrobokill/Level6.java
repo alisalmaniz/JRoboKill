@@ -5,6 +5,8 @@
  */
 package jrobokill;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -34,7 +36,7 @@ import static jrobokill.Level1.tirVector;
 public class Level6 extends JPanel implements Runnable {
 
     private BufferedImage zamin6;
-    private BufferedImage mane;
+    // private BufferedImage mane;
     private BufferedImage robot6;
     private Image dbImage;
     private Graphics dbg;
@@ -69,14 +71,6 @@ public class Level6 extends JPanel implements Runnable {
         }
 
         //tamoom
-        //mane
-        URL resourceMane = getClass().getResource("/pic/mane.png");
-        try {
-            mane = ImageIO.read(resourceMane);
-        } catch (IOException e) {
-            System.out.println("invalid adress mane");
-        }
-
         //robot
         URL resourceRobot = getClass().getResource("/pic/robot.png");
         try {
@@ -104,11 +98,23 @@ public class Level6 extends JPanel implements Runnable {
         Graphics2D g2d = (Graphics2D) g;
         g.drawImage(zamin6, 0, 0, this);
 
-
         g.drawImage(robot6, Level1.Xrobot, Level1.Yrobot, this);
-        
-        g.drawImage(mane, Xmane, Ymane, this);
 
+        // g.drawImage(mane, Xmane, Ymane, this);
+        for (tirCunter = 0; tirCunter < tirVector.size(); tirCunter++) {
+            //System.out.println(tirVector.size());
+
+            g2d.rotate(atan((tirVector.get(tirCunter).getyMouse() - tirVector.get(tirCunter).getyFirstRobot()) / (tirVector.get(tirCunter).getxMouse() - tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxTir(), tirVector.get(tirCunter).getyTir());
+            System.out.println(tirVector.size() + "/" + tirVector.get(tirCunter).getxMouse() + "/" + tirVector.get(tirCunter).getxTir());
+
+            if (tirVector.get(tirCunter).getxMouse() > tirVector.get(tirCunter).getxFirstRobot()) {
+                g.drawImage(T1r, (int) tirVector.get(tirCunter).getxTir(), (int) tirVector.get(tirCunter).getyTir(), this);
+            } else {
+                g.drawImage(T1l, (int) tirVector.get(tirCunter).getxTir(), (int) tirVector.get(tirCunter).getyTir(), this);
+            }
+
+            g2d.rotate(-atan((tirVector.get(tirCunter).getyMouse() - tirVector.get(tirCunter).getyFirstRobot()) / (tirVector.get(tirCunter).getxMouse() - tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxTir(), tirVector.get(tirCunter).getyTir());
+        }
     }
 
     @Override
@@ -197,7 +203,8 @@ public class Level6 extends JPanel implements Runnable {
                         if ((Level1.Yrobot > 180 && Level1.Yrobot < 380 && JRoboKill.counter == 6) && (Level1.Xrobot > 740)) {
                             //bargashtan be level 4
                             JRoboKill.counter = 4;
-
+                            Level1.Xrobot=50;
+                            Level1.Yrobot=300;
                             JRoboKill.board.remove(Level4.RoboPanel6);
                             JRoboKill.board.add(Level3.RoboPanel4, BorderLayout.CENTER);
                             JRoboKill.board.revalidate();
@@ -225,6 +232,12 @@ public class Level6 extends JPanel implements Runnable {
 
         @Override
         public void mouseClicked(MouseEvent e) {
+            //sedaye shlik
+            if (Option.OnSound) {
+                URL url = getClass().getClassLoader().getResource("seda/Tir.wav");
+                AudioClip clip2 = Applet.newAudioClip(url);
+                clip2.loop();
+            }
             tirVector.add(new TirThread(Level1.Xrobot, Level1.Yrobot, e.getX(), e.getY(), tirCunterT));
         }
 

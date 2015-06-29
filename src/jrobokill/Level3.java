@@ -5,6 +5,8 @@
  */
 package jrobokill;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -21,8 +23,14 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import static jrobokill.Level1.Health;
 import static jrobokill.Level1.T1l;
 import static jrobokill.Level1.T1r;
+import static jrobokill.Level1.healthBar1;
+import static jrobokill.Level1.healthBar2;
+import static jrobokill.Level1.healthBar3;
+import static jrobokill.Level1.healthBar4;
+import static jrobokill.Level1.healthBar5;
 import static jrobokill.Level1.tirCunter;
 import static jrobokill.Level1.tirCunterT;
 import static jrobokill.Level1.tirVector;
@@ -44,8 +52,8 @@ public class Level3 extends JPanel implements Runnable {
     private BufferedImage Fall;
 
     public int pause3 = 0;
-    private int Xrobot3 = 400;
-    private int Yrobot3 = 500;
+    //private int Level1Xrobot = 400;
+    // private int Level1Yrobot = 500;
     public static Level4 RoboPanel4;
     private boolean Robo3IsAlive;
     public static Level2 RoboPanel3Back2;
@@ -71,6 +79,10 @@ public class Level3 extends JPanel implements Runnable {
     public Level3() {
 
         setLayout(null);
+        Level1.Health=20;
+
+        Level1.Xrobot = 400;
+        Level1.Yrobot = 650;
 
         TirHandler tirHandler = new TirHandler();
         addMouseListener(tirHandler);
@@ -153,28 +165,43 @@ public class Level3 extends JPanel implements Runnable {
 
         if (bangBox1 == 1 && bangBoxCounter1 >= 3) {
             g.drawImage(bang, xBox1 - 10, yBox1 - 10, this);
-
             g.drawImage(pool, xBox1 + 10, yBox1 + 13, this);
 
         }
         if (bangBox2 == 2 && bangBoxCounter2 >= 3) {
             g.drawImage(bang, xBox2 - 10, yBox2 - 10, this);
+            g.drawImage(gun, xBox2+5, yBox2, this);
         }
-        g.drawImage(gun, 350, 100, this);
-        g.drawImage(robot3, Xrobot3, Yrobot3, this);
-
+        
+        g.drawImage(robot3, Level1.Xrobot, Level1.Yrobot, this);
+        
+        if (Health == 100) {
+            g.drawImage(healthBar1, 0, 555, this);
+        } else if (Health == 80) {
+              g.drawImage(healthBar2, 0, 555, this);
+        }
+        else if (Health == 60) {
+             g.drawImage(healthBar3, 0, 555, this);
+        }
+        else if (Health == 40) {
+              g.drawImage(healthBar4, 0, 555, this);
+        }
+        else if (Health == 20) {
+             g.drawImage(healthBar5, 0, 555, this);
+        }
         for (tirCunter = 0; tirCunter < tirVector.size(); tirCunter++) {
             //System.out.println(tirVector.size());
 
-            g2d.rotate(atan((tirVector.get(tirCunter).getyMouse()-tirVector.get(tirCunter).getyFirstRobot())/(tirVector.get(tirCunter).getxMouse()-tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxTir(), tirVector.get(tirCunter).getyTir());
-                System.out.println(tirVector.size()+"/"+tirVector.get(tirCunter).getxMouse()+"/"+tirVector.get(tirCunter).getxTir());
-             
-            if(tirVector.get(tirCunter).getxMouse()>tirVector.get(tirCunter).getxFirstRobot())
-                g.drawImage(T1r,(int)tirVector.get(tirCunter).getxTir(),(int)tirVector.get(tirCunter).getyTir(),this);
-            else
-                g.drawImage(T1l,(int)tirVector.get(tirCunter).getxTir(),(int)tirVector.get(tirCunter).getyTir(),this);
-                    
-            g2d.rotate(-atan((tirVector.get(tirCunter).getyMouse()-tirVector.get(tirCunter).getyFirstRobot())/(tirVector.get(tirCunter).getxMouse()-tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxTir(), tirVector.get(tirCunter).getyTir());
+            g2d.rotate(atan((tirVector.get(tirCunter).getyMouse() - tirVector.get(tirCunter).getyFirstRobot()) / (tirVector.get(tirCunter).getxMouse() - tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxTir(), tirVector.get(tirCunter).getyTir());
+            System.out.println(tirVector.size() + "/" + tirVector.get(tirCunter).getxMouse() + "/" + tirVector.get(tirCunter).getxTir());
+
+            if (tirVector.get(tirCunter).getxMouse() > tirVector.get(tirCunter).getxFirstRobot()) {
+                g.drawImage(T1r, (int) tirVector.get(tirCunter).getxTir(), (int) tirVector.get(tirCunter).getyTir(), this);
+            } else {
+                g.drawImage(T1l, (int) tirVector.get(tirCunter).getxTir(), (int) tirVector.get(tirCunter).getyTir(), this);
+            }
+
+            g2d.rotate(-atan((tirVector.get(tirCunter).getyMouse() - tirVector.get(tirCunter).getyFirstRobot()) / (tirVector.get(tirCunter).getxMouse() - tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxTir(), tirVector.get(tirCunter).getyTir());
         }
 
     }
@@ -192,110 +219,112 @@ public class Level3 extends JPanel implements Runnable {
         public boolean dispatchKeyEvent(KeyEvent e) {
             int moveKey = e.getKeyCode();
 
-            if (moveKey == KeyEvent.VK_ESCAPE) {
+            if (JRoboKill.counter == 3) {
+                if (moveKey == KeyEvent.VK_ESCAPE) {
 
-                System.exit(0);
-            }
-            //button O & P for pause and continue
-            if (moveKey == KeyEvent.VK_P) {
-                pause3 = 1;
-                JOptionPane.showMessageDialog(null, "Pasue", "", JOptionPane.INFORMATION_MESSAGE);
-            }
-            if (moveKey == KeyEvent.VK_O) {
-                pause3 = 0;
-                JOptionPane.showMessageDialog(null, "continue ", "", JOptionPane.INFORMATION_MESSAGE);
-            }
-            if (moveKey == KeyEvent.VK_Q && JRoboKill.counter == 3) {
-                tanzimRob3 = new TanzimRobat();
+                    System.exit(0);
+                }
+                //button O & P for pause and continue
+                if (moveKey == KeyEvent.VK_P) {
+                    pause3 = 1;
+                    JOptionPane.showMessageDialog(null, "Pasue", "", JOptionPane.INFORMATION_MESSAGE);
+                }
+                if (moveKey == KeyEvent.VK_O) {
+                    pause3 = 0;
+                    JOptionPane.showMessageDialog(null, "continue ", "", JOptionPane.INFORMATION_MESSAGE);
+                }
+                if (moveKey == KeyEvent.VK_Q && JRoboKill.counter == 3) {
+                    tanzimRob3 = new TanzimRobat();
 
-                JRoboKill.board.remove(Level2.RoboPanel3);
-                JRoboKill.board.add(Level3.tanzimRob3, BorderLayout.CENTER);
-                JRoboKill.board.revalidate();
-            }
-            if (moveKey == KeyEvent.VK_W && JRoboKill.counter == 3) {
-                JRoboKill.board.remove(Level3.tanzimRob3);
-                JRoboKill.board.add(Level2.RoboPanel3, BorderLayout.CENTER);
-                JRoboKill.board.revalidate();
-            }
-            if (moveKey == KeyEvent.VK_M && JRoboKill.counter == 3) {
-                map3 = new Map();
+                    JRoboKill.board.remove(Level2.RoboPanel3);
+                    JRoboKill.board.add(Level3.tanzimRob3, BorderLayout.CENTER);
+                    JRoboKill.board.revalidate();
+                }
+                if (moveKey == KeyEvent.VK_W && JRoboKill.counter == 3) {
+                    JRoboKill.board.remove(Level3.tanzimRob3);
+                    JRoboKill.board.add(Level2.RoboPanel3, BorderLayout.CENTER);
+                    JRoboKill.board.revalidate();
+                }
+                if (moveKey == KeyEvent.VK_M && JRoboKill.counter == 3) {
+                    map3 = new Map();
 
-                JRoboKill.board.remove(Level2.RoboPanel3);
-                JRoboKill.board.add(map3, BorderLayout.CENTER);
-                JRoboKill.board.revalidate();
-            }
+                    JRoboKill.board.remove(Level2.RoboPanel3);
+                    JRoboKill.board.add(map3, BorderLayout.CENTER);
+                    JRoboKill.board.revalidate();
+                }
 
-            if (moveKey == KeyEvent.VK_N && JRoboKill.counter == 3) {
+                if (moveKey == KeyEvent.VK_N && JRoboKill.counter == 3) {
 
-                //kelid baraye map robat
-                JRoboKill.board.remove(Level3.map3);
-                JRoboKill.board.add(Level2.RoboPanel3, BorderLayout.CENTER);
-                JRoboKill.board.revalidate();
+                    //kelid baraye map robat
+                    JRoboKill.board.remove(Level3.map3);
+                    JRoboKill.board.add(Level2.RoboPanel3, BorderLayout.CENTER);
+                    JRoboKill.board.revalidate();
 
-            }
+                }
 
-            if (moveKey == KeyEvent.VK_UP) {
-                if (Yrobot3 >= 0 && pause3 == 0) {
-                    Yrobot3 = Yrobot3 - 5;
-                    if (Xrobot3 <= xPool + 15 && Xrobot3 >= xPool - 15 && Yrobot3 <= yPool + 15 && Yrobot3 >= yPool - 15) {
-                        if (getPool != 1) {
+                if (moveKey == KeyEvent.VK_UP && JRoboKill.counter == 3) {
+                    if (Level1.Yrobot >= 0 && pause3 == 0) {
+                        Level1.Yrobot = Level1.Yrobot - 5;
+                        if (Level1.Xrobot <= xPool + 15 && Level1.Xrobot >= xPool - 15 && Level1.Yrobot <= yPool + 15 && Level1.Yrobot >= yPool - 15) {
+                            if (getPool != 1) {
+                                getPool = 1;
+                                Level1.RoboPool += 500;
+                            }
+
+                        }
+                        if ((Level1.Xrobot > 200 && Level1.Xrobot < 600) && (Level1.Yrobot < 40) && JRoboKill.counter == 3) {
+                            //raftan be level4
+                            JRoboKill.counter = 4;
+                            RoboPanel4 = new Level4();
+                            JRoboKill.board.remove(Level2.RoboPanel3);
+                            JRoboKill.board.add(RoboPanel4, BorderLayout.CENTER);
+                            JRoboKill.board.revalidate();
+                            tirVector.removeAllElements();
+                        }
+                    }
+                }
+
+                if (moveKey == KeyEvent.VK_LEFT) {
+                    if (Level1.Xrobot >= 0 && pause3 == 0) {
+                        Level1.Xrobot = Level1.Xrobot - 5;
+                        if (Level1.Xrobot <= xPool + 20 && Level1.Xrobot >= xPool - 20 && Level1.Yrobot <= yPool + 20 && Level1.Yrobot >= yPool - 20) {
                             getPool = 1;
                             Level1.RoboPool += 500;
                         }
-
                     }
-                    if ((Xrobot3 > 200 && Xrobot3 < 600) && (Yrobot3 < 40) && JRoboKill.counter == 3) {
-                        //raftan be level4
-                        JRoboKill.counter = 4;
-                        RoboPanel4 = new Level4();
+
+                }
+
+                if (moveKey == KeyEvent.VK_RIGHT) {
+                    if (Level1.Xrobot <= 740 && pause3 == 0) {
+                        Level1.Xrobot = Level1.Xrobot + 5;
+                    }
+                    if (Level1.Xrobot <= xPool + 15 && Level1.Xrobot >= xPool - 15 && Level1.Yrobot <= yPool + 15 && Level1.Yrobot >= yPool - 15) {
+                        getPool = 1;
+                        Level1.RoboPool += 500;
+                    }
+                }
+                if (moveKey == KeyEvent.VK_DOWN) {
+                    if (Level1.Yrobot <= 560 && pause3 == 0) {
+                        Level1.Yrobot = Level1.Yrobot + 5;
+                        if (Level1.Xrobot <= xPool + 15 && Level1.Xrobot >= xPool - 15 && Level1.Yrobot <= yPool + 15 && Level1.Yrobot >= yPool - 15) {
+                            getPool = 1;
+                            Level1.RoboPool += 500;
+                        }
+                    }
+
+                    if ((Level1.Xrobot > 200 && Level1.Xrobot < 600 && JRoboKill.counter == 3) && (Level1.Yrobot > 540)) {
+                        //bargashtan be level 3
+                        JRoboKill.counter = 2;
+                        Level1.Xrobot = 400;
+                        Level1.Yrobot = 30;
                         JRoboKill.board.remove(Level2.RoboPanel3);
-                        JRoboKill.board.add(RoboPanel4, BorderLayout.CENTER);
+                        JRoboKill.board.add(Level1.RoboPanel2, BorderLayout.CENTER);
                         JRoboKill.board.revalidate();
                         tirVector.removeAllElements();
                     }
                 }
             }
-
-            if (moveKey == KeyEvent.VK_LEFT) {
-                if (Xrobot3 >= 0 && pause3 == 0) {
-                    Xrobot3 = Xrobot3 - 5;
-                    if (Xrobot3 <= xPool + 20 && Xrobot3 >= xPool - 20 && Yrobot3 <= yPool + 20 && Yrobot3 >= yPool - 20) {
-                        getPool = 1;
-                        Level1.RoboPool += 500;
-                    }
-                }
-
-            }
-
-            if (moveKey == KeyEvent.VK_RIGHT) {
-                if (Xrobot3 <= 740 && pause3 == 0) {
-                    Xrobot3 = Xrobot3 + 5;
-                }
-                if (Xrobot3 <= xPool + 15 && Xrobot3 >= xPool - 15 && Yrobot3 <= yPool + 15 && Yrobot3 >= yPool - 15) {
-                    getPool = 1;
-                    Level1.RoboPool += 500;
-                }
-            }
-            if (moveKey == KeyEvent.VK_DOWN) {
-                if (Yrobot3 <= 560 && pause3 == 0) {
-                    Yrobot3 = Yrobot3 + 5;
-                    if (Xrobot3 <= xPool + 15 && Xrobot3 >= xPool - 15 && Yrobot3 <= yPool + 15 && Yrobot3 >= yPool - 15) {
-                        getPool = 1;
-                        Level1.RoboPool += 500;
-                    }
-                }
-
-                if ((Xrobot3 > 200 && Xrobot3 < 600 && JRoboKill.counter == 3) && (Yrobot3 > 540)) {
-                    //bargashtan be level 3
-                    JRoboKill.counter = 2;
-
-                    JRoboKill.board.remove(Level2.RoboPanel3);
-                    JRoboKill.board.add(Level1.RoboPanel2, BorderLayout.CENTER);
-                    JRoboKill.board.revalidate();
-                    tirVector.removeAllElements();
-                }
-            }
-
             //bayad ye chizi ro return kone,return false;
             return false;
 
@@ -307,7 +336,13 @@ public class Level3 extends JPanel implements Runnable {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            tirVector.add(new TirThread(Xrobot3, Yrobot3, e.getX(), e.getY(), tirCunterT));
+            //sedaye shlik
+            if (Option.OnSound) {
+                URL url = getClass().getClassLoader().getResource("seda/Tir.wav");
+                AudioClip clip2 = Applet.newAudioClip(url);
+                clip2.loop();
+            }
+            tirVector.add(new TirThread(Level1.Xrobot, Level1.Yrobot, e.getX(), e.getY(), tirCunterT));
 
             if (e.getX() >= xBox1 - 30 && e.getX() <= xBox1 + 30 && e.getY() >= yBox1 - 30 && e.getY() <= yBox1 + 30) {
                 bangBox1 = 1;

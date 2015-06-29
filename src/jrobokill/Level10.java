@@ -5,6 +5,8 @@
  */
 package jrobokill;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -100,7 +102,6 @@ public class Level10 extends JPanel implements Runnable {
         g.drawImage(robot10, Level1.Xrobot, Level1.Yrobot, this);
         g.drawImage(mane, Xmane, Ymane, this);
 
-        
     }
 
     @Override
@@ -114,6 +115,10 @@ public class Level10 extends JPanel implements Runnable {
 
         @Override
         public void mouseClicked(MouseEvent e) {
+            //sedaye shlik
+            URL url = getClass().getClassLoader().getResource("seda/Tir.wav");
+            AudioClip clip2 = Applet.newAudioClip(url);
+            clip2.loop();
             tirVector.add(new TirThread(Level1.Xrobot, Level1.Yrobot, e.getX(), e.getY(), tirCunterT));
         }
 
@@ -138,71 +143,67 @@ public class Level10 extends JPanel implements Runnable {
         }
 
     }
-                        class moving implements KeyEventDispatcher {
+
+    class moving implements KeyEventDispatcher {
 
         @Override
         public boolean dispatchKeyEvent(KeyEvent e) {
             int moveKey = e.getKeyCode();
-            
-            if(JRoboKill.counter == 8){
-            if (moveKey == KeyEvent.VK_ESCAPE) {
 
-                System.exit(0);
-            }
-            //button O & P for pause and continue
-            if (moveKey == KeyEvent.VK_P) {
-                pause10 = 1;
-                JOptionPane.showMessageDialog(null, "Pasue", "", JOptionPane.INFORMATION_MESSAGE);
-            }
-            if (moveKey == KeyEvent.VK_O) {
-                pause10 = 0;
-                JOptionPane.showMessageDialog(null, "continue ", "", JOptionPane.INFORMATION_MESSAGE);
-            }
+            if (JRoboKill.counter == 8) {
+                if (moveKey == KeyEvent.VK_ESCAPE) {
 
-            if (moveKey == KeyEvent.VK_UP) {
-                if (Level1.Yrobot >= 0 && pause10 == 0) {
-                    Level1.Yrobot = Level1.Yrobot - 5;
-                    
-                    
+                    System.exit(0);
+                }
+                //button O & P for pause and continue
+                if (moveKey == KeyEvent.VK_P) {
+                    pause10 = 1;
+                    JOptionPane.showMessageDialog(null, "Pasue", "", JOptionPane.INFORMATION_MESSAGE);
+                }
+                if (moveKey == KeyEvent.VK_O) {
+                    pause10 = 0;
+                    JOptionPane.showMessageDialog(null, "continue ", "", JOptionPane.INFORMATION_MESSAGE);
+                }
+
+                if (moveKey == KeyEvent.VK_UP) {
+                    if (Level1.Yrobot >= 0 && pause10 == 0) {
+                        Level1.Yrobot = Level1.Yrobot - 5;
+
+                    }
+                }
+
+                if (moveKey == KeyEvent.VK_LEFT) {
+                    if (Level1.Xrobot >= 0 && pause10 == 0) {
+                        Level1.Xrobot = Level1.Xrobot - 5;
+
+                    }
+                    //bargasht be level5
+                    if ((Level1.Yrobot > 170 && Level1.Yrobot < 390 && JRoboKill.counter == 8) && (Level1.Xrobot < 50)) {
+                        //bargashtan be level 5
+                        JRoboKill.counter = 5;
+
+                        JRoboKill.board.remove(Level5.RoboPanel8);
+                        JRoboKill.board.add(Level4.RoboPanel5, BorderLayout.CENTER);
+                        JRoboKill.board.revalidate();
+                        tirVector.removeAllElements();
+                    }
+                }
+
+                if (moveKey == KeyEvent.VK_RIGHT) {
+                    if (Level1.Xrobot <= 740 && pause10 == 0) {
+                        Level1.Xrobot = Level1.Xrobot + 5;
+
+                    }
+                }
+                if (moveKey == KeyEvent.VK_DOWN) {
+                    if (Level1.Yrobot <= 560 && pause10 == 0) {
+                        Level1.Yrobot = Level1.Yrobot + 5;
+
+                    }
 
                 }
-            }
 
-            if (moveKey == KeyEvent.VK_LEFT) {
-                if (Level1.Xrobot >= 0 && pause10 == 0) {
-                    Level1.Xrobot = Level1.Xrobot - 5;
-                    
-
-                }
-                //bargasht be level5
-                        if ((Level1.Yrobot > 170 && Level1.Yrobot < 390 && JRoboKill.counter == 8) && (Level1.Xrobot < 50)) {
-                            //bargashtan be level 5
-                            JRoboKill.counter = 5;
-
-                            JRoboKill.board.remove(Level5.RoboPanel8);
-                            JRoboKill.board.add(Level4.RoboPanel5, BorderLayout.CENTER);
-                            JRoboKill.board.revalidate();
-                            tirVector.removeAllElements();
-                        }
             }
-
-            if (moveKey == KeyEvent.VK_RIGHT) {
-                if (Level1.Xrobot <= 740 && pause10 == 0) {
-                    Level1.Xrobot = Level1.Xrobot + 5;
-                   
-                   
-            }
-            }
-            if (moveKey == KeyEvent.VK_DOWN) {
-                if (Level1.Yrobot <= 560 && pause10 == 0) {
-                    Level1.Yrobot = Level1.Yrobot + 5;
-                    
-                }
-                
-            }
-
-            
-        }
             //bayad ye chizi ro return kone,return false;
             return false;
         }

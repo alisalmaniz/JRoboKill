@@ -5,6 +5,8 @@
  */
 package jrobokill;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -43,7 +45,7 @@ public class Level8 extends JPanel implements Runnable {
     private int Xmane = 300;
     private int Ymane = 300;
     public static Map map8;
-     public static TanzimRobat tanzimRob8;
+    public static TanzimRobat tanzimRob8;
 
     public Level8() {
 
@@ -103,7 +105,6 @@ public class Level8 extends JPanel implements Runnable {
         g.drawImage(robot8, Level1.Xrobot, Level1.Yrobot, this);
         g.drawImage(mane, Xmane, Ymane, this);
 
-        
     }
 
     @Override
@@ -210,6 +211,12 @@ public class Level8 extends JPanel implements Runnable {
 
         @Override
         public void mouseClicked(MouseEvent e) {
+            //sedaye shlik
+            if (Option.OnSound) {
+                URL url = getClass().getClassLoader().getResource("seda/Tir.wav");
+                AudioClip clip2 = Applet.newAudioClip(url);
+                clip2.loop();
+            }
             tirVector.add(new TirThread(Level1.Xrobot, Level1.Yrobot, e.getX(), e.getY(), tirCunterT));
         }
 

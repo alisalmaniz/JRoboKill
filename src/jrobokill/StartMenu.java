@@ -36,7 +36,7 @@ import sun.audio.ContinuousAudioDataStream;
  *
  * @author Asus
  */
-public class StartMenu extends JPanel implements ActionListener{
+public class StartMenu extends JPanel implements ActionListener {
 
     private JButton Start;
     private JButton option;
@@ -45,13 +45,14 @@ public class StartMenu extends JPanel implements ActionListener{
     private BufferedImage PicStart;
 
     public static boolean GoToGame = false;
-    
+    public static boolean OnSeda=true;
+
     MainFrame mainFrame;
-    
+
     public StartMenu(MainFrame mainFrame) {
         setLayout(null);
 
-        this.mainFrame=mainFrame;
+        this.mainFrame = mainFrame;
         //zamin
         URL resourcePicStart = getClass().getResource("/pic/start.jpg");
         try {
@@ -60,8 +61,7 @@ public class StartMenu extends JPanel implements ActionListener{
             System.out.println("invalid adress pic start");
         }
         //tamom
-        
-        
+
         //kelid start
         Start = new JButton("Start");
         Start.setFont(new Font("Arial", Font.BOLD, 20));
@@ -91,21 +91,21 @@ public class StartMenu extends JPanel implements ActionListener{
         //tamom
         //action listener for option
         option.addActionListener(this);
-                
-                
-        
-            
-        
+
         //tamom
         //action listener for exit
         exit.addActionListener(this);
-            
-        
+
         //tamom
         //action listener for start 
         Start.addActionListener(this);
-                
-               
+       
+        
+        URL url = getClass().getClassLoader().getResource("seda/hot.wav");
+        AudioClip clip2 = Applet.newAudioClip(url);
+        clip2.loop();
+        
+
     }
 
     @Override
@@ -116,66 +116,55 @@ public class StartMenu extends JPanel implements ActionListener{
 
         //debug amir :g.fillOval(x, y, 100, 100);
     }
-    
-    
-    
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        
-        if(e.getSource()==option){
 
-                /*    URL url = getClass().getClassLoader().getResource("/seda/seda11.wav");
+        if (e.getSource() == option) {
+            try {
+                Option opt= new Option();
                 
-                 AudioClip clip2 = Applet.newAudioClip(url);
-                 clip2.loop();
-                 System.out.println("debug amir: option shod");*/
-                AudioPlayer myBackgroundPlayer = AudioPlayer.player;
-
+                /* AudioPlayer myBackgroundPlayer = AudioPlayer.player;
+                
                 ContinuousAudioDataStream myLoop = null;
                 //use a try block in case the file doesn't exist.
                 try {
-                    AudioStream myBackgroundMusic
-                            = new AudioStream(new FileInputStream(new File(getClass().getResource("/seda/j.wav").toURI())));
-                    AudioData myData = myBackgroundMusic.getData();
-                    myLoop = new ContinuousAudioDataStream(myData);
+                AudioStream myBackgroundMusic
+                = new AudioStream(new FileInputStream(new File(getClass().getResource("/seda/j.wav").toURI())));
+                AudioData myData = myBackgroundMusic.getData();
+                myLoop = new ContinuousAudioDataStream(myData);
                 } catch (Exception error) {
-                    JOptionPane.showMessageDialog(null, "Invalid file!");
+                JOptionPane.showMessageDialog(null, "Invalid file!");
                 }
-
+                
                 // play background music.
-                myBackgroundPlayer.start(myLoop);
+                myBackgroundPlayer.start(myLoop);*/
+            } catch (IOException ex) {
+                Logger.getLogger(StartMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
-    
-    
-    else if(e.getSource()==exit){
-                System.exit(0);
-                System.out.println("debug amir: exit shod");
-            }
-    
-    
-    else if(e.getSource()==Start){
+        } else if (e.getSource() == exit) {
+            System.exit(0);
+            System.out.println("debug amir: exit shod");
+        } else if (e.getSource() == Start) {
                 //GoToGame = true;
-                // System.out.println("debug amir: start zade shod" + GoToGame);
+            // System.out.println("debug amir: start zade shod" + GoToGame);
 
                 //new kardan level ha
-                
-                System.out.println("w1");
-                mainFrame.dispatchEvent(new ComponentEvent(this, 01));
-        
-                RoboPanel = new Level1();
+            System.out.println("w1");
+            mainFrame.dispatchEvent(new ComponentEvent(this, 01));
 
-                //tamam
-                JRoboKill.board.remove(startmenu);
-                JRoboKill.board.add(RoboPanel, BorderLayout.CENTER);
-                JRoboKill.board.revalidate();
-                //
-                System.out.println("debug amir: 123");
-        
-            }
-        
+            RoboPanel = new Level1();
+
+            //tamam
+            JRoboKill.board.remove(startmenu);
+            JRoboKill.board.add(RoboPanel, BorderLayout.CENTER);
+            JRoboKill.board.revalidate();
+            //
+            System.out.println("debug amir: 123");
+
+        }
+
         //tamoom
     }
-    
-    
+
 }

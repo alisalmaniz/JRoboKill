@@ -76,18 +76,5 @@ public class TanzimRobat extends JPanel {
         g.drawImage(zaminTanzim, 0, 0, this);
     }
 
-    /*class BackToPanel implements KeyEventDispatcher {
-
-        @Override
-        public boolean dispatchKeyEvent(KeyEvent e) {
-            int press = e.getKeyCode();
-            if (press == KeyEvent.VK_W && JRoboKill.counter == 2) {
-                JRoboKill.board.remove(Level2.tanzimRob2);
-                JRoboKill.board.add(Level1.RoboPanel2, BorderLayout.CENTER);
-                JRoboKill.board.revalidate();
-            }
-
-            return false;
-        }
-    }*/
+    
 }
