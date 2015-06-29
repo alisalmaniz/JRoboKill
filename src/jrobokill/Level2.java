@@ -57,6 +57,8 @@ public class Level2 extends JPanel implements Runnable {
     public static BufferedImage enemy2l;
     public static BufferedImage enemy3l;
     public static BufferedImage enemy4l;
+    public static BufferedImage EnemyTir1r;
+    public static BufferedImage EnemyTir1l;
     public static BufferedImage enemyDeth;
     public static Level3 RoboPanel3;
     public static TanzimRobat tanzimRob2;
@@ -73,15 +75,22 @@ public class Level2 extends JPanel implements Runnable {
     public static Vector<EnemyThread> enemyVector;
     public static int enemyNumber=0;
     public static int enemyCunter=0;
-    int edflag;
+    int enemydethflag;
+    
+    
+    private int moveRobots;
+    private int nowMoving;
 
     public Level2() {
         setLayout(null);
         
-        edflag=0;
+        moveRobots=0;
+        nowMoving=0;
+        
+        enemydethflag=0;
         
         Level1.Xrobot=400;
-        Level1.Yrobot=400;
+        Level1.Yrobot=500;
         
         TirHandler tirHandler = new TirHandler();
         addMouseListener(tirHandler);
@@ -190,6 +199,21 @@ public class Level2 extends JPanel implements Runnable {
             System.out.println("invalid adress enemy4l");
         }
         
+        URL resourceEnemyTir1r = getClass().getResource("/pic/EnemyTir1r.png");
+        try {
+            EnemyTir1r = ImageIO.read(resourceEnemyTir1r);
+        } catch (IOException e) {
+            System.out.println("invalid adress EnemyTir1r");
+        }
+        
+        URL resourceEnemyTir1l = getClass().getResource("/pic/EnemyTir1l.png");
+        try {
+            EnemyTir1l = ImageIO.read(resourceEnemyTir1l);
+        } catch (IOException e) {
+            System.out.println("invalid adress EnemyTir1l");
+        }
+        
+        
         URL resourceEnemyDeth = getClass().getResource("/pic/enemyDeth.png");
         try {
             enemyDeth = ImageIO.read(resourceEnemyDeth);
@@ -198,13 +222,12 @@ public class Level2 extends JPanel implements Runnable {
         }
         
         enemyCunter++;
-        enemyVector.add( new EnemyThread(enemyCunter , 1 , 200.0 ,200.0));
+        enemyVector.add( new EnemyThread(enemyCunter , 1 , 250.0 ,00.0));
         enemyCunter++;
-        enemyVector.add( new EnemyThread(enemyCunter , 1 , 200.0 ,600.0));
+        enemyVector.add( new EnemyThread(enemyCunter , 1 , 500.0 ,00.0));
         enemyCunter++;
-        enemyVector.add( new EnemyThread(enemyCunter , 1 , 600.0 ,200.0));
-        enemyCunter++;
-        enemyVector.add( new EnemyThread(enemyCunter , 1 , 600.0 ,600.0));
+        enemyVector.add( new EnemyThread(enemyCunter , 1 , 400.0 ,00.0));
+        
         
         
         
@@ -230,14 +253,28 @@ public class Level2 extends JPanel implements Runnable {
         Graphics2D g2d = (Graphics2D) g;
         
         
-        if(edflag!=0){
+        
+        if(moveRobots==15)
+            moveRobots=0;
+        
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Level1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+       /* 
+        if(enemydethflag!=0){
             try {
                     Thread.sleep(20);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Level2.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            edflag=0;
+            enemydethflag=0;
         }
+        */
         g.drawImage(zamin2, 0, 0, this);
         g.drawImage(pol, 200, 0, this);
         for (int i = 0; i < 2; i++) {
@@ -256,7 +293,7 @@ public class Level2 extends JPanel implements Runnable {
 ////            if(enemyVector.get(enemyCunter).getEnemySmash()){
 ////                g.drawImage(enemyDeth,(int) enemyVector.get(enemyCunter).getxEnemy(),(int) enemyVector.get(enemyCunter).getyEnemy(), this);
 ////                    enemyVector.remove(enemyCunter);
-////                   edflag++; 
+////                   enemydethflag++; 
 ////                   
 ////                
 ////            }
@@ -268,28 +305,28 @@ public class Level2 extends JPanel implements Runnable {
         
         
         if (Robo2IsAlive) {
-            g.drawImage(robot2, Level1.Xrobot, Level1.Yrobot, this);
+            g.drawImage(Level1.robots[moveRobots], Level1.Xrobot, Level1.Yrobot, this);
+            
+            if(nowMoving>0){
+                
+                moveRobots++;
+                nowMoving--;
+            }
+            
         } else {
 
         }
 
 
         //tir
-        
         for( tirCunter=0;tirCunter<tirVector.size();tirCunter++){
-            
                 if(Level1.tirVector.get(tirCunter).getruns()){
-                //System.out.println(tirVector.size());
                 g2d.rotate(atan((tirVector.get(tirCunter).getyMouse()-tirVector.get(tirCunter).getyFirstRobot())/(tirVector.get(tirCunter).getxMouse()-tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxTir(), tirVector.get(tirCunter).getyTir());
-                    System.out.println(atan((tirVector.get(tirCunter).getyMouse()-tirVector.get(tirCunter).getyFirstRobot())/(tirVector.get(tirCunter).getxMouse()-tirVector.get(tirCunter).getxFirstRobot())));//+"+"+tirVector.get(tirCunter).getxFirstRobot()+"+"+ tirVector.get(tirCunter).getyFirstRobot());
-
                 if(tirVector.get(tirCunter).getxMouse()>tirVector.get(tirCunter).getxFirstRobot() )
                     g.drawImage(T1r,(int)tirVector.get(tirCunter).getxTir(),(int)tirVector.get(tirCunter).getyTir(),this);
                 else
                     g.drawImage(T1l,(int)tirVector.get(tirCunter).getxTir(),(int)tirVector.get(tirCunter).getyTir(),this);
-
                 g2d.rotate(-atan((tirVector.get(tirCunter).getyMouse()-tirVector.get(tirCunter).getyFirstRobot())/(tirVector.get(tirCunter).getxMouse()-tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxTir(), tirVector.get(tirCunter).getyTir());
-                //System.out.println("/"+atan((tirVector.get(tirCunter).getyMouse()-tirVector.get(tirCunter).getyFirstRobot())/(tirVector.get(tirCunter).getxMouse()-tirVector.get(tirCunter).getxFirstRobot()))+"+"+tirVector.get(tirCunter).getxFirstRobot()+"+"+ tirVector.get(tirCunter).getyFirstRobot());
             }
         }
         
@@ -327,7 +364,7 @@ public class Level2 extends JPanel implements Runnable {
         
         }
             else{
-                edflag++;
+                enemydethflag++;
             }
         }
     }
@@ -345,6 +382,8 @@ public class Level2 extends JPanel implements Runnable {
         public boolean dispatchKeyEvent(KeyEvent e) {
             int moveKey = e.getKeyCode();
 
+            if(JRoboKill.counter == 2 ){
+            
             if (moveKey == KeyEvent.VK_Q && JRoboKill.counter == 2) {
                 tanzimRob2 = new TanzimRobat();
 
@@ -376,7 +415,7 @@ public class Level2 extends JPanel implements Runnable {
             }
 
             if (moveKey == KeyEvent.VK_UP) {
-
+                nowMoving+=2;
                 if((Level1.Xrobot>=xBox1+40 && (Level1.Yrobot>280 || Level1.Yrobot<180))||(Level1.Xrobot>=xBox1+40 && (Level1.Yrobot<=280 && Level1.Yrobot>=180))||/*(Xrobot2<=300 && (Yrobot2<280 && Yrobot2>200))||*/(Level1.Xrobot<=xBox1+40 && (Level1.Yrobot>=280 || Level1.Yrobot<=180))){
                 Level1.Yrobot = Level1.Yrobot - 5;
                 //age az door rad shod
@@ -392,7 +431,7 @@ public class Level2 extends JPanel implements Runnable {
             }
 
             if (moveKey == KeyEvent.VK_LEFT) {
-
+nowMoving+=2;
                  if((Level1.Xrobot>=xBox1+40 && (Level1.Yrobot>280 || Level1.Yrobot<180))||(Level1.Xrobot>=xBox1+40 && (Level1.Yrobot<280 && Level1.Yrobot>180))||/*(Xrobot2<=300 && (Yrobot2<280 && Yrobot2>200))||*/(Level1.Xrobot<=xBox1+40 && (Level1.Yrobot>280 || Level1.Yrobot<180))){
                    //if( !(Xrobot2<xBox1 && (Yrobot2<280 || Yrobot2>200))){
                      Level1.Xrobot = Level1.Xrobot - 5;
@@ -415,7 +454,7 @@ public class Level2 extends JPanel implements Runnable {
             }
 
             if (moveKey == KeyEvent.VK_RIGHT) {
-
+nowMoving+=2;
                 Level1.Xrobot = Level1.Xrobot + 5;
                 //agar az roye pol oonvartar raft biyofte payin
                 if (Level1.Xrobot > 550 && JRoboKill.counter == 2) {
@@ -434,7 +473,7 @@ public class Level2 extends JPanel implements Runnable {
                 
             }
             if (moveKey == KeyEvent.VK_DOWN) {
-
+nowMoving+=2;
                  if((Level1.Xrobot>=xBox1+40 && (Level1.Yrobot>280 || Level1.Yrobot<180))||(Level1.Xrobot>=xBox1+40 && (Level1.Yrobot<=280 && Level1.Yrobot>=180))||/*(Xrobot2<=300 && (Yrobot2<280 && Yrobot2>200))||*/(Level1.Xrobot<=xBox1+40 && (Level1.Yrobot>=280 || Level1.Yrobot<=180))){
                      
 
@@ -451,7 +490,7 @@ public class Level2 extends JPanel implements Runnable {
                 }
             }
             }
-
+            }
             //return false;
             return false;
 

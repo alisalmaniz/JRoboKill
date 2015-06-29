@@ -25,6 +25,7 @@ public class EnemyThread implements Runnable{
     int enemyNumber;
     double r;
     Boolean enemySmash;
+    int tirs;
     
     
     public EnemyThread(int threadNumber, int enemyNumber,double xEnemy , double yEnemy) {
@@ -34,7 +35,7 @@ public class EnemyThread implements Runnable{
         this.threadNumber=threadNumber;
         this.enemyNumber=enemyNumber;
         enemySmash=false;
-        
+        tirs=0;
         //firstXEnemy=xEnemy+20;
         
         //firstYEnemy=xEnemy+20;
@@ -62,9 +63,9 @@ public class EnemyThread implements Runnable{
             try {
                 
                if(r>200000)
-               Thread.sleep(50);
+               Thread.sleep(60);
                else if(r>10000)
-                   Thread.sleep(30);
+                   Thread.sleep(40);
                else if(r>3000)
                    Thread.sleep(20);
                else if(r>1000)
@@ -86,11 +87,13 @@ public class EnemyThread implements Runnable{
             }
             
             
+            if(enemyNumber!=4){
+            
                 xEnemy-=(double)(xEnemy-Level1.Xrobot)/100;
                 yEnemy-=(double)(yEnemy-Level1.Yrobot)/100;
            
             
-                
+            }
             
            
             
@@ -119,6 +122,14 @@ public class EnemyThread implements Runnable{
 
     public void setEnemySmash(Boolean enemySmash) {
         this.enemySmash = enemySmash;
+    }
+
+    public int getTirs() {
+        return tirs;
+    }
+
+    public void setTirs(int tirs) {
+        this.tirs = tirs;
     }
     
     

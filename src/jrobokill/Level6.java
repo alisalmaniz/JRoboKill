@@ -18,15 +18,23 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import static java.lang.Math.atan;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import static jrobokill.Level1.T1l;
 import static jrobokill.Level1.T1r;
 import static jrobokill.Level1.Xrobot;
+import static jrobokill.Level1.Yrobot;
+import static jrobokill.Level1.robots;
 import static jrobokill.Level1.tirCunter;
 import static jrobokill.Level1.tirCunterT;
 import static jrobokill.Level1.tirVector;
+import static jrobokill.Level2.enemy1l;
+import static jrobokill.Level2.enemy1r;
+import static jrobokill.Level2.enemyCunter;
+import static jrobokill.Level2.enemyVector;
 
 /**
  *
@@ -50,15 +58,23 @@ public class Level6 extends JPanel implements Runnable {
 
     private boolean Robo6IsAlive;
     public static TanzimRobat tanzimRob6;
-
+    int enemydethflag;
+    
+    
+    private int moveRobots;
+    private int nowMoving;
+    
     public Level6() {
         Level1.Xrobot = 740;
         Level1.Yrobot = 300;
-
+ enemydethflag=0;
         setLayout(null);
         TirHandler tirHandler = new TirHandler();
         addMouseListener(tirHandler);
 
+        moveRobots=0;
+        nowMoving=0;
+        
         Robo6IsAlive = true;
 
         //zamin
@@ -88,6 +104,33 @@ public class Level6 extends JPanel implements Runnable {
 
         //move
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new moving());
+        
+        
+        
+        enemyCunter++;
+        enemyVector.add( new EnemyThread(enemyCunter , 2 , 100.0 ,200.0));
+        enemyCunter++;
+        enemyVector.add( new EnemyThread(enemyCunter , 2 , 600.0 ,200.0));
+        enemyCunter++;
+        enemyVector.add( new EnemyThread(enemyCunter , 2 , 400.0 ,300.0));
+        enemyCunter++;
+        enemyVector.add( new EnemyThread(enemyCunter , 2 , 100.0 ,500.0));
+        enemyCunter++;
+        enemyVector.add( new EnemyThread(enemyCunter , 2 , 600.0 ,500.0));
+        enemyCunter++;
+        enemyVector.add( new EnemyThread(enemyCunter , 2 , 150.0 ,200.0));
+        enemyCunter++;
+        enemyVector.add( new EnemyThread(enemyCunter , 2 , 550.0 ,200.0));
+        enemyCunter++;
+        enemyVector.add( new EnemyThread(enemyCunter , 2 , 400.0 ,100.0));
+        enemyCunter++;
+        enemyVector.add( new EnemyThread(enemyCunter , 2 , 100.0 ,400.0));
+        enemyCunter++;
+        enemyVector.add( new EnemyThread(enemyCunter , 2 , 600.0 ,400.0));
+        enemyCunter++;
+        enemyVector.add( new EnemyThread(enemyCunter , 2 , 400.0 ,10.0));
+        
+        
         (new Thread(this)).start();
     }
 
@@ -103,12 +146,105 @@ public class Level6 extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
+        
+        
+        if(moveRobots==15)
+            moveRobots=0;
+        
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Level1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        /*
+        if(enemydethflag!=0){
+            try {
+                    Thread.sleep(20);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Level2.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            enemydethflag=0;
+        }
+        */
         g.drawImage(zamin6, 0, 0, this);
 
 
-        g.drawImage(robot6, Level1.Xrobot, Level1.Yrobot, this);
+        g.drawImage(robots[moveRobots], Xrobot, Yrobot, this);
+            
+            if(nowMoving>0){
+                
+                moveRobots++;
+                nowMoving--;
+            }
+            
         
         g.drawImage(mane, Xmane, Ymane, this);
+        
+        //tir
+        for( tirCunter=0;tirCunter<tirVector.size();tirCunter++){
+                if(Level1.tirVector.get(tirCunter).getruns()){
+                g2d.rotate(atan((tirVector.get(tirCunter).getyMouse()-tirVector.get(tirCunter).getyFirstRobot())/(tirVector.get(tirCunter).getxMouse()-tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxTir(), tirVector.get(tirCunter).getyTir());
+                if(tirVector.get(tirCunter).getxMouse()>tirVector.get(tirCunter).getxFirstRobot() )
+                    g.drawImage(T1r,(int)tirVector.get(tirCunter).getxTir(),(int)tirVector.get(tirCunter).getyTir(),this);
+                else
+                    g.drawImage(T1l,(int)tirVector.get(tirCunter).getxTir(),(int)tirVector.get(tirCunter).getyTir(),this);
+                g2d.rotate(-atan((tirVector.get(tirCunter).getyMouse()-tirVector.get(tirCunter).getyFirstRobot())/(tirVector.get(tirCunter).getxMouse()-tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxTir(), tirVector.get(tirCunter).getyTir());
+            }
+        }
+        
+        //enemy
+        for( enemyCunter=0;enemyCunter<enemyVector.size(); enemyCunter++){
+                    
+            if(!enemyVector.get(enemyCunter).getEnemySmash()){
+                    
+            g2d.rotate(atan((enemyVector.get(enemyCunter).getyEnemy()-Level1.Yrobot)/(enemyVector.get(enemyCunter).getxEnemy()-Level1.Xrobot)),enemyVector.get(enemyCunter).getxEnemy(),enemyVector.get(enemyCunter).getyEnemy());
+            System.out.println(enemyVector.get(enemyCunter).getyEnemy()+"/"+enemyVector.get(enemyCunter).getxEnemy());
+            
+            if(enemyVector.get(enemyCunter).getEnemyNumber()==1){
+                
+                if(enemyVector.get(enemyCunter).getxEnemy()>Level1.Xrobot){
+                    g.drawImage(enemy1r,(int)enemyVector.get(enemyCunter).getxEnemy(),(int)enemyVector.get(enemyCunter).getyEnemy(),this);
+                }
+                else{
+                    g.drawImage(enemy1l,(int)enemyVector.get(enemyCunter).getxEnemy(),(int)enemyVector.get(enemyCunter).getyEnemy(),this);
+                }
+                      
+            }
+            else if(enemyVector.get(enemyCunter).getEnemyNumber()==2){
+                if(enemyVector.get(enemyCunter).getxEnemy()>Level1.Xrobot){
+                    g.drawImage(Level2.enemy2r,(int)enemyVector.get(enemyCunter).getxEnemy(),(int)enemyVector.get(enemyCunter).getyEnemy(),this);
+                }
+                else{
+                    g.drawImage(Level2.enemy2l,(int)enemyVector.get(enemyCunter).getxEnemy(),(int)enemyVector.get(enemyCunter).getyEnemy(),this);
+                }
+            }
+            else if(enemyVector.get(enemyCunter).getEnemyNumber()==3){
+                if(enemyVector.get(enemyCunter).getxEnemy()>Level1.Xrobot){
+                    g.drawImage(Level2.enemy3r,(int)enemyVector.get(enemyCunter).getxEnemy(),(int)enemyVector.get(enemyCunter).getyEnemy(),this);
+                }
+                else{
+                    g.drawImage(Level2.enemy3l,(int)enemyVector.get(enemyCunter).getxEnemy(),(int)enemyVector.get(enemyCunter).getyEnemy(),this);
+                }
+            }
+            else if(enemyVector.get(enemyCunter).getEnemyNumber()==4){
+                if(enemyVector.get(enemyCunter).getxEnemy()>Level1.Xrobot){
+                    g.drawImage(Level2.enemy4r,(int)enemyVector.get(enemyCunter).getxEnemy(),(int)enemyVector.get(enemyCunter).getyEnemy(),this);
+                }
+                else{
+                    g.drawImage(Level2.enemy4l,(int)enemyVector.get(enemyCunter).getxEnemy(),(int)enemyVector.get(enemyCunter).getyEnemy(),this);
+                }
+            }
+            
+            
+            g2d.rotate(-atan((enemyVector.get(enemyCunter).getyEnemy()-Level1.Yrobot)/(enemyVector.get(enemyCunter).getxEnemy()-Level1.Xrobot)),enemyVector.get(enemyCunter).getxEnemy(),enemyVector.get(enemyCunter).getyEnemy() );
+            //System.out.println(enemyVector.get(enemyCunter).getxEnemy()+"/"+enemyVector.get(enemyCunter).getyEnemy());
+        
+        }
+            else{
+                enemydethflag++;
+            }
+        }
 
     }
 
@@ -125,6 +261,8 @@ public class Level6 extends JPanel implements Runnable {
         public boolean dispatchKeyEvent(KeyEvent e) {
             int moveKey = e.getKeyCode();
 
+            if(JRoboKill.counter == 6 ){
+            
             if (JRoboKill.counter == 6) {
                 if (moveKey == KeyEvent.VK_ESCAPE) {
 
@@ -169,6 +307,7 @@ public class Level6 extends JPanel implements Runnable {
                     JRoboKill.board.revalidate();
                 }
                 if (moveKey == KeyEvent.VK_UP) {
+                    nowMoving+=2;
                     if (Level1.Yrobot >= 0 && pause6 == 0) {
                         Level1.Yrobot = Level1.Yrobot - 5;
 
@@ -176,6 +315,7 @@ public class Level6 extends JPanel implements Runnable {
                 }
 
                 if (moveKey == KeyEvent.VK_LEFT) {
+                    nowMoving+=2;
                     if (Level1.Xrobot >= 0 && pause6 == 0) {
                         Level1.Xrobot = Level1.Xrobot - 5;
                     }
@@ -193,6 +333,7 @@ public class Level6 extends JPanel implements Runnable {
                 }
 
                 if (moveKey == KeyEvent.VK_RIGHT) {
+                    nowMoving+=2;
                     if (Level1.Xrobot <= 740 && pause6 == 0) {
                         Level1.Xrobot = Level1.Xrobot + 5;
                         if ((Level1.Yrobot > 180 && Level1.Yrobot < 380 && JRoboKill.counter == 6) && (Level1.Xrobot > 740)) {
@@ -208,6 +349,7 @@ public class Level6 extends JPanel implements Runnable {
                     }
                 }
                 if (moveKey == KeyEvent.VK_DOWN) {
+                    nowMoving+=2;
                     if (Level1.Yrobot <= 560 && pause6 == 0) {
                         Level1.Yrobot = Level1.Yrobot + 5;
 
@@ -216,40 +358,14 @@ public class Level6 extends JPanel implements Runnable {
                 }
 
             }
+            }
             //bayad ye chizi ro return kone,return false;
             return false;
         }
 
     }
 
-    private class TirHandler implements MouseListener {
 
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            tirVector.add(new TirThread(Level1.Xrobot, Level1.Yrobot, e.getX(), e.getY(), tirCunterT));
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-
-        }
-
-    }
         
         private class TirHandler implements MouseListener {
 

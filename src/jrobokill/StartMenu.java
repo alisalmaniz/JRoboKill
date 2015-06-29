@@ -136,7 +136,7 @@ public class StartMenu extends JPanel implements ActionListener{
                 //use a try block in case the file doesn't exist.
                 try {
                     AudioStream myBackgroundMusic
-                            = new AudioStream(new FileInputStream(new File(getClass().getResource("/seda/j.wav").toURI())));
+                            = new AudioStream(new FileInputStream(new File(getClass().getResource("seda/j.wav").toURI())));
                     AudioData myData = myBackgroundMusic.getData();
                     myLoop = new ContinuousAudioDataStream(myData);
                 } catch (Exception error) {
@@ -164,7 +164,7 @@ public class StartMenu extends JPanel implements ActionListener{
                 mainFrame.dispatchEvent(new ComponentEvent(this, 01));
         
                 RoboPanel = new Level1();
-
+               
                 //tamam
                 JRoboKill.board.remove(startmenu);
                 JRoboKill.board.add(RoboPanel, BorderLayout.CENTER);

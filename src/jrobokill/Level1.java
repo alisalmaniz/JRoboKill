@@ -375,6 +375,7 @@ public class Level1 extends JPanel implements Runnable {
 
                         JRoboKill.counter = 2;
                         RoboPanel2 = new Level2();
+                        
                         //JRoboKill.board.panelChanger();
                         JRoboKill.board.remove(StartMenu.RoboPanel);
                         JRoboKill.board.add(RoboPanel2, BorderLayout.CENTER);

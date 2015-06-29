@@ -67,11 +67,16 @@ public class TirThread implements Runnable{
         
         
         while (runs) {
-            if(JRoboKill.counter==2)
+            if(JRoboKill.counter!=1)
             for(int j=0;j<Level2.enemyVector.size();j++){
-            if(xTir>Level2.enemyVector.get(j).getxEnemy() && xTir<Level2.enemyVector.get(j).getxEnemy()+25 && yTir>Level2.enemyVector.get(j).getyEnemy() && yTir<Level2.enemyVector.get(j).getyEnemy()+25){
+            if(xTir>Level2.enemyVector.get(j).getxEnemy() && xTir<Level2.enemyVector.get(j).getxEnemy()+25 && yTir>Level2.enemyVector.get(j).getyEnemy() && yTir<Level2.enemyVector.get(j).getyEnemy()+35){
                 runs=false;
-                Level2.enemyVector.get(j).setEnemySmash(true);
+                Level2.enemyVector.get(j).setTirs(Level2.enemyVector.get(j).getTirs()+1);
+                if(Level2.enemyVector.get(j).getTirs()>1){
+                    Level2.enemyVector.get(j).setEnemySmash(true);
+                    Level2.enemyVector.remove(j);
+                }
+                
             }
         }
             
@@ -88,19 +93,23 @@ public class TirThread implements Runnable{
                     Thread.sleep(400000/(int)r);
                 else if(r>1000)
                     Thread.sleep(200000/(int)r);
-                else
+                else if(r>100)
                     Thread.sleep(1000/(int)r);
+                else
+                    Thread.sleep(0);
                  
             } catch (InterruptedException ex) {
                 Logger.getLogger(TirThread.class.getName()).log(Level.SEVERE, null, ex);
             }
             
+           
             if(r<1000)
-                r=100*r;
+                r=1000*r;
             
             if(r<100)
-                r=10*r;
+                r=100;
             
+            System.out.println(xMouse-xFirstRobot);
             if(xMouse>=xRobot+20 ){
                 
                 xTir+=(double)(xMouse-xFirstRobot)*1000/r;

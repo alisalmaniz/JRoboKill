@@ -32,6 +32,7 @@ public class MainFrame extends JFrame{
             Dimension size = new Dimension(805, 635);
             setSize(size);
             //amir:add kardan start menu be Jfram
+            
             add(startmenu, BorderLayout.CENTER);
     }
 

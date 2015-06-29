@@ -18,11 +18,16 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import static java.lang.Math.atan;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import static jrobokill.Level1.T1l;
 import static jrobokill.Level1.T1r;
+import static jrobokill.Level1.Xrobot;
+import static jrobokill.Level1.Yrobot;
+import static jrobokill.Level1.robots;
 import static jrobokill.Level1.tirCunter;
 import static jrobokill.Level1.tirCunterT;
 import static jrobokill.Level1.tirVector;
@@ -43,11 +48,17 @@ public class Level11 extends JPanel implements Runnable {
     private int Xmane = 300;
     private int Ymane = 300;
     public static Level6 RoboPanel6;
+    
+    private int moveRobots;
+    private int nowMoving;
 
     public Level11() {
         Level1.Xrobot = 450;
         Level1.Yrobot = 30;
 
+        moveRobots=0;
+        nowMoving=0;
+        
         setLayout(null);
         TirHandler tirHandler = new TirHandler();
         addMouseListener(tirHandler);
@@ -96,9 +107,29 @@ public class Level11 extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
+        
+        if(moveRobots==15)
+            moveRobots=0;
+        
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Level1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
         g.drawImage(zamin11, 0, 0, this);
 
-        g.drawImage(robot11, Level1.Xrobot, Level1.Yrobot, this);
+        g.drawImage(robots[moveRobots], Xrobot, Yrobot, this);
+            
+            if(nowMoving>0){
+                
+                moveRobots++;
+                nowMoving--;
+            }
+            
+            
+            
         g.drawImage(mane, Xmane, Ymane, this);
 
         
@@ -146,7 +177,7 @@ public class Level11 extends JPanel implements Runnable {
         public boolean dispatchKeyEvent(KeyEvent e) {
             int moveKey = e.getKeyCode();
 
-            if (JRoboKill.counter == 8) {
+            if (JRoboKill.counter ==11 ){
                 if (moveKey == KeyEvent.VK_ESCAPE) {
 
                     System.exit(0);
@@ -162,6 +193,7 @@ public class Level11 extends JPanel implements Runnable {
                 }
 
                 if (moveKey == KeyEvent.VK_UP) {
+                    nowMoving+=2;
                     if (Level1.Yrobot >= 0 && pause11 == 0) {
                         Level1.Yrobot = Level1.Yrobot - 5;
 
@@ -169,6 +201,7 @@ public class Level11 extends JPanel implements Runnable {
                 }
 
                 if (moveKey == KeyEvent.VK_LEFT) {
+                    nowMoving+=2;
                     if (Level1.Xrobot >= 0 && pause11 == 0) {
                         Level1.Xrobot = Level1.Xrobot - 5;
 
@@ -186,6 +219,7 @@ public class Level11 extends JPanel implements Runnable {
                 }
 
                 if (moveKey == KeyEvent.VK_RIGHT) {
+                    nowMoving+=2;
                     if (Level1.Xrobot <= 740 && pause11 == 0) {
                         Level1.Xrobot = Level1.Xrobot + 5;
                     }
@@ -201,6 +235,7 @@ public class Level11 extends JPanel implements Runnable {
                     }
                 }
                 if (moveKey == KeyEvent.VK_DOWN) {
+                    nowMoving+=2;
                     if (Level1.Yrobot <= 560 && pause11 == 0) {
                         Level1.Yrobot = Level1.Yrobot + 5;
 
