@@ -37,6 +37,9 @@ public class MainFrame extends JFrame {
         //amir:add kardan start menu be Jfram
         add(startmenu, BorderLayout.CENTER);
         
+
+            
+
     }
 
     @Override

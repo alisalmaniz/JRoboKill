@@ -35,7 +35,7 @@ import javax.swing.JPanel;
  */
 public class Level1 extends JPanel implements Runnable {
 
-    static int Xrobot = 400;
+    public static int Xrobot = 400;
     public static int Yrobot = 500;
     public static int x = 0;
     public static int y = 0;
@@ -437,6 +437,7 @@ public class Level1 extends JPanel implements Runnable {
                     JRoboKill.board.revalidate();
                 }
 
+
                 if (moveKey == KeyEvent.VK_UP) {
                     if (Yrobot >= 0 && pause == 0) {
                         nowMoving += 2;
@@ -455,6 +456,7 @@ public class Level1 extends JPanel implements Runnable {
                             JRoboKill.board.revalidate();
                             tirVector.removeAllElements();
                         }
+
                     }
                 }
 

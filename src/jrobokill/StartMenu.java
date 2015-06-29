@@ -129,10 +129,17 @@ public class StartMenu extends JPanel implements ActionListener {
                 ContinuousAudioDataStream myLoop = null;
                 //use a try block in case the file doesn't exist.
                 try {
+<<<<<<< HEAD
                 AudioStream myBackgroundMusic
                 = new AudioStream(new FileInputStream(new File(getClass().getResource("/seda/j.wav").toURI())));
                 AudioData myData = myBackgroundMusic.getData();
                 myLoop = new ContinuousAudioDataStream(myData);
+=======
+                    AudioStream myBackgroundMusic
+                            = new AudioStream(new FileInputStream(new File(getClass().getResource("seda/j.wav").toURI())));
+                    AudioData myData = myBackgroundMusic.getData();
+                    myLoop = new ContinuousAudioDataStream(myData);
+>>>>>>> origin/master
                 } catch (Exception error) {
                 JOptionPane.showMessageDialog(null, "Invalid file!");
                 }
@@ -150,19 +157,16 @@ public class StartMenu extends JPanel implements ActionListener {
             // System.out.println("debug amir: start zade shod" + GoToGame);
 
                 //new kardan level ha
-            System.out.println("w1");
-            mainFrame.dispatchEvent(new ComponentEvent(this, 01));
 
-            RoboPanel = new Level1();
-
-            //tamam
-            JRoboKill.board.remove(startmenu);
-            JRoboKill.board.add(RoboPanel, BorderLayout.CENTER);
-            JRoboKill.board.revalidate();
-            //
-            System.out.println("debug amir: 123");
-
-        }
+                System.out.println("w1");
+                mainFrame.dispatchEvent(new ComponentEvent(this, 01));
+                RoboPanel = new Level1();
+                //tamam
+                JRoboKill.board.remove(startmenu);
+                JRoboKill.board.add(RoboPanel, BorderLayout.CENTER);
+                JRoboKill.board.revalidate();
+                System.out.println("debug amir: 123");
+            }
 
         //tamoom
     }
