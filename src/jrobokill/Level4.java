@@ -25,18 +25,35 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import static jrobokill.Level1.Health;
+import static jrobokill.Level1.SeparJ;
 import static jrobokill.Level1.T1l;
 import static jrobokill.Level1.T1r;
+import static jrobokill.Level1.T2l;
+import static jrobokill.Level1.T2r;
 import static jrobokill.Level1.Xrobot;
 import static jrobokill.Level1.Yrobot;
+import static jrobokill.Level1.healthBar1;
+import static jrobokill.Level1.healthBar2;
+import static jrobokill.Level1.healthBar3;
+import static jrobokill.Level1.healthBar4;
+import static jrobokill.Level1.healthBar5;
 import static jrobokill.Level1.robots;
+import static jrobokill.Level1.separ1;
+import static jrobokill.Level1.separ2;
+import static jrobokill.Level1.separ3;
+import static jrobokill.Level1.separ4;
+import static jrobokill.Level1.separ5;
 import static jrobokill.Level1.tirCunter;
 import static jrobokill.Level1.tirCunterT;
 import static jrobokill.Level1.tirVector;
 import static jrobokill.Level2.enemy1l;
 import static jrobokill.Level2.enemy1r;
 import static jrobokill.Level2.enemyCunter;
+import static jrobokill.Level2.enemyDeth;
 import static jrobokill.Level2.enemyVector;
+import static jrobokill.Level6.KeySmall;
+import static jrobokill.Level6.keyTrue;
 
 /**
  *
@@ -67,23 +84,27 @@ public class Level4 extends JPanel implements Runnable {
     private BufferedImage mane;
     private int xMane = 300;
     private int yMane = 300;
+    private int xSepar = 600;
+    private int ySepar = 100;
+    public static boolean separTrue = false;
+    private boolean separShow = true;
 
     int enemydethflag;
 
     private int moveRobots;
-    private int nowMoving;
+   // private int Level1.nowMoving;
 
     public Level4() {
         Level1.Xrobot = 400;
         Level1.Yrobot = 500;
 
         moveRobots = 0;
-        nowMoving = 0;
+        Level1.nowMoving = 0;
 
         setLayout(null);
 
         Level1.Xrobot = 300;
-        Level1.Yrobot = 650;
+        Level1.Yrobot = 610;
 
         enemydethflag = 0;
 
@@ -107,6 +128,13 @@ public class Level4 extends JPanel implements Runnable {
         } catch (IOException e) {
             System.out.println("invalid adress pic mane");
         }
+        //SEPAR!!!!!!
+        URL resources = getClass().getResource("/pic/Mysepar.png");
+        try {
+            separ = ImageIO.read(resources);
+        } catch (IOException e) {
+            System.out.println("invalid adress pic mane");
+        }
         //robot
         URL resourceRobot = getClass().getResource("/pic/robot.png");
         try {
@@ -114,13 +142,7 @@ public class Level4 extends JPanel implements Runnable {
         } catch (IOException e) {
             System.out.println("invalid adress Rabat");
         }
-        //separ
-        URL resourceSepar = getClass().getResource("/pic/separ.png");
-        try {
-            separ = ImageIO.read(resourceSepar);
-        } catch (IOException e) {
-            System.out.println("invalid adress separ");
-        }
+
         //bang bomb
         URL resourceBangBomb = getClass().getResource("/pic/bang.png");
         try {
@@ -198,21 +220,66 @@ public class Level4 extends JPanel implements Runnable {
          }
          */
         g.drawImage(zamin4, 0, 0, this);
-        g.drawImage(separ, 300, 300, this);
+
         g.drawImage(bomb, xBomb, yBomb, this);
+         if (separShow) {
+                g.drawImage(separ, xSepar, ySepar, this);
+            }
         if (bangBomb1 == 1 && bangBombCounter1 >= 2) {
             g.drawImage(bangBomb, xBomb - 10, yBomb - 10, this);
         }
+         if (keyTrue) {
+            g.drawImage(KeySmall, 730, 30, this);
+        }
+        for (enemyCunter = 0; enemyCunter < enemyVector.size(); enemyCunter++) {
 
-        g.drawImage(robots[moveRobots], Xrobot, Yrobot, this);
+            if (enemyVector.get(enemyCunter).getEnemySmash()) {
+                g.drawImage(enemyDeth, (int) enemyVector.get(enemyCunter).getxEnemy(), (int) enemyVector.get(enemyCunter).getyEnemy(), this);
+                enemyVector.remove(enemyCunter);
+                enemydethflag++;
 
-        if (nowMoving > 0) {
+            }
+        }
+        if (Health > 0) {
+            g.drawImage(Level1.robots[moveRobots], Level1.Xrobot, Level1.Yrobot, this);
 
-            moveRobots++;
-            nowMoving--;
+            if (Level1.nowMoving > 0) {
+
+                moveRobots++;
+                Level1.nowMoving--;
+            }
+
+        } else {
+
         }
 
         g.drawImage(mane, xMane, yMane, this);
+
+        if (!separShow) {
+            if (SeparJ == 100) {
+                g.drawImage(separ1, 650, 555, this);
+            } else if (SeparJ == 80) {
+                g.drawImage(separ2, 650, 555, this);
+            } else if (SeparJ == 60) {
+                g.drawImage(separ3, 650, 555, this);
+            } else if (SeparJ == 40) {
+                g.drawImage(separ4, 650, 555, this);
+            } else if (Level1.SeparJ == 20) {
+                g.drawImage(separ5, 650, 555, this);
+            }
+        }
+
+        if (Health == 100) {
+            g.drawImage(healthBar1, 0, 555, this);
+        } else if (Health == 80) {
+            g.drawImage(healthBar2, 0, 555, this);
+        } else if (Health == 60) {
+            g.drawImage(healthBar3, 0, 555, this);
+        } else if (Health == 40) {
+            g.drawImage(healthBar4, 0, 555, this);
+        } else if (Health == 20) {
+            g.drawImage(healthBar5, 0, 555, this);
+        }
 
         for (tirCunter = 0; tirCunter < tirVector.size(); tirCunter++) {
             //System.out.println(tirVector.size());
@@ -222,14 +289,25 @@ public class Level4 extends JPanel implements Runnable {
                 System.out.println(tirVector.size() + "/" + tirVector.get(tirCunter).getxMouse() + "/" + tirVector.get(tirCunter).getxTir());
 
                 if (tirVector.get(tirCunter).getxMouse() > tirVector.get(tirCunter).getxFirstRobot()) {
-                    g.drawImage(T1r, (int) tirVector.get(tirCunter).getxTir(), (int) tirVector.get(tirCunter).getyTir(), this);
+                    if (!Level3.gunTrue) {
+                        g.drawImage(T1r, (int) tirVector.get(tirCunter).getxTir(), (int) tirVector.get(tirCunter).getyTir(), this);
+                    } else {
+                        g.drawImage(T2r, (int) tirVector.get(tirCunter).getxTir(), (int) tirVector.get(tirCunter).getyTir(), this);
+
+                    }
                 } else {
-                    g.drawImage(T1l, (int) tirVector.get(tirCunter).getxTir(), (int) tirVector.get(tirCunter).getyTir(), this);
+                    if (!Level3.gunTrue) {
+                        g.drawImage(T1l, (int) tirVector.get(tirCunter).getxTir(), (int) tirVector.get(tirCunter).getyTir(), this);
+                    } else {
+                        g.drawImage(T2l, (int) tirVector.get(tirCunter).getxTir(), (int) tirVector.get(tirCunter).getyTir(), this);
+
+                    }
                 }
 
                 g2d.rotate(-atan((tirVector.get(tirCunter).getyMouse() - tirVector.get(tirCunter).getyFirstRobot()) / (tirVector.get(tirCunter).getxMouse() - tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxTir(), tirVector.get(tirCunter).getyTir());
 
             }
+           
         }
 
         //enemy
@@ -288,7 +366,12 @@ public class Level4 extends JPanel implements Runnable {
 
         @Override
         public boolean dispatchKeyEvent(KeyEvent e) {
-            int moveKey = e.getKeyCode();
+            int moveKey = e.getKeyCode();       
+            
+            if (moveKey == KeyEvent.VK_F1) {
+
+                    Health = 100;
+                }
 
             if (JRoboKill.counter == 4) {
 
@@ -337,43 +420,70 @@ public class Level4 extends JPanel implements Runnable {
 
                 if (moveKey == KeyEvent.VK_UP) {
 
-                    nowMoving += 2;
+                    Level1.nowMoving += 2;
                     if (Level1.Yrobot >= 0 && pause4 == 0) {
 
-                        if ((Level1.Xrobot >= xMane + 60 && (Level1.Yrobot >= 360 || Level1.Yrobot <= 300)) || (Level1.Xrobot >= xMane + 40 && (Level1.Yrobot <= 360 && Level1.Yrobot >= 300)) || (Level1.Xrobot <= xMane + 40 && (Level1.Yrobot >= 360 || Level1.Yrobot <= 300))) {
-                            Level1.Yrobot = Level1.Yrobot - 5;
+                       /* if ((Level1.Xrobot >= xMane + 60 && (Level1.Yrobot >= 360 || Level1.Yrobot <= 300)) || (Level1.Xrobot >= xMane + 40 && (Level1.Yrobot <= 360 && Level1.Yrobot >= 300)) || (Level1.Xrobot <= xMane + 40 && (Level1.Yrobot >= 360 || Level1.Yrobot <= 300))) {
+                            Level1.Yrobot -=5;
+                        }*/
+                        if(!((Level1.Xrobot > xMane-42) && (Level1.Xrobot < xMane+97 )&& (Level1.Yrobot > yMane-42) && (Level1.Yrobot < yMane+91) ))
+                        {
+                             Level1.Yrobot -=5;
+                        }
+                        else
+                        {
+                           
                         }
                     }
-                    if (Level1.Xrobot > 250 && Level1.Xrobot < 400 && Level1.Yrobot < 50 && JRoboKill.counter == 4) {
+                    //gereftan separ
+                    if (Level1.Xrobot >= xSepar - 10 && Level1.Xrobot <= xSepar + 10 && Level1.Yrobot >= ySepar - 10 && Level1.Yrobot <= ySepar + 10) {
+                        separTrue = true;
+                        separShow = false;
+                    }
+                    if (Level1.Xrobot > 250 && Level1.Xrobot < 400 && Level1.Yrobot < 50 && JRoboKill.counter == 4 && keyTrue==true ) {
 
                         //raftan be level 10 ***final
+                        if (enemyVector.size() == 0){
                         JRoboKill.counter = 10;
                         RoboPanel10 = new Level10();
                         JRoboKill.board.remove(Level3.RoboPanel4);
                         JRoboKill.board.add(RoboPanel10, BorderLayout.CENTER);
                         JRoboKill.board.revalidate();
-                        tirVector.removeAllElements();
+                        tirVector.removeAllElements();}
 
                     }
                 }
 
                 if (moveKey == KeyEvent.VK_LEFT) {
-                    nowMoving += 2;
+                    Level1.nowMoving += 2;
                     if (Level1.Xrobot >= 0 && pause4 == 0) {
-                        if ((Level1.Xrobot >= xMane - 40 && Level1.Xrobot <= xMane + 100 && (Level1.Yrobot >= yMane + 70 || Level1.Yrobot <= yMane - 40)) || (Level1.Xrobot >= xMane + 100 && (Level1.Yrobot >= yMane + 70 || Level1.Yrobot <= yMane - 40)) || (Level1.Xrobot <= xMane - 40 && (Level1.Yrobot >= yMane + 70 || Level1.Yrobot <= yMane - 40)) || (Level1.Yrobot <= yMane + 70 && Level1.Yrobot >= yMane - 40 && Level1.Xrobot <= xMane - 40) || (Level1.Yrobot <= yMane + 70 && Level1.Yrobot >= yMane - 40 && Level1.Xrobot >= xMane + 100)) {
-                            Level1.Xrobot = Level1.Xrobot - 5;
+                       /* if ((Level1.Xrobot >= xMane - 40 && Level1.Xrobot <= xMane + 100 && (Level1.Yrobot >= yMane + 70 || Level1.Yrobot <= yMane - 40)) || (Level1.Xrobot >= xMane + 100 && (Level1.Yrobot >= yMane + 70 || Level1.Yrobot <= yMane - 40)) || (Level1.Xrobot <= xMane - 40 && (Level1.Yrobot >= yMane + 70 || Level1.Yrobot <= yMane - 40)) || (Level1.Yrobot <= yMane + 70 && Level1.Yrobot >= yMane - 40 && Level1.Xrobot <= xMane - 40) || (Level1.Yrobot <= yMane + 70 && Level1.Yrobot >= yMane - 40 && Level1.Xrobot >= xMane + 100)) {
+                            Level1.Xrobot -=5;
+                        }*/
+                         if((Level1.Xrobot > xMane-42) && (Level1.Xrobot < xMane+97 )&& (Level1.Yrobot > yMane-42) && (Level1.Yrobot < yMane+91) )
+                        {
+                            
+                        }
+                        else
+                        {
+                            Level1.Xrobot -=5;
                         }
 
+                        if (Level1.Xrobot >= xSepar - 10 && Level1.Xrobot <= xSepar + 10 && Level1.Yrobot >= ySepar - 10 && Level1.Yrobot <= ySepar + 10) {
+                            separTrue = true;
+                            separShow = false;
+                        }
                         //vared shodan be marhale 6
                         if (Level1.Xrobot < 30 && Level1.Yrobot > 200 && Level1.Yrobot < 400 && JRoboKill.counter == 4) {
 
                             //raftan be level 6
+                            if (enemyVector.size() == 0){
                             JRoboKill.counter = 6;
                             RoboPanel6 = new Level6();
                             JRoboKill.board.remove(Level3.RoboPanel4);
                             JRoboKill.board.add(RoboPanel6, BorderLayout.CENTER);
                             JRoboKill.board.revalidate();
-                            tirVector.removeAllElements();
+                            tirVector.removeAllElements();}
 
                         }
 
@@ -381,40 +491,59 @@ public class Level4 extends JPanel implements Runnable {
                 }
 
                 if (moveKey == KeyEvent.VK_RIGHT) {
-                    nowMoving += 2;
+                    Level1.nowMoving += 2;
                     if (Level1.Xrobot <= 740 && pause4 == 0) {
-                        if ((Level1.Xrobot >= xMane - 40 && Level1.Xrobot <= xMane + 100 && (Level1.Yrobot >= yMane + 70 || Level1.Yrobot <= yMane - 40)) || (Level1.Xrobot >= xMane + 100 && (Level1.Yrobot >= yMane + 70 || Level1.Yrobot <= yMane - 40)) || (Level1.Xrobot <= xMane - 40 && (Level1.Yrobot >= yMane + 70 || Level1.Yrobot <= yMane - 40)) || (Level1.Yrobot <= yMane + 70 && Level1.Yrobot >= yMane - 40 && Level1.Xrobot <= xMane - 40) || (Level1.Yrobot <= yMane + 70 && Level1.Yrobot >= yMane - 40 && Level1.Xrobot >= xMane + 100)) {
-                            Level1.Xrobot = Level1.Xrobot + 5;
+                        // if ((Level1.Xrobot >= xMane - 40 && Level1.Xrobot <= xMane + 100 && (Level1.Yrobot >= yMane + 70 || Level1.Yrobot <= yMane - 40)) || (Level1.Xrobot >= xMane + 100 && (Level1.Yrobot >= yMane + 70 || Level1.Yrobot <= yMane - 40)) || (Level1.Xrobot <= xMane - 40 && (Level1.Yrobot >= yMane + 70 || Level1.Yrobot <= yMane - 40)) || (Level1.Yrobot <= yMane + 70 && Level1.Yrobot >= yMane - 40 && Level1.Xrobot <= xMane - 40) || (Level1.Yrobot <= yMane + 70 && Level1.Yrobot >= yMane - 40 && Level1.Xrobot >= xMane + 100)) {
+                         //x va y for mane
+                         if((Level1.Xrobot > xMane-42) && (Level1.Xrobot < xMane+97 )&& (Level1.Yrobot > yMane-42) && (Level1.Yrobot < yMane+91) )
+                        {
+                            
                         }
-
+                        else
+                        {
+                            Level1.Xrobot +=5;
+                        }
+                        // }
+                        if (Level1.Xrobot >= xSepar - 10 && Level1.Xrobot <= xSepar + 10 && Level1.Yrobot >= ySepar - 10 && Level1.Yrobot <= ySepar + 10) {
+                            separTrue = true;
+                            separShow = false;
+                        }
                         if (Level1.Xrobot > 700 && Level1.Yrobot > 200 && Level1.Yrobot < 400 && JRoboKill.counter == 4) {
 
-                            //raftan be level 5
-                            JRoboKill.counter = 5;
-                            RoboPanel5 = new Level5();
-                            JRoboKill.board.remove(Level3.RoboPanel4);
-                            JRoboKill.board.add(RoboPanel5, BorderLayout.CENTER);
-                            JRoboKill.board.revalidate();
-                            tirVector.removeAllElements();
+                            if (enemyVector.size() == 0) {
+                                //raftan be level 5
+                                JRoboKill.counter = 5;
+                                RoboPanel5 = new Level5();
+                                JRoboKill.board.remove(Level3.RoboPanel4);
+                                JRoboKill.board.add(RoboPanel5, BorderLayout.CENTER);
+                                JRoboKill.board.revalidate();
+                                tirVector.removeAllElements();
+                            }
 
                         }
 
                     }
                 }
                 if (moveKey == KeyEvent.VK_DOWN) {
-                    nowMoving += 2;
+                    Level1.nowMoving += 2;
 
                     if (Level1.Yrobot <= 560 && pause4 == 0) {
-                        Level1.Yrobot = Level1.Yrobot + 5;
-
+                        Level1.Yrobot +=5; 
+                    }
+                    if (Level1.Xrobot >= xSepar - 10 && Level1.Xrobot <= xSepar + 10 && Level1.Yrobot >= ySepar - 10 && Level1.Yrobot <= ySepar + 10) {
+                        separTrue = true;
+                        separShow = false;
                     }
                     if ((Level1.Xrobot > 200 && Level1.Xrobot < 600 && JRoboKill.counter == 4) && (Level1.Yrobot > 540)) {
-                        JRoboKill.counter = 3;
-
-                        JRoboKill.board.remove(Level3.RoboPanel4);
-                        JRoboKill.board.add(Level2.RoboPanel3, BorderLayout.CENTER);
-                        JRoboKill.board.revalidate();
-                        tirVector.removeAllElements();
+                        if (enemyVector.size() == 0) {
+                            JRoboKill.counter = 3;
+                            Level1.Xrobot=400;
+                            Level1.Yrobot=50;
+                            JRoboKill.board.remove(Level3.RoboPanel4);
+                            JRoboKill.board.add(Level2.RoboPanel3, BorderLayout.CENTER);
+                            JRoboKill.board.revalidate();
+                            tirVector.removeAllElements();
+                        }
                     }
                 }
             }

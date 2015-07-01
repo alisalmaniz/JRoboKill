@@ -78,6 +78,7 @@ public class TirThread implements Runnable{
                 }
                 
             }
+            
         }
             
             try {

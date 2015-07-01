@@ -28,6 +28,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import static jrobokill.Level6.KeySmall;
+import static jrobokill.Level6.keyTrue;
 
 /**
  *
@@ -43,7 +45,12 @@ public class Level1 extends JPanel implements Runnable {
     private Image dbImage;
     private Graphics dbg;
     private BufferedImage zamin;
-    private BufferedImage separ;
+    public static BufferedImage separ1;
+    public static BufferedImage separ2;
+    public static BufferedImage separ3;
+    public static BufferedImage separ4;
+    public static BufferedImage separ5;
+    public static BufferedImage separ6;
     public static BufferedImage Robo1;
     public static BufferedImage Robo2;
     public static BufferedImage Robo3;
@@ -63,14 +70,13 @@ public class Level1 extends JPanel implements Runnable {
 
     private BufferedImage Jet;
     private BufferedImage exit;
-    
+
     public static BufferedImage healthBar1;
     public static BufferedImage healthBar2;
     public static BufferedImage healthBar3;
     public static BufferedImage healthBar4;
     public static BufferedImage healthBar5;
-    
-    
+
     public static String HealthAdress = "";
     private BufferedImage shop;
     private BufferedImage makanAval;
@@ -83,30 +89,25 @@ public class Level1 extends JPanel implements Runnable {
     public static Map map1;
 
     public static int RoboPool = 0;
-    private JButton health;
+
     private boolean Robo1IsAlive;
     private int moveRobots;
-    private int nowMoving;
+    public static int nowMoving;
     public static int Health = 60;
-    public static int Separ = 100;
+    public static int SeparJ = 100;
 
     //thread
     public static int tirCunter = 0;
     public static int tirCunterT = 0;
-    public static Vector<TirThread> tirVector;
+    public static Vector<TirThread> tirVector = new Vector<TirThread>();
+    ;
     public static BufferedImage T1r;
     public static BufferedImage T1l;
+    public static BufferedImage T2l;
+    public static BufferedImage T2r;
 
     public Level1() {
         setLayout(null);
-
-        health = new JButton("Start");
-        //health.setFont(new Font("Arial", Font.BOLD, 20));
-        health.setSize(100, 100);
-        health.setLocation(0, 0);
-        health.setBackground(Color.WHITE);
-        //health.setForeground(Color.WHITE);
-        add(health);
 
         TirHandler tirHandler = new TirHandler();
         addMouseListener(tirHandler);
@@ -163,9 +164,44 @@ public class Level1 extends JPanel implements Runnable {
             System.out.println("invalid adress zamin");
         }
         //separ
-        URL resourceSepar = getClass().getResource("/pic/separ11.png");
+        URL resourceSepar1 = getClass().getResource("/pic/separ11.png");
         try {
-            separ = ImageIO.read(resourceSepar);
+            separ1 = ImageIO.read(resourceSepar1);
+        } catch (IOException e) {
+            System.out.println("invalid adress separ");
+        }
+        //separ
+        URL resourceSepar2 = getClass().getResource("/pic/separ12.png");
+        try {
+            separ2 = ImageIO.read(resourceSepar2);
+        } catch (IOException e) {
+            System.out.println("invalid adress separ");
+        }
+        //separ
+        URL resourceSepar3 = getClass().getResource("/pic/separ13.png");
+        try {
+            separ3 = ImageIO.read(resourceSepar3);
+        } catch (IOException e) {
+            System.out.println("invalid adress separ");
+        }
+        //separ
+        URL resourceSepar4 = getClass().getResource("/pic/separ14.png");
+        try {
+            separ4 = ImageIO.read(resourceSepar4);
+        } catch (IOException e) {
+            System.out.println("invalid adress separ");
+        }
+        //separ
+        URL resourceSepar5 = getClass().getResource("/pic/separ15.png");
+        try {
+            separ5 = ImageIO.read(resourceSepar5);
+        } catch (IOException e) {
+            System.out.println("invalid adress separ");
+        }
+        //separ
+        URL resourceSepar6 = getClass().getResource("/pic/separ16.png");
+        try {
+            separ6 = ImageIO.read(resourceSepar6);
         } catch (IOException e) {
             System.out.println("invalid adress separ");
         }
@@ -193,7 +229,7 @@ public class Level1 extends JPanel implements Runnable {
         //health bar
         //health
         //navar salamati 1
-        
+
         URL resourceHealth1 = getClass().getResource("/pic/healthBar1.png");
         try {
             healthBar1 = ImageIO.read(resourceHealth1);
@@ -201,7 +237,7 @@ public class Level1 extends JPanel implements Runnable {
             System.out.println("invalid adress health");
         }
         //navar salamati 2
-        
+
         URL resourceHealth2 = getClass().getResource("/pic/healthBar2.png");
         try {
             healthBar2 = ImageIO.read(resourceHealth2);
@@ -209,7 +245,7 @@ public class Level1 extends JPanel implements Runnable {
             System.out.println("invalid adress health");
         }
         //navar salamati 3
-        
+
         URL resourceHealth3 = getClass().getResource("/pic/healthBar3.png");
         try {
             healthBar3 = ImageIO.read(resourceHealth3);
@@ -217,7 +253,7 @@ public class Level1 extends JPanel implements Runnable {
             System.out.println("invalid adress health");
         }
         //navar salamati 4
-        
+
         URL resourceHealth4 = getClass().getResource("/pic/healthBar4.png");
         try {
             healthBar4 = ImageIO.read(resourceHealth4);
@@ -225,7 +261,7 @@ public class Level1 extends JPanel implements Runnable {
             System.out.println("invalid adress health");
         }
         //navar salamati 5
-        
+
         URL resourceHealth5 = getClass().getResource("/pic/healthBar5.png");
         try {
             healthBar5 = ImageIO.read(resourceHealth5);
@@ -262,6 +298,13 @@ public class Level1 extends JPanel implements Runnable {
         } catch (IOException e) {
             System.out.println("invalid adress exit");
         }
+        //Tir2 right
+        URL resourceT2r = getClass().getResource("/pic/T2r.png");
+        try {
+            T2r = ImageIO.read(resourceT2r);
+        } catch (IOException e) {
+            System.out.println("invalid adress exit");
+        }
         //Tir1 left
         URL resourceT1l = getClass().getResource("/pic/T1l.png");
         try {
@@ -269,8 +312,13 @@ public class Level1 extends JPanel implements Runnable {
         } catch (IOException e) {
             System.out.println("invalid adress exit");
         }
-
-        tirVector = new Vector<TirThread>();
+        //Tir2 left
+        URL resourceT2l = getClass().getResource("/pic/T2l.png");
+        try {
+            T2l = ImageIO.read(resourceT2l);
+        } catch (IOException e) {
+            System.out.println("invalid adress exit");
+        }
 
         //move
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new moving());
@@ -290,8 +338,6 @@ public class Level1 extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        
-        
 
         if (moveRobots == 15) {
             moveRobots = 0;
@@ -304,6 +350,9 @@ public class Level1 extends JPanel implements Runnable {
         }
 
         g.drawImage(zamin, 0, 0, this);
+        if (keyTrue) {
+            g.drawImage(KeySmall, 730, 30, this);
+        }
 
         g.drawImage(shop, 600, 200, this);
         //rasm chale 
@@ -320,7 +369,7 @@ public class Level1 extends JPanel implements Runnable {
 
         g.drawImage(Jet, 20, 90, this);
 
-        if (Robo1IsAlive) {
+        if (Health > 0) {
 
             g.drawImage(robots[moveRobots], Xrobot, Yrobot, this);
 
@@ -333,26 +382,32 @@ public class Level1 extends JPanel implements Runnable {
         } else {
             g.drawImage(Fall, Xrobot, Yrobot, this);
         }
-        
-        
+        //separ
+        if (Level4.separTrue) {
+            if (SeparJ == 100) {
+                g.drawImage(separ1, 0, 555, this);
+            } else if (SeparJ == 80) {
+                g.drawImage(separ2, 0, 555, this);
+            } else if (SeparJ == 60) {
+                g.drawImage(separ3, 0, 555, this);
+            } else if (SeparJ == 40) {
+                g.drawImage(separ4, 0, 555, this);
+            } else if (SeparJ == 20) {
+                g.drawImage(separ5, 0, 555, this);
+            }
+        }
+        //health
         if (Health == 100) {
             g.drawImage(healthBar1, 0, 555, this);
         } else if (Health == 80) {
-              g.drawImage(healthBar2, 0, 555, this);
+            g.drawImage(healthBar2, 0, 555, this);
+        } else if (Health == 60) {
+            g.drawImage(healthBar3, 0, 555, this);
+        } else if (Health == 40) {
+            g.drawImage(healthBar4, 0, 555, this);
+        } else if (Health == 20) {
+            g.drawImage(healthBar5, 0, 555, this);
         }
-        else if (Health == 60) {
-             g.drawImage(healthBar3, 0, 555, this);
-        }
-        else if (Health == 40) {
-              g.drawImage(healthBar4, 0, 555, this);
-        }
-        else if (Health == 20) {
-             g.drawImage(healthBar5, 0, 555, this);
-        }
-       
-      
-
-        g.drawImage(separ, 650, 555, this);
 
         System.out.println("**************" + tirVector.size());
         for (tirCunter = 0; tirCunter < tirVector.size(); tirCunter++) {
@@ -362,9 +417,22 @@ public class Level1 extends JPanel implements Runnable {
             //System.out.println(Xrobot+"/"+tirVector.get(tirCunter).getxTir());
 
             if (tirVector.get(tirCunter).getxMouse() > tirVector.get(tirCunter).getxFirstRobot()) {
-                g.drawImage(T1r, (int) tirVector.get(tirCunter).getxTir(), (int) tirVector.get(tirCunter).getyTir(), this);
+                if (!Level3.gunTrue) {
+                    g.drawImage(T1r, (int) tirVector.get(tirCunter).getxTir(), (int) tirVector.get(tirCunter).getyTir(), this);
+
+                } else {
+
+                    g.drawImage(T2r, (int) tirVector.get(tirCunter).getxTir(), (int) tirVector.get(tirCunter).getyTir(), this);
+                }
+
             } else {
-                g.drawImage(T1l, (int) tirVector.get(tirCunter).getxTir() - 35, (int) tirVector.get(tirCunter).getyTir() - 10, this);
+
+                if (!Level3.gunTrue) {
+                    g.drawImage(T1l, (int) tirVector.get(tirCunter).getxTir() - 35, (int) tirVector.get(tirCunter).getyTir() - 10, this);
+                } else {
+                    g.drawImage(T2l, (int) tirVector.get(tirCunter).getxTir() - 35, (int) tirVector.get(tirCunter).getyTir() - 10, this);
+                }
+
             }
 
             g2d.rotate(-atan((tirVector.get(tirCunter).getyMouse() - tirVector.get(tirCunter).getyFirstRobot()) / (tirVector.get(tirCunter).getxMouse() - tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxTir(), tirVector.get(tirCunter).getyTir());
@@ -378,7 +446,7 @@ public class Level1 extends JPanel implements Runnable {
 
         while (true) {
             repaint();
-            health.repaint();
+
         }
     }
 
@@ -389,7 +457,14 @@ public class Level1 extends JPanel implements Runnable {
             int moveKey = e.getKeyCode();
 
             if (JRoboKill.counter == 1) {
+                //code taghalob
 
+                if (moveKey == KeyEvent.VK_F1) {
+
+                    Health = 100;
+                }
+
+                //
                 if (moveKey == KeyEvent.VK_ESCAPE) {
 
                     System.exit(0);
@@ -436,7 +511,6 @@ public class Level1 extends JPanel implements Runnable {
                     JRoboKill.board.add(StartMenu.RoboPanel, BorderLayout.CENTER);
                     JRoboKill.board.revalidate();
                 }
-
 
                 if (moveKey == KeyEvent.VK_UP) {
                     if (Yrobot >= 0 && pause == 0) {
