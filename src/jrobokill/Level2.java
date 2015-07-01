@@ -82,21 +82,20 @@ public class Level2 extends JPanel implements Runnable {
 
     private boolean Robo2IsAlive;
     
-    public static Vector<EnemyThread> enemyVector;
+    public static Vector<EnemyThread> enemyVector =  new Vector<EnemyThread>();;
     public static int enemyNumber=0;
     public static int enemyCunter=0;
     int enemydethflag;
     
     
     private int moveRobots;
-    private int nowMoving;
 
     public Level2() {
         setLayout(null);
         
 
         moveRobots=0;
-        nowMoving=0;
+        Level1.nowMoving=0;
         
         enemydethflag=0;
         
@@ -107,7 +106,7 @@ public class Level2 extends JPanel implements Runnable {
         TirHandler tirHandler = new TirHandler();
         addMouseListener(tirHandler);
         
-        enemyVector = new Vector<EnemyThread>();
+        
         
 
         Robo2IsAlive = true;
@@ -300,29 +299,29 @@ public class Level2 extends JPanel implements Runnable {
             g.drawImage(bang, 200, 234, this);
         }
 
-//        for(enemyCunter=0;enemyCunter<enemyVector.size(); enemyCunter++){
-//            
-////            if(enemyVector.get(enemyCunter).getEnemySmash()){
-////                g.drawImage(enemyDeth,(int) enemyVector.get(enemyCunter).getxEnemy(),(int) enemyVector.get(enemyCunter).getyEnemy(), this);
-////                    enemyVector.remove(enemyCunter);
-////                   enemydethflag++; 
-////                   
-////                
-////            }
-//        }
+        for(enemyCunter=0;enemyCunter<enemyVector.size(); enemyCunter++){
+            
+            if(enemyVector.get(enemyCunter).getEnemySmash()){
+                g.drawImage(enemyDeth,(int) enemyVector.get(enemyCunter).getxEnemy(),(int) enemyVector.get(enemyCunter).getyEnemy(), this);
+                    enemyVector.remove(enemyCunter);
+                   enemydethflag++; 
+                   
+                
+            }
+        }
         
         
         
         
         
         
-        if (Robo2IsAlive) {
+        if (Health>0) {
             g.drawImage(Level1.robots[moveRobots], Level1.Xrobot, Level1.Yrobot, this);
             
-            if(nowMoving>0){
+            if(Level1.nowMoving>0){
                 
                 moveRobots++;
-                nowMoving--;
+                Level1.nowMoving--;
             }
             
         } else {
@@ -443,7 +442,7 @@ public class Level2 extends JPanel implements Runnable {
             }
 
             if (moveKey == KeyEvent.VK_UP) {
-                nowMoving+=2;
+                Level1.nowMoving+=2;
                 if((Level1.Xrobot>=xBox1+40 && (Level1.Yrobot>280 || Level1.Yrobot<180))||(Level1.Xrobot>=xBox1+40 && (Level1.Yrobot<=280 && Level1.Yrobot>=180))||/*(Xrobot2<=300 && (Yrobot2<280 && Yrobot2>200))||*/(Level1.Xrobot<=xBox1+40 && (Level1.Yrobot>=280 || Level1.Yrobot<=180))){
                 Level1.Yrobot = Level1.Yrobot - 5;
                 //age az door rad shod
@@ -460,7 +459,7 @@ public class Level2 extends JPanel implements Runnable {
             }
 
             if (moveKey == KeyEvent.VK_LEFT) {
-nowMoving+=2;
+Level1.nowMoving+=2;
                  if((Level1.Xrobot>=xBox1+40 && (Level1.Yrobot>280 || Level1.Yrobot<180))||(Level1.Xrobot>=xBox1+40 && (Level1.Yrobot<280 && Level1.Yrobot>180))||/*(Xrobot2<=300 && (Yrobot2<280 && Yrobot2>200))||*/(Level1.Xrobot<=xBox1+40 && (Level1.Yrobot>280 || Level1.Yrobot<180))){
                    //if( !(Xrobot2<xBox1 && (Yrobot2<280 || Yrobot2>200))){
                      Level1.Xrobot = Level1.Xrobot - 5;
@@ -483,7 +482,7 @@ nowMoving+=2;
             }
 
             if (moveKey == KeyEvent.VK_RIGHT) {
-nowMoving+=2;
+Level1.nowMoving+=2;
                 Level1.Xrobot = Level1.Xrobot + 5;
                 //agar az roye pol oonvartar raft biyofte payin
                 if (Level1.Xrobot > 550 && JRoboKill.counter == 2) {
@@ -502,7 +501,7 @@ nowMoving+=2;
                 
             }
             if (moveKey == KeyEvent.VK_DOWN) {
-nowMoving+=2;
+Level1.nowMoving+=2;
                  if((Level1.Xrobot>=xBox1+40 && (Level1.Yrobot>280 || Level1.Yrobot<180))||(Level1.Xrobot>=xBox1+40 && (Level1.Yrobot<=280 && Level1.Yrobot>=180))||/*(Xrobot2<=300 && (Yrobot2<280 && Yrobot2>200))||*/(Level1.Xrobot<=xBox1+40 && (Level1.Yrobot>=280 || Level1.Yrobot<=180))){
                      
 

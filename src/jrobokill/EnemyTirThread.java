@@ -7,6 +7,7 @@ package jrobokill;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -50,6 +51,20 @@ public class EnemyTirThread implements Runnable{
             //for(int j=0;j<Level2.enemyVector.size();j++){
             if(xTir>Level1.Xrobot && xTir<Level1.Xrobot+25 && yTir>Level1.Yrobot && yTir<Level1.Yrobot+35){
                 runs=false;
+                
+                
+                if(Level4.separTrue){
+                    Level1.SeparJ-=10;
+                    if(Level1.SeparJ==0)
+                        Level4.separTrue=false;
+                }
+                else{
+                    Level1.Health-=10;
+                        if(Level1.Health==0){
+                            JOptionPane.showMessageDialog(null, "Game Over ", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                            System.exit(0);
+                        }
+                }
 //                Level2.enemyVector.get(j).setTirs(Level2.enemyVector.get(j).getTirs()+1);
 //                if(Level2.enemyVector.get(j).getTirs()>1){
 //                    Level2.enemyVector.get(j).setEnemySmash(true);

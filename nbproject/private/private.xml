@@ -3,38 +3,34 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/Asus/Documents/JRoboKill/src/jrobokill/Level8.java</file>
-            <file>file:/C:/Users/Asus/Documents/JRoboKill/src/jrobokill/Level7.java</file>
-            <file>file:/C:/Users/Asus/Documents/JRoboKill/src/jrobokill/Level4.java</file>
-            <file>file:/C:/Users/Asus/Documents/JRoboKill/src/jrobokill/Level9.java</file>
-            <file>file:/C:/Users/Asus/Documents/JRoboKill/src/jrobokill/Level11.java</file>
-            <file>file:/C:/Users/Asus/Documents/JRoboKill/src/jrobokill/Level1.java</file>
-            <file>file:/C:/Users/Asus/Documents/JRoboKill/src/jrobokill/Level6.java</file>
-            <file>file:/C:/Users/Asus/Documents/JRoboKill/src/jrobokill/StartMenu.java</file>
-            <file>file:/C:/Users/Asus/Documents/JRoboKill/src/jrobokill/Map.java</file>
-            <file>file:/C:/Users/Asus/Documents/JRoboKill/src/jrobokill/Level3.java</file>
-            <file>file:/C:/Users/Asus/Documents/JRoboKill/src/jrobokill/Level10.java</file>
-            <file>file:/C:/Users/Asus/Documents/JRoboKill/src/jrobokill/TanzimRobat.java</file>
-            <file>file:/C:/Users/Asus/Documents/JRoboKill/src/jrobokill/Level2.java</file>
-            <file>file:/C:/Users/Asus/Documents/JRoboKill/src/jrobokill/TirThread.java</file>
-            <file>file:/C:/Users/Asus/Documents/JRoboKill/src/jrobokill/Level5.java</file>
-            <file>file:/C:/Users/Asus/Documents/JRoboKill/src/jrobokill/MainFrame.java</file>
-=======
+            <file>file:/E:/Education/Github/JRoboKill/src/jrobokill/Level7.java</file>
+            <file>file:/E:/Education/Github/JRoboKill/src/pic/separ14.png</file>
             <file>file:/E:/Education/Github/JRoboKill/src/jrobokill/Level1.java</file>
-            <file>file:/E:/Education/Github/JRoboKill/src/jrobokill/Map.java</file>
-            <file>file:/E:/Education/Github/JRoboKill/src/jrobokill/Level5.java</file>
-            <file>file:/E:/Education/Github/JRoboKill/src/jrobokill/Level3.java</file>
+            <file>file:/E:/Education/Github/JRoboKill/src/jrobokill/Client.java</file>
+            <file>file:/E:/Education/Github/JRoboKill/src/jrobokill/Level11.java</file>
             <file>file:/E:/Education/Github/JRoboKill/src/jrobokill/MainFrame.java</file>
-            <file>file:/E:/Education/Github/JRoboKill/src/jrobokill/TirThread.java</file>
+            <file>file:/E:/Education/Github/JRoboKill/src/pic/separ15.png</file>
             <file>file:/E:/Education/Github/JRoboKill/src/jrobokill/Level9.java</file>
             <file>file:/E:/Education/Github/JRoboKill/src/jrobokill/Level6.java</file>
             <file>file:/E:/Education/Github/JRoboKill/src/jrobokill/Level2.java</file>
+            <file>file:/E:/Education/Github/JRoboKill/src/pic/separ1.png</file>
             <file>file:/E:/Education/Github/JRoboKill/src/jrobokill/JRoboKill.java</file>
             <file>file:/E:/Education/Github/JRoboKill/src/jrobokill/StartMenu.java</file>
+            <file>file:/E:/Education/Github/JRoboKill/src/pic/separ11.png</file>
+            <file>file:/E:/Education/Github/JRoboKill/src/pic/separ16.png</file>
+            <file>file:/E:/Education/Github/JRoboKill/src/jrobokill/Map.java</file>
+            <file>file:/E:/Education/Github/JRoboKill/src/jrobokill/Level8.java</file>
+            <file>file:/E:/Education/Github/JRoboKill/src/jrobokill/Server.java</file>
+            <file>file:/E:/Education/Github/JRoboKill/src/jrobokill/Level5.java</file>
+            <file>file:/E:/Education/Github/JRoboKill/src/jrobokill/Level3.java</file>
+            <file>file:/E:/Education/Github/JRoboKill/src/pic/separ12.png</file>
+            <file>file:/E:/Education/Github/JRoboKill/src/jrobokill/TirThread.java</file>
+            <file>file:/E:/Education/Github/JRoboKill/src/jrobokill/EnemyTirThread.java</file>
+            <file>file:/E:/Education/Github/JRoboKill/src/jrobokill/Workstation.java</file>
+            <file>file:/E:/Education/Github/JRoboKill/src/pic/separ13.png</file>
             <file>file:/E:/Education/Github/JRoboKill/src/jrobokill/EnemyThread.java</file>
             <file>file:/E:/Education/Github/JRoboKill/src/jrobokill/Level4.java</file>
->>>>>>> origin/master
+            <file>file:/E:/Education/Github/JRoboKill/src/jrobokill/Level10.java</file>
         </group>
     </open-files>
 </project-private>

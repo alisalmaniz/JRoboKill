@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import static jrobokill.Level1.Health;
 import static jrobokill.Level1.T1l;
 import static jrobokill.Level1.T1r;
 import static jrobokill.Level1.Xrobot;
@@ -36,6 +37,7 @@ import static jrobokill.Level1.tirVector;
 import static jrobokill.Level2.enemy1l;
 import static jrobokill.Level2.enemy1r;
 import static jrobokill.Level2.enemyCunter;
+import static jrobokill.Level2.enemyDeth;
 import static jrobokill.Level2.enemyVector;
 
 /**
@@ -71,14 +73,20 @@ public class Level4 extends JPanel implements Runnable {
     int enemydethflag;
 
     private int moveRobots;
-    private int nowMoving;
+    
+    public static boolean  separTrue = false;
+    public static boolean  separShow = true;
+    
+    
+    private int xSepar = 600;
+    private int ySepar = 100;
 
     public Level4() {
         Level1.Xrobot = 400;
         Level1.Yrobot = 500;
 
         moveRobots = 0;
-        nowMoving = 0;
+        Level1.nowMoving = 0;
 
         setLayout(null);
 
@@ -204,12 +212,29 @@ public class Level4 extends JPanel implements Runnable {
             g.drawImage(bangBomb, xBomb - 10, yBomb - 10, this);
         }
 
-        g.drawImage(robots[moveRobots], Xrobot, Yrobot, this);
+        for(enemyCunter=0;enemyCunter<enemyVector.size(); enemyCunter++){
+            
+            if(enemyVector.get(enemyCunter).getEnemySmash()){
+                g.drawImage(enemyDeth,(int) enemyVector.get(enemyCunter).getxEnemy(),(int) enemyVector.get(enemyCunter).getyEnemy(), this);
+                    enemyVector.remove(enemyCunter);
+                   enemydethflag++; 
+                   
+                
+            }
+        }
+        
+        
+        if (Health>0) {
+            g.drawImage(Level1.robots[moveRobots], Level1.Xrobot, Level1.Yrobot, this);
+            
+            if(Level1.nowMoving>0){
+                
+                moveRobots++;
+                Level1.nowMoving--;
+            }
+            
+        } else {
 
-        if (nowMoving > 0) {
-
-            moveRobots++;
-            nowMoving--;
         }
 
         g.drawImage(mane, xMane, yMane, this);
@@ -337,7 +362,7 @@ public class Level4 extends JPanel implements Runnable {
 
                 if (moveKey == KeyEvent.VK_UP) {
 
-                    nowMoving += 2;
+                    Level1.nowMoving += 2;
                     if (Level1.Yrobot >= 0 && pause4 == 0) {
 
                         if ((Level1.Xrobot >= xMane + 60 && (Level1.Yrobot >= 360 || Level1.Yrobot <= 300)) || (Level1.Xrobot >= xMane + 40 && (Level1.Yrobot <= 360 && Level1.Yrobot >= 300)) || (Level1.Xrobot <= xMane + 40 && (Level1.Yrobot >= 360 || Level1.Yrobot <= 300))) {
@@ -358,7 +383,7 @@ public class Level4 extends JPanel implements Runnable {
                 }
 
                 if (moveKey == KeyEvent.VK_LEFT) {
-                    nowMoving += 2;
+                    Level1.nowMoving += 2;
                     if (Level1.Xrobot >= 0 && pause4 == 0) {
                         if ((Level1.Xrobot >= xMane - 40 && Level1.Xrobot <= xMane + 100 && (Level1.Yrobot >= yMane + 70 || Level1.Yrobot <= yMane - 40)) || (Level1.Xrobot >= xMane + 100 && (Level1.Yrobot >= yMane + 70 || Level1.Yrobot <= yMane - 40)) || (Level1.Xrobot <= xMane - 40 && (Level1.Yrobot >= yMane + 70 || Level1.Yrobot <= yMane - 40)) || (Level1.Yrobot <= yMane + 70 && Level1.Yrobot >= yMane - 40 && Level1.Xrobot <= xMane - 40) || (Level1.Yrobot <= yMane + 70 && Level1.Yrobot >= yMane - 40 && Level1.Xrobot >= xMane + 100)) {
                             Level1.Xrobot = Level1.Xrobot - 5;
@@ -381,7 +406,7 @@ public class Level4 extends JPanel implements Runnable {
                 }
 
                 if (moveKey == KeyEvent.VK_RIGHT) {
-                    nowMoving += 2;
+                    Level1.nowMoving += 2;
                     if (Level1.Xrobot <= 740 && pause4 == 0) {
                         if ((Level1.Xrobot >= xMane - 40 && Level1.Xrobot <= xMane + 100 && (Level1.Yrobot >= yMane + 70 || Level1.Yrobot <= yMane - 40)) || (Level1.Xrobot >= xMane + 100 && (Level1.Yrobot >= yMane + 70 || Level1.Yrobot <= yMane - 40)) || (Level1.Xrobot <= xMane - 40 && (Level1.Yrobot >= yMane + 70 || Level1.Yrobot <= yMane - 40)) || (Level1.Yrobot <= yMane + 70 && Level1.Yrobot >= yMane - 40 && Level1.Xrobot <= xMane - 40) || (Level1.Yrobot <= yMane + 70 && Level1.Yrobot >= yMane - 40 && Level1.Xrobot >= xMane + 100)) {
                             Level1.Xrobot = Level1.Xrobot + 5;
@@ -402,7 +427,7 @@ public class Level4 extends JPanel implements Runnable {
                     }
                 }
                 if (moveKey == KeyEvent.VK_DOWN) {
-                    nowMoving += 2;
+                    Level1.nowMoving += 2;
 
                     if (Level1.Yrobot <= 560 && pause4 == 0) {
                         Level1.Yrobot = Level1.Yrobot + 5;
