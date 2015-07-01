@@ -70,7 +70,7 @@ public class Level11 extends JPanel implements Runnable {
     private int enemydethflag;
 
     private int moveRobots;
-    //private int Level1.nowMoving;
+
 
     public Level11() {
         Level1.Xrobot = 690;
@@ -149,6 +149,7 @@ public class Level11 extends JPanel implements Runnable {
 
             if (Level1.nowMoving > 0) {
 
+
                 moveRobots++;
                 Level1.nowMoving--;
             }
@@ -157,31 +158,38 @@ public class Level11 extends JPanel implements Runnable {
 
         }
 
+        //separ
         if (Level4.separTrue) {
-            if (SeparJ == 100) {
-                g.drawImage(separ1, 650, 555, this);
-            } else if (SeparJ == 80) {
-                g.drawImage(separ2, 650, 555, this);
-            } else if (SeparJ == 60) {
-                g.drawImage(separ3, 650, 555, this);
-            } else if (SeparJ == 40) {
-                g.drawImage(separ4, 650, 555, this);
-            } else if (Level1.SeparJ == 20) {
-                g.drawImage(separ5, 650, 555, this);
+            if (SeparJ>= 80) {
+                g.drawImage(separ1, 0, 555, this);
+            } else if (SeparJ >= 60) {
+                g.drawImage(separ2, 0, 555, this);
+            } else if (SeparJ >= 40) {
+                g.drawImage(separ3, 0, 555, this);
+            } else if (SeparJ >= 20) {
+                g.drawImage(separ4, 0, 555, this);
+            } else if (SeparJ >= 0) {
+                g.drawImage(separ5, 0, 555, this);
             }
         }
 
-        if (Health == 100) {
+        //health
+   
+        if (Health > 80) {
             g.drawImage(healthBar1, 0, 555, this);
-        } else if (Health == 80) {
-            g.drawImage(healthBar2, 0, 555, this);
-        } else if (Health == 60) {
-            g.drawImage(healthBar3, 0, 555, this);
-        } else if (Health == 40) {
-            g.drawImage(healthBar4, 0, 555, this);
-        } else if (Health == 20) {
-            g.drawImage(healthBar5, 0, 555, this);
+        } else if (Health > 60) {
+              g.drawImage(healthBar2, 0, 555, this);
         }
+        else if (Health > 40) {
+             g.drawImage(healthBar3, 0, 555, this);
+        }
+        else if (Health > 0) {
+              g.drawImage(healthBar4, 0, 555, this);
+        }
+        else {
+             g.drawImage(healthBar5, 0, 555, this);
+        }
+
     }
 
     @Override
@@ -263,6 +271,7 @@ public class Level11 extends JPanel implements Runnable {
                 if (moveKey == KeyEvent.VK_UP) {
 
                     Level1.nowMoving += 2;
+
                     if (Level1.Yrobot >= 0 && pause11 == 0) {
 
                         Level1.Yrobot = Level1.Yrobot - 5;
@@ -271,7 +280,9 @@ public class Level11 extends JPanel implements Runnable {
                 }
 
                 if (moveKey == KeyEvent.VK_LEFT) {
+
                     Level1.nowMoving += 2;
+
                     if (Level1.Xrobot >= 0 && pause11 == 0) {
                         Level1.Xrobot = Level1.Xrobot - 5;
 
@@ -289,7 +300,9 @@ public class Level11 extends JPanel implements Runnable {
                 }
 
                 if (moveKey == KeyEvent.VK_RIGHT) {
+
                     Level1.nowMoving += 2;
+
                     if (Level1.Xrobot <= 740 && pause11 == 0) {
                         Level1.Xrobot = Level1.Xrobot + 5;
                     }
@@ -308,7 +321,9 @@ public class Level11 extends JPanel implements Runnable {
                     }
                 }
                 if (moveKey == KeyEvent.VK_DOWN) {
+
                     Level1.nowMoving += 2;
+
                     if (Level1.Yrobot <= 560 && pause11 == 0) {
 
                         Level1.Yrobot = Level1.Yrobot + 5;

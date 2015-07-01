@@ -84,7 +84,6 @@ public class Level6 extends JPanel implements Runnable {
     public static boolean keyTrue = false;
 
     private int moveRobots;
-    //private int Level1.nowMoving;
 
     public Level6() {
         Level1.Xrobot = 740;
@@ -94,8 +93,10 @@ public class Level6 extends JPanel implements Runnable {
         TirHandler tirHandler = new TirHandler();
         addMouseListener(tirHandler);
 
-        moveRobots = 0;
-        Level1.nowMoving = 0;
+
+        moveRobots=0;
+        Level1.nowMoving=0;
+        
 
         Robo6IsAlive = true;
 
@@ -204,50 +205,64 @@ public class Level6 extends JPanel implements Runnable {
         }
         for (enemyCunter = 0; enemyCunter < enemyVector.size(); enemyCunter++) {
 
-            if (enemyVector.get(enemyCunter).getEnemySmash()) {
-                g.drawImage(enemyDeth, (int) enemyVector.get(enemyCunter).getxEnemy(), (int) enemyVector.get(enemyCunter).getyEnemy(), this);
-                enemyVector.remove(enemyCunter);
-                enemydethflag++;
 
+        for(enemyCunter=0;enemyCunter<enemyVector.size(); enemyCunter++){
+            
+            if(enemyVector.get(enemyCunter).getEnemySmash()){
+                g.drawImage(enemyDeth,(int) enemyVector.get(enemyCunter).getxEnemy(),(int) enemyVector.get(enemyCunter).getyEnemy(), this);
+                    enemyVector.remove(enemyCunter);
+                   enemydethflag++; 
+                   
+                
             }
         }
-
-        if (Health > 0) {
+        
+        
+        
+        
+        if (Health>0) {
             g.drawImage(Level1.robots[moveRobots], Level1.Xrobot, Level1.Yrobot, this);
-
-            if (Level1.nowMoving > 0) {
-
+            
+            if(Level1.nowMoving>0){
+                
                 moveRobots++;
                 Level1.nowMoving--;
             }
-
+            
         } else {
 
         }
+            
 
+        //separ
         if (Level4.separTrue) {
-            if (SeparJ == 100) {
-                g.drawImage(separ1, 650, 555, this);
-            } else if (SeparJ == 80) {
-                g.drawImage(separ2, 650, 555, this);
-            } else if (SeparJ == 60) {
-                g.drawImage(separ3, 650, 555, this);
-            } else if (SeparJ == 40) {
-                g.drawImage(separ4, 650, 555, this);
-            } else if (Level1.SeparJ == 20) {
-                g.drawImage(separ5, 650, 555, this);
+            if (SeparJ>= 80) {
+                g.drawImage(separ1, 0, 555, this);
+            } else if (SeparJ >= 60) {
+                g.drawImage(separ2, 0, 555, this);
+            } else if (SeparJ >= 40) {
+                g.drawImage(separ3, 0, 555, this);
+            } else if (SeparJ >= 20) {
+                g.drawImage(separ4, 0, 555, this);
+            } else if (SeparJ >= 0) {
+                g.drawImage(separ5, 0, 555, this);
             }
         }
-        if (Health == 100) {
+        //health
+   
+        if (Health > 80) {
             g.drawImage(healthBar1, 0, 555, this);
-        } else if (Health == 80) {
-            g.drawImage(healthBar2, 0, 555, this);
-        } else if (Health == 60) {
-            g.drawImage(healthBar3, 0, 555, this);
-        } else if (Health == 40) {
-            g.drawImage(healthBar4, 0, 555, this);
-        } else if (Health == 20) {
-            g.drawImage(healthBar5, 0, 555, this);
+        } else if (Health > 60) {
+              g.drawImage(healthBar2, 0, 555, this);
+        }
+        else if (Health > 40) {
+             g.drawImage(healthBar3, 0, 555, this);
+        }
+        else if (Health > 0) {
+              g.drawImage(healthBar4, 0, 555, this);
+        }
+        else {
+             g.drawImage(healthBar5, 0, 555, this);
         }
 
         //tir
@@ -333,7 +348,7 @@ public class Level6 extends JPanel implements Runnable {
             g2d.rotate(-atan((tirVector.get(tirCunter).getyMouse() - tirVector.get(tirCunter).getyFirstRobot()) / (tirVector.get(tirCunter).getxMouse() - tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxTir(), tirVector.get(tirCunter).getyTir());
         }
     }
-
+    }
     @Override
     public void run() {
         while (true) {
@@ -376,12 +391,15 @@ public class Level6 extends JPanel implements Runnable {
                         JRoboKill.board.revalidate();
                     }
 
+
                     if (moveKey == KeyEvent.VK_N && JRoboKill.counter == 6) {
 
                         //kelid baraye map robat
                         JRoboKill.board.remove(Level6.map6);
                         JRoboKill.board.add(Level4.RoboPanel6, BorderLayout.CENTER);
                         JRoboKill.board.revalidate();
+
+
 
                     }
                     if (moveKey == KeyEvent.VK_Q && JRoboKill.counter == 6) {
@@ -409,6 +427,7 @@ public class Level6 extends JPanel implements Runnable {
                         }
                     }
 
+
                     if (moveKey == KeyEvent.VK_LEFT) {
                         Level1.nowMoving += 2;
                         if (Level1.Xrobot >= 0 && pause6 == 0) {
@@ -418,6 +437,7 @@ public class Level6 extends JPanel implements Runnable {
                         if (Level1.Xrobot >= xKey - 20 && Level1.Xrobot <= xKey + 30 && Level1.Yrobot >= yKey - 10 && Level1.Yrobot <= yKey + 10) {
                             keyTrue = true;
                             keyShow = false;
+
                         }
                         if (Level1.Yrobot > 160 && Level1.Yrobot < 390 && Level1.Xrobot < 50 && JRoboKill.counter == 6) {
 

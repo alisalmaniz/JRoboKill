@@ -92,8 +92,9 @@ public class Level4 extends JPanel implements Runnable {
     int enemydethflag;
 
     private int moveRobots;
-   // private int Level1.nowMoving;
 
+  
+    
     public Level4() {
         Level1.Xrobot = 400;
         Level1.Yrobot = 500;
@@ -240,11 +241,15 @@ public class Level4 extends JPanel implements Runnable {
 
             }
         }
-        if (Health > 0) {
+      
+ 
+        
+        
+        if (Health>0) {
             g.drawImage(Level1.robots[moveRobots], Level1.Xrobot, Level1.Yrobot, this);
-
-            if (Level1.nowMoving > 0) {
-
+            
+            if(Level1.nowMoving>0){
+                
                 moveRobots++;
                 Level1.nowMoving--;
             }
@@ -255,30 +260,36 @@ public class Level4 extends JPanel implements Runnable {
 
         g.drawImage(mane, xMane, yMane, this);
 
-        if (!separShow) {
-            if (SeparJ == 100) {
-                g.drawImage(separ1, 650, 555, this);
-            } else if (SeparJ == 80) {
-                g.drawImage(separ2, 650, 555, this);
-            } else if (SeparJ == 60) {
-                g.drawImage(separ3, 650, 555, this);
-            } else if (SeparJ == 40) {
-                g.drawImage(separ4, 650, 555, this);
-            } else if (Level1.SeparJ == 20) {
-                g.drawImage(separ5, 650, 555, this);
+        //separ
+        if (separTrue) {
+            if (SeparJ>= 80) {
+                g.drawImage(separ1, 0, 555, this);
+            } else if (SeparJ >= 60) {
+                g.drawImage(separ2, 0, 555, this);
+            } else if (SeparJ >= 40) {
+                g.drawImage(separ3, 0, 555, this);
+            } else if (SeparJ >= 20) {
+                g.drawImage(separ4, 0, 555, this);
+            } else if (SeparJ >= 0) {
+                g.drawImage(separ5, 0, 555, this);
             }
         }
 
-        if (Health == 100) {
+        //health
+   
+        if (Health > 80) {
             g.drawImage(healthBar1, 0, 555, this);
-        } else if (Health == 80) {
-            g.drawImage(healthBar2, 0, 555, this);
-        } else if (Health == 60) {
-            g.drawImage(healthBar3, 0, 555, this);
-        } else if (Health == 40) {
-            g.drawImage(healthBar4, 0, 555, this);
-        } else if (Health == 20) {
-            g.drawImage(healthBar5, 0, 555, this);
+        } else if (Health > 60) {
+              g.drawImage(healthBar2, 0, 555, this);
+        }
+        else if (Health > 40) {
+             g.drawImage(healthBar3, 0, 555, this);
+        }
+        else if (Health > 0) {
+              g.drawImage(healthBar4, 0, 555, this);
+        }
+        else {
+             g.drawImage(healthBar5, 0, 555, this);
         }
 
         for (tirCunter = 0; tirCunter < tirVector.size(); tirCunter++) {

@@ -111,8 +111,10 @@ public class Level3 extends JPanel implements Runnable {
     //private int Level1.nowMoving;
     public Level3() {
 
+
         moveRobots = 0;
         Level1.nowMoving = 0;
+
         setLayout(null);
 
         enemydethflag = 0;
@@ -249,30 +251,36 @@ public class Level3 extends JPanel implements Runnable {
 
         g.drawImage(robot3, Level1.Xrobot, Level1.Yrobot, this);
 
+        //separ
         if (Level4.separTrue) {
-            if (SeparJ == 100) {
-                g.drawImage(separ1, 650, 555, this);
-            } else if (SeparJ == 80) {
-                g.drawImage(separ2, 650, 555, this);
-            } else if (SeparJ == 60) {
-                g.drawImage(separ3, 650, 555, this);
-            } else if (SeparJ == 40) {
-                g.drawImage(separ4, 650, 555, this);
-            } else if (Level1.SeparJ == 20) {
-                g.drawImage(separ5, 650, 555, this);
+            if (SeparJ>= 80) {
+                g.drawImage(separ1, 0, 555, this);
+            } else if (SeparJ >= 60) {
+                g.drawImage(separ2, 0, 555, this);
+            } else if (SeparJ >= 40) {
+                g.drawImage(separ3, 0, 555, this);
+            } else if (SeparJ >= 20) {
+                g.drawImage(separ4, 0, 555, this);
+            } else if (SeparJ >= 0) {
+                g.drawImage(separ5, 0, 555, this);
             }
         }
 
-        if (Health == 100) {
+        //health
+   
+        if (Health > 80) {
             g.drawImage(healthBar1, 0, 555, this);
-        } else if (Health == 80) {
-            g.drawImage(healthBar2, 0, 555, this);
-        } else if (Health == 60) {
-            g.drawImage(healthBar3, 0, 555, this);
-        } else if (Health == 40) {
-            g.drawImage(healthBar4, 0, 555, this);
-        } else if (Health == 20) {
-            g.drawImage(healthBar5, 0, 555, this);
+        } else if (Health > 60) {
+              g.drawImage(healthBar2, 0, 555, this);
+        }
+        else if (Health > 40) {
+             g.drawImage(healthBar3, 0, 555, this);
+        }
+        else if (Health > 0) {
+              g.drawImage(healthBar4, 0, 555, this);
+        }
+        else {
+             g.drawImage(healthBar5, 0, 555, this);
         }
 
         if (Health > 0) {
@@ -299,11 +307,50 @@ public class Level3 extends JPanel implements Runnable {
         }
         // ////// 
 
+
+        g.drawImage(gun, 350, 100, this);
+        
+        
+        for(enemyCunter=0;enemyCunter<enemyVector.size(); enemyCunter++){
+            
+            if(enemyVector.get(enemyCunter).getEnemySmash()){
+                g.drawImage(enemyDeth,(int) enemyVector.get(enemyCunter).getxEnemy(),(int) enemyVector.get(enemyCunter).getyEnemy(), this);
+                    enemyVector.remove(enemyCunter);
+                   enemydethflag++; 
+                   
+                
+            }
+        }
+        
+        
+        
+        
+        if (Health>0) {
+            g.drawImage(Level1.robots[moveRobots], Level1.Xrobot, Level1.Yrobot, this);
+            
+            if(Level1.nowMoving>0){
+                
+                moveRobots++;
+                Level1.nowMoving--;
+            }
+            
+        } else {
+
+        }
+
         for (tirCunter = 0; tirCunter < tirVector.size(); tirCunter++) {
             //System.out.println(tirVector.size());
-            if (Level1.tirVector.get(tirCunter).getruns()) {
-                g2d.rotate(atan((tirVector.get(tirCunter).getyMouse() - tirVector.get(tirCunter).getyFirstRobot()) / (tirVector.get(tirCunter).getxMouse() - tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxTir(), tirVector.get(tirCunter).getyTir());
-                System.out.println(tirVector.size() + "/" + tirVector.get(tirCunter).getxMouse() + "/" + tirVector.get(tirCunter).getxTir());
+        if(Level1.tirVector.get(tirCunter).getruns()){
+            g2d.rotate(atan((tirVector.get(tirCunter).getyMouse()-tirVector.get(tirCunter).getyFirstRobot())/(tirVector.get(tirCunter).getxMouse()-tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxTir(), tirVector.get(tirCunter).getyTir());
+                System.out.println(tirVector.size()+"/"+tirVector.get(tirCunter).getxMouse()+"/"+tirVector.get(tirCunter).getxTir());
+             
+            if(tirVector.get(tirCunter).getxMouse()>tirVector.get(tirCunter).getxFirstRobot())
+                g.drawImage(T1r,(int)tirVector.get(tirCunter).getxTir(),(int)tirVector.get(tirCunter).getyTir(),this);
+            else
+                g.drawImage(T1l,(int)tirVector.get(tirCunter).getxTir(),(int)tirVector.get(tirCunter).getyTir(),this);
+                    
+            g2d.rotate(-atan((tirVector.get(tirCunter).getyMouse()-tirVector.get(tirCunter).getyFirstRobot())/(tirVector.get(tirCunter).getxMouse()-tirVector.get(tirCunter).getxFirstRobot())), tirVector.get(tirCunter).getxTir(), tirVector.get(tirCunter).getyTir());
+
 
                 if (tirVector.get(tirCunter).getxMouse() > tirVector.get(tirCunter).getxFirstRobot()) {
                     if (!Level3.gunTrue) {
@@ -422,22 +469,22 @@ public class Level3 extends JPanel implements Runnable {
 
                 }
 
-                if (moveKey == KeyEvent.VK_UP) {
-                    Level1.nowMoving += 2;
+
+            if (moveKey == KeyEvent.VK_UP) {
+                Level1.nowMoving+=2;
+                if (Level1.Yrobot >= 0 && pause3 == 0) {
+                    Level1.Yrobot = Level1.Yrobot - 5;
                     if (Level1.Xrobot >= xgun - 10 && Level1.Xrobot <= xgun + 10 && Level1.Yrobot >= ygun - 10 && Level1.Yrobot <= ygun + 10) {
                         gunTrue = true;
                         gunShow = false;
                     }
-                    if (Level1.Yrobot >= 0 && pause3 == 0) {
-                        Yrobot -= 5;
-                        if (Level1.Xrobot <= xPool + 15 && Level1.Xrobot >= xPool - 15 && Level1.Yrobot <= yPool + 15 && Level1.Yrobot >= yPool - 15) {
-                            if (getPool != 1) {
-                                getPool = 1;
-                                Level1.RoboPool += 500;
-                            }
-
+                    if (Level1.Xrobot <= xPool + 15 && Level1.Xrobot >= xPool - 15 && Level1.Yrobot <= yPool + 15 && Level1.Yrobot >= yPool - 15) {
+                        if (getPool != 1) {
+                            getPool = 1;
+                            Level1.RoboPool += 500;
                         }
-                        if ((Level1.Xrobot > 200 && Level1.Xrobot < 600) && (Level1.Yrobot < 40) && JRoboKill.counter == 3) {
+                    }
+                     if ((Level1.Xrobot > 200 && Level1.Xrobot < 600) && (Level1.Yrobot < 40) && JRoboKill.counter == 3) {
                             //raftan be level4
                             if (enemyVector.size() == 0) {
                                 JRoboKill.counter = 4;
@@ -451,8 +498,10 @@ public class Level3 extends JPanel implements Runnable {
                             }
 
                         }
-                    }
+                    
                 }
+            }
+
 
                 if (moveKey == KeyEvent.VK_LEFT) {
                     Level1.nowMoving += 2;
@@ -462,19 +511,22 @@ public class Level3 extends JPanel implements Runnable {
                             getPool = 1;
                             Level1.RoboPool += 500;
 
+
                         }
                     }
                 }
-                if (moveKey == KeyEvent.VK_RIGHT) {
-                    Level1.nowMoving += 2;
-                    if (Level1.Xrobot <= 740 && pause3 == 0) {
-                        Level1.Xrobot = Level1.Xrobot + 5;
-                    }
-                    if (Level1.Xrobot <= xPool + 15 && Level1.Xrobot >= xPool - 15 && Level1.Yrobot <= yPool + 15 && Level1.Yrobot >= yPool - 15) {
-                        getPool = 1;
-                        Level1.RoboPool += 500;
-                    }
+
+            if (moveKey == KeyEvent.VK_RIGHT) {
+                Level1.nowMoving+=2;
+                if (Level1.Xrobot <= 740 && pause3 == 0) {
+                    Level1.Xrobot = Level1.Xrobot + 5;
                 }
+                if (Level1.Xrobot <= xPool + 15 && Level1.Xrobot >= xPool - 15 && Level1.Yrobot <= yPool + 15 && Level1.Yrobot >= yPool - 15) {
+                    getPool = 1;
+                    Level1.RoboPool += 500;
+                }
+            }
+
                 if (moveKey == KeyEvent.VK_DOWN) {
                     Level1.nowMoving += 2;
                     if (Level1.Yrobot <= 560 && pause3 == 0) {

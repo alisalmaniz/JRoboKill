@@ -5,8 +5,10 @@
  */
 package jrobokill;
 
+import java.awt.BorderLayout;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -56,8 +58,20 @@ public class EnemyThread implements Runnable{
         
         while (!enemySmash && !(xEnemy>=Level1.Xrobot-10 && yEnemy>=Level1.Yrobot-10 && xEnemy<=Level1.Xrobot+40 && yEnemy<=Level1.Yrobot+40)) {
             
-            
-            
+            if(xEnemy>=Level1.Xrobot-10 && yEnemy>=Level1.Yrobot-10 && xEnemy<=Level1.Xrobot+40 && yEnemy<=Level1.Yrobot+40){
+                if(Level4.separTrue){
+                    Level1.SeparJ-=10;
+                    if(Level1.SeparJ==0)
+                        Level4.separTrue=false;
+                }
+                else{
+                    Level1.Health-=10;
+                        if(Level1.Health==0){
+                            JOptionPane.showMessageDialog(null, "Game Over ", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                            System.exit(0);
+                        }
+                }
+            }
             
             r=(yEnemy-Level1.Yrobot)*(yEnemy-Level1.Yrobot)+(xEnemy-Level1.Xrobot)*(xEnemy-Level1.Xrobot);
             try {

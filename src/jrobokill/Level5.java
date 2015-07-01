@@ -78,17 +78,20 @@ public class Level5 extends JPanel implements Runnable {
     int enemydethflag;
 
     private int moveRobots;
-    //private int Level1.nowMoving;
+
+
 
     public Level5() {
 
         setLayout(null);
+
         enemydethflag = 0;
         Level1.Xrobot = 10;
         Level1.Yrobot = 200;
 
         moveRobots = 0;
         Level1.nowMoving = 0;
+
 
         TirHandler tirHandler = new TirHandler();
         addMouseListener(tirHandler);
@@ -191,37 +194,47 @@ public class Level5 extends JPanel implements Runnable {
 
             if (Level1.nowMoving > 0) {
 
+
                 moveRobots++;
                 Level1.nowMoving--;
             }
+
+            
+
 
         } else {
 
         }
 
+        //separ
         if (Level4.separTrue) {
-            if (SeparJ == 100) {
-                g.drawImage(separ1, 650, 555, this);
-            } else if (SeparJ == 80) {
-                g.drawImage(separ2, 650, 555, this);
-            } else if (SeparJ == 60) {
-                g.drawImage(separ3, 650, 555, this);
-            } else if (SeparJ == 40) {
-                g.drawImage(separ4, 650, 555, this);
-            } else if (Level1.SeparJ == 20) {
-                g.drawImage(separ5, 650, 555, this);
+            if (SeparJ>= 80) {
+                g.drawImage(separ1, 0, 555, this);
+            } else if (SeparJ >= 60) {
+                g.drawImage(separ2, 0, 555, this);
+            } else if (SeparJ >= 40) {
+                g.drawImage(separ3, 0, 555, this);
+            } else if (SeparJ >= 20) {
+                g.drawImage(separ4, 0, 555, this);
+            } else if (SeparJ >= 0) {
+                g.drawImage(separ5, 0, 555, this);
             }
         }
-        if (Health == 100) {
+        //health
+   
+        if (Health > 80) {
             g.drawImage(healthBar1, 0, 555, this);
-        } else if (Health == 80) {
-            g.drawImage(healthBar2, 0, 555, this);
-        } else if (Health == 60) {
-            g.drawImage(healthBar3, 0, 555, this);
-        } else if (Health == 40) {
-            g.drawImage(healthBar4, 0, 555, this);
-        } else if (Health == 20) {
-            g.drawImage(healthBar5, 0, 555, this);
+        } else if (Health > 60) {
+              g.drawImage(healthBar2, 0, 555, this);
+        }
+        else if (Health > 40) {
+             g.drawImage(healthBar3, 0, 555, this);
+        }
+        else if (Health > 0) {
+              g.drawImage(healthBar4, 0, 555, this);
+        }
+        else {
+             g.drawImage(healthBar5, 0, 555, this);
         }
 
         for (tirCunter = 0; tirCunter < tirVector.size(); tirCunter++) {
@@ -322,6 +335,7 @@ public class Level5 extends JPanel implements Runnable {
                     if (moveKey == KeyEvent.VK_ESCAPE) {
 
                         System.exit(0);
+
                     }
                     //button O & P for pause and continue
                     if (moveKey == KeyEvent.VK_P) {
@@ -335,6 +349,7 @@ public class Level5 extends JPanel implements Runnable {
                     if (moveKey == KeyEvent.VK_M && JRoboKill.counter == 5) {
                         map5 = new Map();
 
+
                         JRoboKill.board.remove(Level4.RoboPanel5);
                         JRoboKill.board.add(map5, BorderLayout.CENTER);
                         JRoboKill.board.revalidate();
@@ -346,6 +361,7 @@ public class Level5 extends JPanel implements Runnable {
                         JRoboKill.board.remove(Level5.map5);
                         JRoboKill.board.add(Level4.RoboPanel5, BorderLayout.CENTER);
                         JRoboKill.board.revalidate();
+
 
                     }
                     if (moveKey == KeyEvent.VK_Q && JRoboKill.counter == 5) {
@@ -360,6 +376,7 @@ public class Level5 extends JPanel implements Runnable {
                         JRoboKill.board.add(Level4.RoboPanel5, BorderLayout.CENTER);
                         JRoboKill.board.revalidate();
                     }
+
                     if (moveKey == KeyEvent.VK_UP) {
                         Level1.nowMoving += 2;
                         if (Level1.Yrobot >= 0 && pause5 == 0) {
@@ -399,6 +416,7 @@ public class Level5 extends JPanel implements Runnable {
                             }
 
                         }
+
                     }
 
                     if (moveKey == KeyEvent.VK_LEFT) {

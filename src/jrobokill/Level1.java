@@ -67,6 +67,23 @@ public class Level1 extends JPanel implements Runnable {
     public static BufferedImage Robo14;
     public static BufferedImage Robo15;
     public static BufferedImage[] robots;
+    
+    public static BufferedImage Robo1Sh;
+    public static BufferedImage Robo2Sh;
+    public static BufferedImage Robo3Sh;
+    public static BufferedImage Robo4Sh;
+    public static BufferedImage Robo5Sh;
+    public static BufferedImage Robo6Sh;
+    public static BufferedImage Robo7Sh;
+    public static BufferedImage Robo8Sh;
+    public static BufferedImage Robo9Sh;
+    public static BufferedImage Robo10Sh;
+    public static BufferedImage Robo11Sh;
+    public static BufferedImage Robo12Sh;
+    public static BufferedImage Robo13Sh;
+    public static BufferedImage Robo14Sh;
+    public static BufferedImage Robo15Sh;
+    public static BufferedImage[] robotsSh;
 
     private BufferedImage Jet;
     private BufferedImage exit;
@@ -90,32 +107,41 @@ public class Level1 extends JPanel implements Runnable {
 
     public static int RoboPool = 0;
 
+    
     private boolean Robo1IsAlive;
     private int moveRobots;
-    public static int nowMoving;
-    public static int Health = 60;
+    public static int nowMoving = 0;
+    public static int Health = 100;
     public static int SeparJ = 100;
 
     //thread
     public static int tirCunter = 0;
     public static int tirCunterT = 0;
+
     public static Vector<TirThread> tirVector = new Vector<TirThread>();
-    ;
     public static BufferedImage T1r;
     public static BufferedImage T1l;
     public static BufferedImage T2l;
     public static BufferedImage T2r;
 
+    public static int XrobotSh = 500;
+    public static int YrobotSh = 500;
+    public static boolean Sh=true;
+    public static int HealthSh=100;
+    public static int moveRobotsSh=0;
+    public static int nowMovingSh=0;
+
     public Level1() {
         setLayout(null);
+        
 
         TirHandler tirHandler = new TirHandler();
         addMouseListener(tirHandler);
 
         Robo1IsAlive = true;
         moveRobots = 0;
-        nowMoving = 0;
         robots = new BufferedImage[15];
+        robotsSh = new BufferedImage[15];
 
         //robot
         URL resourceRobo1 = getClass().getResource("/pic/Robo1.png");
@@ -133,6 +159,22 @@ public class Level1 extends JPanel implements Runnable {
         URL resourceRobo13 = getClass().getResource("/pic/Robo13.png");
         URL resourceRobo14 = getClass().getResource("/pic/Robo14.png");
         URL resourceRobo15 = getClass().getResource("/pic/Robo15.png");
+        
+        URL resourceRobo1Sh = getClass().getResource("/pic/Robo1Sh.png");
+        URL resourceRobo2Sh = getClass().getResource("/pic/Robo2Sh.png");
+        URL resourceRobo3Sh = getClass().getResource("/pic/Robo3Sh.png");
+        URL resourceRobo4Sh = getClass().getResource("/pic/Robo4Sh.png");
+        URL resourceRobo5Sh = getClass().getResource("/pic/Robo5Sh.png");
+        URL resourceRobo6Sh = getClass().getResource("/pic/Robo6Sh.png");
+        URL resourceRobo7Sh = getClass().getResource("/pic/Robo7Sh.png");
+        URL resourceRobo8Sh = getClass().getResource("/pic/Robo8Sh.png");
+        URL resourceRobo9Sh = getClass().getResource("/pic/Robo9Sh.png");
+        URL resourceRobo10Sh = getClass().getResource("/pic/Robo10Sh.png");
+        URL resourceRobo11Sh = getClass().getResource("/pic/Robo11Sh.png");
+        URL resourceRobo12Sh = getClass().getResource("/pic/Robo12Sh.png");
+        URL resourceRobo13Sh = getClass().getResource("/pic/Robo13Sh.png");
+        URL resourceRobo14Sh = getClass().getResource("/pic/Robo14Sh.png");
+        URL resourceRobo15Sh = getClass().getResource("/pic/Robo15Sh.png");
 
         try {
 
@@ -151,6 +193,22 @@ public class Level1 extends JPanel implements Runnable {
             robots[12] = ImageIO.read(resourceRobo13);
             robots[13] = ImageIO.read(resourceRobo14);
             robots[14] = ImageIO.read(resourceRobo15);
+            
+            robotsSh[0] = ImageIO.read(resourceRobo1Sh);
+            robotsSh[1] = ImageIO.read(resourceRobo2Sh);
+            robotsSh[2] = ImageIO.read(resourceRobo3Sh);
+            robotsSh[3] = ImageIO.read(resourceRobo4Sh);
+            robotsSh[4] = ImageIO.read(resourceRobo5Sh);
+            robotsSh[5] = ImageIO.read(resourceRobo6Sh);
+            robotsSh[6] = ImageIO.read(resourceRobo7Sh);
+            robotsSh[7] = ImageIO.read(resourceRobo8Sh);
+            robotsSh[8] = ImageIO.read(resourceRobo9Sh);
+            robotsSh[9] = ImageIO.read(resourceRobo10Sh);
+            robotsSh[10] = ImageIO.read(resourceRobo11Sh);
+            robotsSh[11] = ImageIO.read(resourceRobo12Sh);
+            robotsSh[12] = ImageIO.read(resourceRobo13Sh);
+            robotsSh[13] = ImageIO.read(resourceRobo14Sh);
+            robotsSh[14] = ImageIO.read(resourceRobo15Sh);
 
         } catch (IOException e) {
             System.out.println("invalid adress Robots");
@@ -312,6 +370,7 @@ public class Level1 extends JPanel implements Runnable {
         } catch (IOException e) {
             System.out.println("invalid adress exit");
         }
+
         //Tir2 left
         URL resourceT2l = getClass().getResource("/pic/T2l.png");
         try {
@@ -319,6 +378,7 @@ public class Level1 extends JPanel implements Runnable {
         } catch (IOException e) {
             System.out.println("invalid adress exit");
         }
+
 
         //move
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new moving());
@@ -341,6 +401,9 @@ public class Level1 extends JPanel implements Runnable {
 
         if (moveRobots == 15) {
             moveRobots = 0;
+        }
+        if (moveRobotsSh == 15) {
+            moveRobotsSh = 0;
         }
 
         try {
@@ -369,47 +432,56 @@ public class Level1 extends JPanel implements Runnable {
 
         g.drawImage(Jet, 20, 90, this);
 
-        if (Health > 0) {
 
+        if(Sh && HealthSh>0){
+            g.drawImage(robotsSh[moveRobotsSh], XrobotSh, YrobotSh, this);
+            if (nowMovingSh > 0) {
+                moveRobotsSh++;
+                nowMovingSh--;
+            }
+        }
+            
+            
+        if (Health>0) {
             g.drawImage(robots[moveRobots], Xrobot, Yrobot, this);
-
             if (nowMoving > 0) {
-
                 moveRobots++;
                 nowMoving--;
             }
-
         } else {
-            g.drawImage(Fall, Xrobot, Yrobot, this);
         }
         //separ
         if (Level4.separTrue) {
-            if (SeparJ == 100) {
+            if (SeparJ>= 80) {
                 g.drawImage(separ1, 0, 555, this);
-            } else if (SeparJ == 80) {
+            } else if (SeparJ >= 60) {
                 g.drawImage(separ2, 0, 555, this);
-            } else if (SeparJ == 60) {
+            } else if (SeparJ >= 40) {
                 g.drawImage(separ3, 0, 555, this);
-            } else if (SeparJ == 40) {
+            } else if (SeparJ >= 20) {
                 g.drawImage(separ4, 0, 555, this);
-            } else if (SeparJ == 20) {
+            } else if (SeparJ >= 0) {
                 g.drawImage(separ5, 0, 555, this);
             }
         }
         //health
-        if (Health == 100) {
+   
+        if (Health > 80) {
             g.drawImage(healthBar1, 0, 555, this);
-        } else if (Health == 80) {
-            g.drawImage(healthBar2, 0, 555, this);
-        } else if (Health == 60) {
-            g.drawImage(healthBar3, 0, 555, this);
-        } else if (Health == 40) {
-            g.drawImage(healthBar4, 0, 555, this);
-        } else if (Health == 20) {
-            g.drawImage(healthBar5, 0, 555, this);
+        } else if (Health > 60) {
+              g.drawImage(healthBar2, 0, 555, this);
+        }
+        else if (Health > 40) {
+             g.drawImage(healthBar3, 0, 555, this);
+        }
+        else if (Health > 0) {
+              g.drawImage(healthBar4, 0, 555, this);
+        }
+        else {
+             g.drawImage(healthBar5, 0, 555, this);
         }
 
-        System.out.println("**************" + tirVector.size());
+        
         for (tirCunter = 0; tirCunter < tirVector.size(); tirCunter++) {
 
             //System.out.println(tirVector.size());
@@ -446,7 +518,6 @@ public class Level1 extends JPanel implements Runnable {
 
         while (true) {
             repaint();
-
         }
     }
 

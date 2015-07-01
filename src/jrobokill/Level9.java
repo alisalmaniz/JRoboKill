@@ -78,7 +78,7 @@ public class Level9 extends JPanel implements Runnable {
     int nenetir;
 
     private int moveRobots;
-    //private int Level1.nowMoving;
+
 
     public Level9() {
         enemydethflag = 0;
@@ -90,6 +90,7 @@ public class Level9 extends JPanel implements Runnable {
 
         nenetir = 99;
         kenetir = -1;
+
 
         setLayout(null);
         TirHandler tirHandler = new TirHandler();
@@ -183,9 +184,11 @@ public class Level9 extends JPanel implements Runnable {
 
             if (Level1.nowMoving > 0) {
 
+
                 moveRobots++;
                 Level1.nowMoving--;
             }
+
 
         } else 
         {
@@ -201,32 +204,36 @@ public class Level9 extends JPanel implements Runnable {
             }
         }
 
-        //g.drawImage(mane, Xmane, Ymane, this);
-
+        //separ
         if (Level4.separTrue) {
-            if (SeparJ == 100) {
-                g.drawImage(separ1, 650, 555, this);
-            } else if (SeparJ == 80) {
-                g.drawImage(separ2, 650, 555, this);
-            } else if (SeparJ == 60) {
-                g.drawImage(separ3, 650, 555, this);
-            } else if (SeparJ == 40) {
-                g.drawImage(separ4, 650, 555, this);
-            } else if (Level1.SeparJ == 20) {
-                g.drawImage(separ5, 650, 555, this);
+            if (SeparJ>= 80) {
+                g.drawImage(separ1, 0, 555, this);
+            } else if (SeparJ >= 60) {
+                g.drawImage(separ2, 0, 555, this);
+            } else if (SeparJ >= 40) {
+                g.drawImage(separ3, 0, 555, this);
+            } else if (SeparJ >= 20) {
+                g.drawImage(separ4, 0, 555, this);
+            } else if (SeparJ >= 0) {
+                g.drawImage(separ5, 0, 555, this);
             }
         }
 
-        if (Health == 100) {
+        //health
+   
+        if (Health > 80) {
             g.drawImage(healthBar1, 0, 555, this);
-        } else if (Health == 80) {
-            g.drawImage(healthBar2, 0, 555, this);
-        } else if (Health == 60) {
-            g.drawImage(healthBar3, 0, 555, this);
-        } else if (Health == 40) {
-            g.drawImage(healthBar4, 0, 555, this);
-        } else if (Health == 20) {
-            g.drawImage(healthBar5, 0, 555, this);
+        } else if (Health > 60) {
+              g.drawImage(healthBar2, 0, 555, this);
+        }
+        else if (Health > 40) {
+             g.drawImage(healthBar3, 0, 555, this);
+        }
+        else if (Health > 0) {
+              g.drawImage(healthBar4, 0, 555, this);
+        }
+        else {
+             g.drawImage(healthBar5, 0, 555, this);
         }
 
         //tir
@@ -296,23 +303,24 @@ public class Level9 extends JPanel implements Runnable {
             }
         }
 
-        for (enemyCunter = 0; enemyCunter < enemyVector.size(); enemyCunter++) {
-            if (enemyVector.get(enemyCunter).getEnemyNumber() == 4) 
-            {
-                if (nenetir % 100 == 0) {
-                    enemyTirVector.add(new EnemyTirThread((int) enemyVector.get(enemyCunter).getxEnemy(), (int) enemyVector.get(enemyCunter).getyEnemy(), Level1.Xrobot, Level1.Yrobot));
+        
+        for( enemyCunter=0;enemyCunter<enemyVector.size(); enemyCunter++){
+            if(enemyVector.get(enemyCunter).getEnemyNumber()==4){
+                if(nenetir%100==0){
+                    
+                    enemyTirVector.add(new EnemyTirThread((int)enemyVector.get(enemyCunter).getxEnemy(), (int)enemyVector.get(enemyCunter).getyEnemy(),Level1.Xrobot, Level1.Yrobot));
                     kenetir++;
                 }
                 nenetir++;
-                if (kenetir >=0 &&enemyTirVector.get(kenetir).getruns()) 
-                {
-                    g2d.rotate(atan((enemyTirVector.get(kenetir).getYroboFirst() - enemyTirVector.get(kenetir).getyTir()) / (enemyTirVector.get(kenetir).getXroboFirst() - enemyTirVector.get(kenetir).getxTir())), enemyTirVector.get(kenetir).getxTir(), enemyTirVector.get(kenetir).getyTir());
-                    if (enemyTirVector.get(kenetir).getXroboFirst() > enemyTirVector.get(kenetir).getxTir()) {
-                        g.drawImage(Level2.EnemyTir1r, (int) enemyTirVector.get(kenetir).getxTir(), (int) enemyTirVector.get(kenetir).getyTir(), this);
-                    } else {
-                        g.drawImage(Level2.EnemyTir1l, (int) enemyTirVector.get(kenetir).getxTir(), (int) enemyTirVector.get(kenetir).getyTir(), this);
-                    }
-                    g2d.rotate(-atan((enemyTirVector.get(kenetir).getYroboFirst() - enemyTirVector.get(kenetir).getyTir()) / (enemyTirVector.get(kenetir).getXroboFirst() - enemyTirVector.get(kenetir).getxTir())), enemyTirVector.get(kenetir).getxTir(), enemyTirVector.get(kenetir).getyTir());
+                
+                if(kenetir>=0 && enemyTirVector.get(kenetir).getruns()){
+                    g2d.rotate(atan((enemyTirVector.get(kenetir).getYroboFirst()-enemyTirVector.get(kenetir).getyTir())/(enemyTirVector.get(kenetir).getXroboFirst()-enemyTirVector.get(kenetir).getxTir())), enemyTirVector.get(kenetir).getxTir(), enemyTirVector.get(kenetir).getyTir());
+                    if(enemyTirVector.get(kenetir).getXroboFirst()>enemyTirVector.get(kenetir).getxTir())
+                        g.drawImage(Level2.EnemyTir1r,(int)enemyTirVector.get(kenetir).getxTir(), (int)enemyTirVector.get(kenetir).getyTir(),this);
+                    else
+                        g.drawImage(Level2.EnemyTir1l,(int)enemyTirVector.get(kenetir).getxTir(),(int) enemyTirVector.get(kenetir).getyTir(),this);
+                    g2d.rotate(-atan((enemyTirVector.get(kenetir).getYroboFirst()-enemyTirVector.get(kenetir).getyTir())/(enemyTirVector.get(kenetir).getXroboFirst()-enemyTirVector.get(kenetir).getxTir())), enemyTirVector.get(kenetir).getxTir(), enemyTirVector.get(kenetir).getyTir());
+
                 }
             }
         }
@@ -381,7 +389,9 @@ public class Level9 extends JPanel implements Runnable {
                 }
 
                 if (moveKey == KeyEvent.VK_UP) {
+
                     Level1.nowMoving += 2;
+
                     if (Level1.Yrobot >= 0 && pause9 == 0) {
                         Level1.Yrobot = Level1.Yrobot - 5;
 
@@ -389,7 +399,9 @@ public class Level9 extends JPanel implements Runnable {
                 }
 
                 if (moveKey == KeyEvent.VK_LEFT) {
+
                     Level1.nowMoving += 2;
+
                     if (Level1.Xrobot >= 0 && pause9 == 0) {
                         Level1.Xrobot = Level1.Xrobot - 5;
 
@@ -397,14 +409,18 @@ public class Level9 extends JPanel implements Runnable {
                 }
 
                 if (moveKey == KeyEvent.VK_RIGHT) {
+
                     Level1.nowMoving += 2;
+
                     if (Level1.Xrobot <= 740 && pause9 == 0) {
                         Level1.Xrobot = Level1.Xrobot + 5;
 
                     }
                 }
                 if (moveKey == KeyEvent.VK_DOWN) {
+
                     Level1.nowMoving += 2;
+
                     if (Level1.Yrobot <= 560 && pause9 == 0) {
                         Level1.Yrobot = Level1.Yrobot + 5;
 

@@ -90,14 +90,15 @@ public class Level2 extends JPanel implements Runnable {
 
     private boolean Robo2IsAlive;
 
-    public static Vector<EnemyThread> enemyVector = new Vector<EnemyThread>();
-    ;
-    public static int enemyNumber = 0;
-    public static int enemyCunter = 0;
+    
+    public static Vector<EnemyThread> enemyVector =  new Vector<EnemyThread>();;
+    public static int enemyNumber=0;
+    public static int enemyCunter=0;
+
     int enemydethflag;
 
     private int moveRobots;
-    // private int Level1.nowMoving;
+
 
     public Level2() {
         setLayout(null);
@@ -107,11 +108,19 @@ public class Level2 extends JPanel implements Runnable {
 
         enemydethflag = 0;
 
+
         Level1.Xrobot = 400;
         Level1.Yrobot = 500;
 
+        moveRobots=0;
+        Level1.nowMoving=0;
+        
+        enemydethflag=0;
+
+
         TirHandler tirHandler = new TirHandler();
         addMouseListener(tirHandler);
+
 
         Robo2IsAlive = true;
         //zamin
@@ -298,6 +307,7 @@ public class Level2 extends JPanel implements Runnable {
             g.drawImage(bang, 200, 234, this);
         }
 
+
         for (enemyCunter = 0; enemyCunter < enemyVector.size(); enemyCunter++) {
 
             if (enemyVector.get(enemyCunter).getEnemySmash()) {
@@ -312,6 +322,7 @@ public class Level2 extends JPanel implements Runnable {
 
             if (Level1.nowMoving > 0) {
 
+
                 moveRobots++;
                 Level1.nowMoving--;
             }
@@ -319,30 +330,36 @@ public class Level2 extends JPanel implements Runnable {
         } else {
 
         }
+        //separ
         if (Level4.separTrue) {
-            if (SeparJ == 100) {
-                g.drawImage(separ1, 650, 555, this);
-            } else if (SeparJ == 80) {
-                g.drawImage(separ2, 650, 555, this);
-            } else if (SeparJ == 60) {
-                g.drawImage(separ3, 650, 555, this);
-            } else if (SeparJ == 40) {
-                g.drawImage(separ4, 650, 555, this);
-            } else if (Level1.SeparJ == 20) {
-                g.drawImage(separ5, 650, 555, this);
+            if (SeparJ>= 80) {
+                g.drawImage(separ1, 0, 555, this);
+            } else if (SeparJ >= 60) {
+                g.drawImage(separ2, 0, 555, this);
+            } else if (SeparJ >= 40) {
+                g.drawImage(separ3, 0, 555, this);
+            } else if (SeparJ >= 20) {
+                g.drawImage(separ4, 0, 555, this);
+            } else if (SeparJ >= 0) {
+                g.drawImage(separ5, 0, 555, this);
             }
         }
 
-        if (Health == 100) {
+       //health
+   
+        if (Health > 80) {
             g.drawImage(healthBar1, 0, 555, this);
-        } else if (Health == 80) {
-            g.drawImage(healthBar2, 0, 555, this);
-        } else if (Health == 60) {
-            g.drawImage(healthBar3, 0, 555, this);
-        } else if (Health == 40) {
-            g.drawImage(healthBar4, 0, 555, this);
-        } else if (Health == 20) {
-            g.drawImage(healthBar5, 0, 555, this);
+        } else if (Health > 60) {
+              g.drawImage(healthBar2, 0, 555, this);
+        }
+        else if (Health > 40) {
+             g.drawImage(healthBar3, 0, 555, this);
+        }
+        else if (Health > 0) {
+              g.drawImage(healthBar4, 0, 555, this);
+        }
+        else {
+             g.drawImage(healthBar5, 0, 555, this);
         }
 
         //tir
@@ -436,10 +453,8 @@ public class Level2 extends JPanel implements Runnable {
                 if (moveKey == KeyEvent.VK_M && JRoboKill.counter == 2) {
                     map2 = new Map();
 
-                    JRoboKill.board.remove(Level1.RoboPanel2);
-                    JRoboKill.board.add(map2, BorderLayout.CENTER);
-                    JRoboKill.board.revalidate();
                 }
+           
 
                 if (moveKey == KeyEvent.VK_N && JRoboKill.counter == 2) {
 
@@ -496,9 +511,7 @@ public class Level2 extends JPanel implements Runnable {
                             System.exit(0);
                         }
                     }
-
                 }
-
                 if (moveKey == KeyEvent.VK_RIGHT) {
                     Level1.nowMoving += 2;
                     Level1.Xrobot = Level1.Xrobot + 5;
@@ -514,10 +527,11 @@ public class Level2 extends JPanel implements Runnable {
                         }
                         JOptionPane.showMessageDialog(null, "You fall in a hole ", "Game Over", JOptionPane.INFORMATION_MESSAGE);
                         System.exit(0);
+
                     }
 
                 }
-                if (moveKey == KeyEvent.VK_DOWN) {
+               if (moveKey == KeyEvent.VK_DOWN) {
                     Level1.nowMoving += 2;
                     if ((Level1.Xrobot >= xBox1 + 40 && (Level1.Yrobot > 280 || Level1.Yrobot < 180)) || (Level1.Xrobot >= xBox1 + 40 && (Level1.Yrobot <= 280 && Level1.Yrobot >= 180)) ||/*(Xrobot2<=300 && (Yrobot2<280 && Yrobot2>200))||*/ (Level1.Xrobot <= xBox1 + 40 && (Level1.Yrobot >= 280 || Level1.Yrobot <= 180))) {
                         Level1.Yrobot += 5;
@@ -535,6 +549,7 @@ public class Level2 extends JPanel implements Runnable {
                             }
                         }
                     }
+
                 }
             }
             //return false;
